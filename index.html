@@ -6,6 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Léo Baskarane — Développeur Web & Full-Stack</title>
     <link rel="stylesheet" href="style.css">
+    <script>
+        // Applique le thème avant le rendu pour éviter un flash de la mauvaise couleur
+        (function () {
+            var theme = null;
+            try { theme = localStorage.getItem('theme'); } catch (e) { }
+            if (!theme) {
+                theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+            }
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
 </head>
 
 <body>
@@ -13,19 +24,40 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="logo">Léo Baskarane</div>
-        <ul class="nav-links">
-            <li><a href="#about">À propos</a></li>
-            <li><a href="#skills">Compétences</a></li>
-            <li><a href="#projects">Projets</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li><a href="#about">À propos</a></li>
+                <li><a href="#journey">Parcours</a></li>
+                <li><a href="#skills">Compétences</a></li>
+                <li><a href="#projects">Projets</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button type="button" class="theme-toggle" aria-label="Activer le thème clair">
+                <!-- Soleil (affiché en thème sombre) -->
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+                </svg>
+                <!-- Lune (affichée en thème clair) -->
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+            </button>
+        </div>
     </nav>
 
     <!-- Hero Section -->
     <header class="hero">
         <div class="hero-content">
             <h1>Bonjour, je suis <span class="highlight">Léo Baskarane</span></h1>
-            <p class="subtitle">Développeur Web & Full-Stack</p>
+            <p class="subtitle">
+                <span class="sr-only">Développeur Full-Stack, passionné de Python & FastAPI, créateur web</span>
+                <span class="typewriter" aria-hidden="true"
+                    data-roles='["Développeur Full-Stack", "Passionné de Python & FastAPI", "Créateur Web"]'>Développeur Full-Stack</span><span
+                    class="typewriter-cursor" aria-hidden="true"></span>
+            </p>
             <p class="description">
                 Passionné par le développement d'applications web modernes, la conception d'API robustes et la gestion
                 de projets full-stack.
@@ -45,6 +77,62 @@
             applications fluides et performantes. Mon parcours m'a permis d'acquérir une bonne maîtrise du développement
             full-stack, de la gestion de bases de données et des workflows Git/Bitbucket.
         </p>
+
+        <!-- Mini-terminal interactif (piloté par script.js) -->
+        <div class="terminal">
+            <div class="terminal-header" aria-hidden="true">
+                <span class="terminal-dot"></span>
+                <span class="terminal-dot"></span>
+                <span class="terminal-dot"></span>
+                <span class="terminal-title">leo@portfolio: ~</span>
+            </div>
+            <div class="terminal-body">
+                <div class="terminal-output" role="log" aria-live="polite"></div>
+                <form class="terminal-line">
+                    <label for="terminal-input" class="terminal-prompt">leo@portfolio:~$</label>
+                    <input type="text" id="terminal-input" class="terminal-input" autocomplete="off"
+                        autocapitalize="off" spellcheck="false" aria-label="Commande du terminal">
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Parcours (timeline verticale) -->
+    <section id="journey" class="section">
+        <h2>Parcours</h2>
+        <ol class="timeline">
+            <li class="timeline-item">
+                <span class="timeline-dot" aria-hidden="true"></span>
+                <div class="timeline-content">
+                    <p class="timeline-date">2025 — 2026</p>
+                    <h3>Développement Full-Stack &amp; Projets Personnels</h3>
+                    <p class="timeline-place">En autodidacte — Combs-la-Ville</p>
+                    <p>
+                        Conception et développement d'applications web interactives, mise en place d'API REST avec
+                        FastAPI, gestion de bases de données MySQL et gestion de versions avec Git.
+                    </p>
+                    <ul class="timeline-tags">
+                        <li>Python</li>
+                        <li>FastAPI</li>
+                        <li>MySQL</li>
+                        <li>JavaScript</li>
+                        <li>Git</li>
+                    </ul>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <span class="timeline-dot" aria-hidden="true"></span>
+                <div class="timeline-content">
+                    <p class="timeline-date">2025 — 2026</p>
+                    <h3>Autodidacte en Développement Full-Stack &amp; Systèmes</h3>
+                    <p class="timeline-place">Formation à la maison — Combs-la-Ville</p>
+                    <p>
+                        Apprentissage approfondi de la programmation, conception d'applications web avec Python, FastAPI,
+                        MySQL et maîtrise des environnements de développement sous Linux/WSL et Git.
+                    </p>
+                </div>
+            </li>
+        </ol>
     </section>
 
     <!-- Section Compétences -->
@@ -76,35 +164,85 @@
         <div class="projects-grid">
 
             <!-- Projet 1 -->
-            <div class="project-card">
+            <div class="project-card" data-project="task-manager" tabindex="0" role="button"
+                aria-haspopup="dialog">
                 <h3>Task Manager API</h3>
                 <p class="project-tech">FastAPI · MySQL · HTML/CSS/JS · Bitbucket</p>
                 <p>
                     Application Full-Stack complète permettant la gestion de tâches (CRUD). Serveur backend Python
                     FastAPI connecté à une base MySQL avec interface frontend interactive.
                 </p>
+                <p class="project-more">Voir les détails →</p>
             </div>
 
             <!-- Projet 2 -->
-            <div class="project-card">
+            <div class="project-card" data-project="finops" tabindex="0" role="button" aria-haspopup="dialog">
                 <h3>FinOps Cloud Analytics</h3>
                 <p class="project-tech">HTML5 · CSS3 · JavaScript · Chart.js</p>
                 <p>
                     Tableau de bord interactif de suivi et d'optimisation des coûts multi-cloud (AWS, GCP, Azure) avec
                     graphiques en temps réel et simulateur d'économies.
                 </p>
+                <p class="project-more">Voir les détails →</p>
             </div>
 
         </div>
     </section>
 
+    <!-- Modale de détail projet (remplie par script.js) -->
+    <dialog class="project-modal" aria-labelledby="modal-title">
+        <button type="button" class="modal-close" aria-label="Fermer">&times;</button>
+        <h3 id="modal-title"></h3>
+        <p class="modal-subtitle"></p>
+        <p class="modal-description"></p>
+        <h4>Fonctionnalités clés</h4>
+        <ul class="modal-features"></ul>
+        <h4>Architecture</h4>
+        <ol class="modal-architecture"></ol>
+        <h4>Stack technique</h4>
+        <ul class="modal-stack"></ul>
+    </dialog>
+
     <!-- Section Contact -->
     <section id="contact" class="section">
         <h2>Contact</h2>
         <p>Un projet ou une opportunité ? N'hésite pas à me contacter !</p>
-        <div class="contact-links">
-            <a href="mailto:contact@example.com" class="btn primary-btn">M'envoyer un email</a>
-        </div>
+
+        <!--
+            Formspree : remplacer VOTRE_ID dans l'attribut action par l'identifiant de ton formulaire
+            (https://formspree.io). Tant que ce n'est pas fait, l'envoi ouvre le logiciel de messagerie
+            du visiteur avec le message pré-rempli, adressé à data-fallback-email.
+        -->
+        <form class="contact-form" action="https://formspree.io/f/VOTRE_ID" method="POST"
+            data-fallback-email="baskaraneleo@forcefabric.com">
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="contact-name">Nom</label>
+                    <input type="text" id="contact-name" name="name" autocomplete="name" required>
+                </div>
+                <div class="form-field">
+                    <label for="contact-email">Email</label>
+                    <input type="email" id="contact-email" name="email" autocomplete="email" required>
+                </div>
+            </div>
+            <div class="form-field">
+                <label for="contact-subject">Sujet</label>
+                <input type="text" id="contact-subject" name="subject">
+            </div>
+            <div class="form-field">
+                <label for="contact-message">Message</label>
+                <textarea id="contact-message" name="message" rows="6" required></textarea>
+            </div>
+            <!-- Champ piège anti-spam : invisible pour les humains -->
+            <input type="text" name="_gotcha" class="form-honeypot" tabindex="-1" autocomplete="off"
+                aria-hidden="true">
+            <button type="submit" class="btn primary-btn">Envoyer le message</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+        </form>
+
+        <p class="contact-alt">
+            Ou écris-moi directement : <a href="mailto:baskaraneleo@forcefabric.com">baskaraneleo@forcefabric.com</a>
+        </p>
     </section>
 
     <footer>
