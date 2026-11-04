@@ -639,6 +639,122 @@ a {
     font-weight: 600;
 }
 
+/* Onglets de la modale */
+.modal-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.modal-tabs [role="tab"] {
+    margin-bottom: -1px;
+    padding: 0.6rem 1rem;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.modal-tabs [role="tab"]:hover,
+.modal-tabs [role="tab"]:focus-visible {
+    color: var(--accent);
+    outline: none;
+}
+
+.modal-tabs [role="tab"][aria-selected="true"] {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
+.modal-choices,
+.modal-challenges {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    list-style: none;
+}
+
+.modal-choices li,
+.modal-challenges li {
+    padding: 1rem 1.25rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background-color: var(--accent-soft);
+}
+
+.modal-choices strong {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: var(--text);
+}
+
+.modal-challenges p + p {
+    margin-top: 0.5rem;
+}
+
+.modal-tag {
+    display: inline-block;
+    margin-right: 0.6rem;
+    padding: 0.1rem 0.6rem;
+    border-radius: 999px;
+    background-color: var(--accent);
+    color: var(--on-accent);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.project-modal .modal-github {
+    display: inline-block;
+    margin-top: 1.75rem;
+}
+
+/* Filtres de projets */
+.filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+}
+
+.filter-btn {
+    padding: 0.45rem 1.1rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background-color: var(--surface);
+    color: var(--text-soft);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.filter-btn:hover,
+.filter-btn:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent);
+    outline: none;
+}
+
+.filter-btn.is-active {
+    border-color: var(--accent);
+    background-color: var(--accent);
+    color: var(--on-accent);
+}
+
+/* display:flex des cartes l'emporte sur l'attribut hidden : on le rétablit */
+.project-card[hidden] {
+    display: none;
+}
+
 /* Timeline / Parcours */
 .timeline {
     position: relative;
@@ -897,6 +1013,92 @@ a {
 .copy-email-btn.is-copied .copy-tooltip {
     opacity: 1;
     transform: translate(-50%, 0);
+}
+
+/* Témoignages */
+/* Deux cartes de même largeur, alignées sur le titre de la section ; elles s'empilent sous 640px */
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+@media (max-width: 640px) {
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.testimonial-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 2rem 1.75rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background-color: var(--surface);
+    transition: border-color 0.3s;
+}
+
+.testimonial-card:hover {
+    border-color: var(--accent);
+}
+
+/* Grand guillemet décoratif */
+.testimonial-card::before {
+    content: '“';
+    position: absolute;
+    top: 0.25rem;
+    left: 1.25rem;
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--accent);
+    opacity: 0.35;
+}
+
+.testimonial-card blockquote {
+    margin-top: 1.25rem;
+}
+
+.section .testimonial-card blockquote p {
+    color: var(--text-soft);
+    font-style: italic;
+}
+
+.testimonial-card figcaption {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+}
+
+.testimonial-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background-color: var(--accent-soft);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.testimonial-author {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.85rem;
+    color: var(--text-faint);
+}
+
+.testimonial-author strong {
+    font-size: 0.95rem;
+    color: var(--text);
 }
 
 /* Footer */

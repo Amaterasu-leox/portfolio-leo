@@ -25,6 +25,16 @@ const PROJECTS = {
             { layer: 'Base de données', detail: 'MySQL — stockage relationnel des tâches' },
         ],
         stack: ['Python', 'FastAPI', 'MySQL', 'HTML5', 'CSS3', 'JavaScript', 'Git', 'Bitbucket'],
+        choices: [
+            { title: 'FastAPI', detail: 'Validation des données via les types Python et documentation interactive de l’API générée automatiquement.' },
+            { title: 'MySQL', detail: 'Les tâches forment un modèle simple et relationnel : un SGBD classique permet de pratiquer le SQL et la modélisation.' },
+            { title: 'JavaScript natif', detail: 'Pas de framework côté interface : l’objectif était de bien comprendre fetch et la manipulation du DOM.' },
+        ],
+        challenges: [
+            { problem: 'Le navigateur bloquait les appels du frontend vers l’API (erreurs CORS).', solution: 'Configuration du middleware CORS de FastAPI pour n’autoriser que l’origine du frontend.' },
+            { problem: 'Garder l’interface synchronisée avec la base après chaque création, modification ou suppression.', solution: 'Chaque action passe par l’API, puis la liste est rechargée depuis la réponse du serveur plutôt que modifiée localement.' },
+            { problem: 'Travailler proprement en revue de code.', solution: 'Branches dédiées et Pull Requests Bitbucket pour relire chaque changement avant fusion.' },
+        ],
     },
     portfolio: {
         title: 'Portfolio Web Personnel',
@@ -45,6 +55,16 @@ const PROJECTS = {
             { layer: 'Interactions', detail: 'JavaScript natif — un module init par fonctionnalité' },
         ],
         stack: ['HTML5', 'CSS3', 'JavaScript', 'Git'],
+        choices: [
+            { title: 'Zéro framework', detail: 'HTML, CSS et JavaScript natifs : site léger, sans dépendance ni étape de build.' },
+            { title: 'Variables CSS pour les thèmes', detail: 'Toutes les couleurs passent par des variables : le thème clair ou sombre se change en un seul attribut sur <html>.' },
+            { title: '<dialog> natif', detail: 'Pour les modales : gestion du focus, de la touche Échap et du fond assombri sans bibliothèque.' },
+        ],
+        challenges: [
+            { problem: 'Un flash de la mauvaise couleur au chargement avec le thème sombre / clair.', solution: 'Un petit script dans le <head> applique le thème mémorisé avant le premier affichage.' },
+            { problem: 'L’inclinaison 3D des cartes entrait en conflit avec l’animation d’apparition au défilement.', solution: 'L’apparition anime la propriété translate, ce qui laisse transform à l’inclinaison.' },
+            { problem: 'Rester accessible malgré les animations.', solution: 'Respect de « réduire les animations », rôles ARIA, navigation clavier et libellés explicites.' },
+        ],
     },
     finops: {
         title: 'FinOps Cloud Analytics',
@@ -64,6 +84,16 @@ const PROJECTS = {
             { layer: 'Visualisation', detail: 'Chart.js — graphiques mis à jour en temps réel' },
         ],
         stack: ['HTML5', 'CSS3', 'JavaScript', 'Chart.js'],
+        choices: [
+            { title: 'Chart.js', detail: 'Bibliothèque légère et responsive, avec mise à jour fluide des graphiques sans les recréer.' },
+            { title: 'JavaScript natif', detail: 'L’agrégation des coûts et le simulateur sont de simples fonctions pures, faciles à tester.' },
+            { title: 'Données simulées', detail: 'Un jeu de données multi-cloud représentatif permet de démontrer l’outil sans compte AWS, GCP ou Azure.' },
+        ],
+        challenges: [
+            { problem: 'Comparer des fournisseurs qui présentent leurs coûts différemment.', solution: 'Normalisation des données dans un format commun avant l’agrégation et l’affichage.' },
+            { problem: 'Garder des graphiques fluides lors des mises à jour en temps réel.', solution: 'Mise à jour des jeux de données existants plutôt que destruction et recréation des graphiques.' },
+            { problem: 'Rendre le simulateur d’économies compréhensible.', solution: 'Résultats recalculés instantanément à chaque changement de paramètre, avec l’économie estimée mise en évidence.' },
+        ],
     },
 };
 
@@ -74,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSmoothScroll(navbar, prefersReducedMotion);
     initScrollReveal(prefersReducedMotion);
     initTypewriter(prefersReducedMotion);
+    initProjectFilter(prefersReducedMotion);
     initProjectModal();
     initThemeToggle();
     initTerminal();
@@ -364,6 +395,40 @@ function initTypewriter(reducedMotion) {
 }
 
 /**
+ * Filtre les cartes projets selon leur data-category quand on clique sur un bouton .filter-btn.
+ */
+function initProjectFilter(reducedMotion) {
+    const buttons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.project-card[data-category]');
+    if (buttons.length === 0 || cards.length === 0) return;
+
+    buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+            const filter = button.dataset.filter;
+
+            buttons.forEach((b) => {
+                const active = b === button;
+                b.classList.toggle('is-active', active);
+                b.setAttribute('aria-pressed', String(active));
+            });
+
+            cards.forEach((card) => {
+                const match = filter === 'all' || card.dataset.category === filter;
+                const wasHidden = card.hidden;
+                card.hidden = !match;
+                // Petite apparition des cartes qui viennent de réapparaître
+                if (match && wasHidden && !reducedMotion && card.animate) {
+                    card.animate(
+                        [{ opacity: 0, translate: '0 16px' }, { opacity: 1, translate: '0 0' }],
+                        { duration: 400, easing: 'ease-out' }
+                    );
+                }
+            });
+        });
+    });
+}
+
+/**
  * Ouvre une modale <dialog> avec le détail du projet au clic (ou Entrée / Espace) sur sa carte.
  */
 function initProjectModal() {
@@ -376,6 +441,51 @@ function initProjectModal() {
     const features = modal.querySelector('.modal-features');
     const architecture = modal.querySelector('.modal-architecture');
     const stack = modal.querySelector('.modal-stack');
+    const choices = modal.querySelector('.modal-choices');
+    const challenges = modal.querySelector('.modal-challenges');
+    const tabs = Array.from(modal.querySelectorAll('[role="tab"]'));
+
+    // Onglets : un seul panneau visible à la fois, navigation aux flèches / Début / Fin
+    function selectTab(tab, focus) {
+        tabs.forEach((t) => {
+            const active = t === tab;
+            t.setAttribute('aria-selected', String(active));
+            t.tabIndex = active ? 0 : -1;
+            modal.querySelector(`#${t.getAttribute('aria-controls')}`).hidden = !active;
+        });
+        if (focus) tab.focus();
+    }
+
+    tabs.forEach((tab, i) => {
+        tab.addEventListener('click', () => selectTab(tab));
+        tab.addEventListener('keydown', (event) => {
+            const keys = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 };
+            if (!(event.key in keys)) return;
+            event.preventDefault();
+            selectTab(tabs[(keys[event.key] + tabs.length) % tabs.length], true);
+        });
+    });
+
+    function makeItem(label, text) {
+        const li = document.createElement('li');
+        const strong = document.createElement('strong');
+        strong.textContent = label;
+        li.append(strong, document.createTextNode(text));
+        return li;
+    }
+
+    function makeChallenge({ problem, solution }) {
+        const li = document.createElement('li');
+        [['Difficulté', problem], ['Solution', solution]].forEach(([label, text]) => {
+            const row = document.createElement('p');
+            const tag = document.createElement('span');
+            tag.className = 'modal-tag';
+            tag.textContent = label;
+            row.append(tag, document.createTextNode(text));
+            li.append(row);
+        });
+        return li;
+    }
 
     function fillList(list, items) {
         list.replaceChildren(
@@ -406,6 +516,10 @@ function initProjectModal() {
             })
         );
 
+        choices.replaceChildren(...project.choices.map(({ title, detail }) => makeItem(title, detail)));
+        challenges.replaceChildren(...project.challenges.map(makeChallenge));
+
+        selectTab(tabs[0]);
         modal.showModal();
         document.body.style.overflow = 'hidden';
     }
@@ -518,7 +632,9 @@ function initScrollReveal(reducedMotion) {
         '.timeline-item',
         '.skill-card',
         '.project-card',
+        '.filter-bar',
         '.projects-cta',
+        '.testimonial-card',
         '.contact-form',
     ].join(', ');
     const STAGGER = 120; // ms entre deux éléments frères

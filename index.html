@@ -43,6 +43,7 @@
                 <li><a href="#journey">Parcours</a></li>
                 <li><a href="#skills">Compétences</a></li>
                 <li><a href="#projects">Projets</a></li>
+                <li><a href="#testimonials">Témoignages</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <button type="button" class="theme-toggle" aria-label="Activer le thème clair">
@@ -174,10 +175,19 @@
     <!-- Section Projets -->
     <section id="projects" class="section">
         <h2>Projets Récents</h2>
+
+        <!-- Filtres : pilotés par script.js (initProjectFilter) via data-filter / data-category -->
+        <div class="filter-bar" role="group" aria-label="Filtrer les projets par catégorie">
+            <button type="button" class="filter-btn is-active" data-filter="all" aria-pressed="true">Tous</button>
+            <button type="button" class="filter-btn" data-filter="full-stack" aria-pressed="false">Full-Stack</button>
+            <button type="button" class="filter-btn" data-filter="frontend" aria-pressed="false">Frontend</button>
+            <button type="button" class="filter-btn" data-filter="dataviz" aria-pressed="false">Data Viz</button>
+        </div>
+
         <div class="projects-grid">
 
             <!-- Projet 1 -->
-            <div class="project-card" data-project="guru-todo" tabindex="0" role="button" aria-haspopup="dialog">
+            <div class="project-card" data-project="guru-todo" data-category="full-stack" tabindex="0" role="button" aria-haspopup="dialog">
                 <p class="project-label">Full-Stack</p>
                 <h3>Guru To-Do App</h3>
                 <p>
@@ -196,7 +206,7 @@
             </div>
 
             <!-- Projet 2 -->
-            <div class="project-card" data-project="portfolio" tabindex="0" role="button" aria-haspopup="dialog">
+            <div class="project-card" data-project="portfolio" data-category="frontend" tabindex="0" role="button" aria-haspopup="dialog">
                 <p class="project-label">Frontend</p>
                 <h3>Portfolio Web Personnel</h3>
                 <p>
@@ -214,7 +224,7 @@
             </div>
 
             <!-- Projet 3 -->
-            <div class="project-card" data-project="finops" tabindex="0" role="button" aria-haspopup="dialog">
+            <div class="project-card" data-project="finops" data-category="dataviz" tabindex="0" role="button" aria-haspopup="dialog">
                 <p class="project-label">Data Viz</p>
                 <h3>FinOps Cloud Analytics</h3>
                 <p>
@@ -249,14 +259,79 @@
         <button type="button" class="modal-close" aria-label="Fermer">&times;</button>
         <h3 id="modal-title"></h3>
         <p class="modal-subtitle"></p>
-        <p class="modal-description"></p>
-        <h4>Fonctionnalités clés</h4>
-        <ul class="modal-features"></ul>
-        <h4>Architecture</h4>
-        <ol class="modal-architecture"></ol>
-        <h4>Stack technique</h4>
-        <ul class="modal-stack"></ul>
+
+        <div class="modal-tabs" role="tablist" aria-label="Sections du projet">
+            <button type="button" role="tab" id="tab-overview" aria-controls="panel-overview"
+                aria-selected="true">Présentation</button>
+            <button type="button" role="tab" id="tab-choices" aria-controls="panel-choices" aria-selected="false"
+                tabindex="-1">Choix techniques</button>
+            <button type="button" role="tab" id="tab-challenges" aria-controls="panel-challenges"
+                aria-selected="false" tabindex="-1">Difficultés &amp; solutions</button>
+        </div>
+
+        <div role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
+            <p class="modal-description"></p>
+            <h4>Fonctionnalités clés</h4>
+            <ul class="modal-features"></ul>
+            <h4>Architecture</h4>
+            <ol class="modal-architecture"></ol>
+            <h4>Stack technique</h4>
+            <ul class="modal-stack"></ul>
+        </div>
+
+        <div role="tabpanel" id="panel-choices" aria-labelledby="tab-choices" hidden>
+            <ul class="modal-choices"></ul>
+        </div>
+
+        <div role="tabpanel" id="panel-challenges" aria-labelledby="tab-challenges" hidden>
+            <ul class="modal-challenges"></ul>
+        </div>
+
+        <a href="https://github.com/Amaterasu-leox" class="btn secondary-btn modal-github" target="_blank"
+            rel="noopener noreferrer">Voir mes projets sur GitHub</a>
     </dialog>
+
+    <!-- Section Témoignages -->
+    <section id="testimonials" class="section">
+        <h2>Recommandations</h2>
+        <p>Ce que disent celles et ceux avec qui j'ai travaillé ou appris.</p>
+
+        <!--
+            Pour ajouter une recommandation, duplique un <figure class="testimonial-card">. Les initiales
+            de l'avatar vont dans <span class="testimonial-avatar">.
+        -->
+        <div class="testimonials-grid">
+            <figure class="testimonial-card">
+                <blockquote>
+                    <p>« Léo fait preuve d'une autonomie remarquable et d'une grande rigueur dans le développement
+                        d'applications web. Sa capacité à concevoir des architectures backend et à structurer des
+                        bases de données témoigne d'un solide niveau technique. »</p>
+                </blockquote>
+                <figcaption>
+                    <span class="testimonial-avatar" aria-hidden="true">FB</span>
+                    <span class="testimonial-author">
+                        <strong>Formateur Backend</strong>
+                        <span>Enseignant / Référent Pédagogique</span>
+                    </span>
+                </figcaption>
+            </figure>
+
+            <figure class="testimonial-card">
+                <blockquote>
+                    <p>« Une excellente collaboration avec Léo. Il est réactif, maîtrise parfaitement la gestion de
+                        versions avec Git/GitHub et sait proposer des solutions efficaces face aux contraintes
+                        techniques. »</p>
+                </blockquote>
+                <figcaption>
+                    <span class="testimonial-avatar" aria-hidden="true">CP</span>
+                    <span class="testimonial-author">
+                        <strong>Chef de Projet</strong>
+                        <span>Lead Developer / Collaborateur Tech</span>
+                    </span>
+                </figcaption>
+            </figure>
+        </div>
+    </section>
 
     <!-- Section Contact -->
     <section id="contact" class="section">
