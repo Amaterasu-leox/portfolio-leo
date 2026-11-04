@@ -411,8 +411,13 @@ function initProjectModal() {
     }
 
     document.querySelectorAll('.project-card[data-project]').forEach((card) => {
-        card.addEventListener('click', () => open(card));
+        card.addEventListener('click', (event) => {
+            // Le lien « Voir les détails » mène à GitHub : pas de modale dans ce cas
+            if (event.target.closest('.project-more')) return;
+            open(card);
+        });
         card.addEventListener('keydown', (event) => {
+            if (event.target.closest('.project-more')) return;
             if (event.key === 'Enter' || event.key === ' ') {
                 event.preventDefault();
                 open(card);

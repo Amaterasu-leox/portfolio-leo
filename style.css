@@ -500,7 +500,8 @@ a {
 }
 
 /* Poussé en bas de la carte pour aligner les cartes de hauteurs différentes */
-.section p.project-more {
+.section .project-more {
+    display: block;
     margin-top: auto;
     padding-top: 1.25rem;
     font-size: 0.9rem;
