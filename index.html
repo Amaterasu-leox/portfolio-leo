@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Léo Baskarane — Développeur Web & Full-Stack</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="style.css">
     <script>
         // Applique le thème avant le rendu pour éviter un flash de la mauvaise couleur
@@ -23,7 +24,19 @@
 
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="logo">Léo Baskarane</div>
+        <a href="#" class="logo" aria-label="Force Fabric — Accueil">
+            <!-- Logo : un « F » tissé de trois bandes (référence au tissu / fabric) dans un hexagone -->
+            <svg class="logo-img" viewBox="0 0 40 40" width="40" height="40" fill="none" aria-hidden="true"
+                focusable="false">
+                <path d="M20 2.5 35.2 11.25v17.5L20 37.5 4.8 28.75v-17.5z" stroke="currentColor" stroke-width="2"
+                    stroke-linejoin="round" />
+                <path d="M14 27V13.5h12" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                <path d="M14 20h8.5" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" />
+                <path d="M14 27h0" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" opacity=".4" />
+            </svg>
+            <span class="logo-text">Force Fabric</span>
+        </a>
         <div class="nav-right">
             <ul class="nav-links">
                 <li><a href="#about">À propos</a></li>

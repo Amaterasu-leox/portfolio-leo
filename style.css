@@ -88,9 +88,25 @@ a {
 }
 
 .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
     font-size: 1.25rem;
     font-weight: bold;
     color: var(--accent);
+    text-decoration: none;
+}
+
+.logo-img {
+    display: block;
+    height: 40px;
+    width: 40px;
+    flex-shrink: 0;
+}
+
+.logo-text {
+    line-height: 1;
+    white-space: nowrap;
 }
 
 .nav-right {
