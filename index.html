@@ -46,6 +46,24 @@
                 <li><a href="#testimonials">Témoignages</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <!-- Widget « Dev Timezone & Status » (script.js, initDevClock) : Paris + UTC, ONLINE de 08:00 à 22:00 -->
+            <div class="dev-clock is-away" role="group" aria-label="Fuseau horaire et statut du développeur">
+                <span class="dev-status">
+                    <span class="dev-status-dot" aria-hidden="true"></span>
+                    <span class="dev-status-badge">AWAY</span>
+                </span>
+                <div class="dev-clock-times">
+                    <span class="dev-clock-row">
+                        <span class="dev-clock-label">PAR</span>
+                        <time class="dev-clock-local">--:--:--</time>
+                        <span class="dev-clock-offset">UTC+1</span>
+                    </span>
+                    <span class="dev-clock-row">
+                        <span class="dev-clock-label">UTC</span>
+                        <time class="dev-clock-utc">--:--:--</time>
+                    </span>
+                </div>
+            </div>
             <button type="button" class="theme-toggle" aria-label="Activer le thème clair">
                 <!-- Soleil (affiché en thème sombre) -->
                 <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"

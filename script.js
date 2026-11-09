@@ -106,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initTypewriter(prefersReducedMotion);
     initProjectFilter(prefersReducedMotion);
     initProjectModal();
+    initDevClock();
     initThemeToggle();
     initTerminal();
     initTilt(prefersReducedMotion);
@@ -555,6 +556,77 @@ function initProjectModal() {
     modal.addEventListener('close', () => {
         document.body.style.overflow = '';
     });
+}
+
+/**
+ * Widget « Dev Timezone & Status » de la navbar : heure de Paris (avec décalage UTC+1 / UTC+2
+ * selon l'heure d'été), heure UTC, et statut ONLINE entre 08:00 et 22:00 (heure de Paris), AWAY sinon.
+ */
+function initDevClock() {
+    const root = document.querySelector('.dev-clock');
+    if (!root) return;
+
+    const localEl = root.querySelector('.dev-clock-local');
+    const utcEl = root.querySelector('.dev-clock-utc');
+    const offsetEl = root.querySelector('.dev-clock-offset');
+    const badge = root.querySelector('.dev-status-badge');
+
+    const ONLINE_FROM = 8;
+    const ONLINE_TO = 22; // exclu : 21:59:59 est encore ONLINE
+
+    const parisTime = new Intl.DateTimeFormat('fr-FR', {
+        timeZone: 'Europe/Paris', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23',
+    });
+    const utcTime = new Intl.DateTimeFormat('fr-FR', {
+        timeZone: 'UTC', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23',
+    });
+    const parisHour = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/Paris', hour: 'numeric', hourCycle: 'h23',
+    });
+    let parisZone = null;
+    try {
+        parisZone = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Paris', timeZoneName: 'shortOffset' });
+    } catch (e) {
+        // shortOffset non supporté : le décalage est alors déduit des deux horloges ci-dessous
+    }
+
+    function offsetLabel(now) {
+        if (parisZone) {
+            const part = parisZone.formatToParts(now).find((p) => p.type === 'timeZoneName');
+            if (part) {
+                const match = part.value.match(/GMT([+-]\d+)?/);
+                if (match) return `UTC${match[1] || '+0'}`;
+            }
+        }
+        const diff = (Number(parisHour.format(now)) - now.getUTCHours() + 24) % 24;
+        return `UTC+${diff}`;
+    }
+
+    let lastState = null;
+
+    function tick() {
+        const now = new Date();
+        const hour = Number(parisHour.format(now));
+        const online = hour >= ONLINE_FROM && hour < ONLINE_TO;
+
+        localEl.textContent = parisTime.format(now);
+        utcEl.textContent = utcTime.format(now);
+        offsetEl.textContent = offsetLabel(now);
+
+        if (online !== lastState) {
+            lastState = online;
+            root.classList.toggle('is-online', online);
+            root.classList.toggle('is-away', !online);
+            badge.textContent = online ? 'ONLINE' : 'AWAY';
+        }
+    }
+
+    tick();
+    // Aligné sur le changement de seconde pour que l'affichage ne saute jamais
+    setTimeout(() => {
+        tick();
+        setInterval(tick, 1000);
+    }, 1000 - (Date.now() % 1000));
 }
 
 /**
