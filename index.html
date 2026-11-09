@@ -16,11 +16,27 @@
                 theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
             }
             document.documentElement.setAttribute('data-theme', theme);
+
+            // Accent néon mémorisé (liste blanche : seules les 4 couleurs de la palette sont acceptées)
+            try {
+                var accent = localStorage.getItem('forcefabric-accent');
+                if (['#00f2fe', '#10b981', '#a855f7', '#ff6b00'].indexOf(accent) !== -1) {
+                    var s = document.documentElement.style;
+                    s.setProperty('--accent-color', accent);
+                    s.setProperty('--accent-rgb', [1, 3, 5].map(function (i) { return parseInt(accent.substr(i, 2), 16); }).join(', '));
+                }
+            } catch (e) { }
         })();
     </script>
 </head>
 
 <body>
+    <!-- Barre de progression de lecture (pilotée par script.js, initReadingProgress) -->
+    <div class="reading-progress" role="progressbar" aria-label="Progression de lecture"
+        aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="reading-progress-bar"></div>
+    </div>
+
 
     <!-- Navigation -->
     <nav class="navbar">
@@ -42,7 +58,9 @@
                 <li><a href="#about">À propos</a></li>
                 <li><a href="#journey">Parcours</a></li>
                 <li><a href="#skills">Compétences</a></li>
+                <li><a href="#terminal">Terminal</a></li>
                 <li><a href="#projects">Projets</a></li>
+                <li><a href="#blog">Blog</a></li>
                 <li><a href="#testimonials">Témoignages</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -64,6 +82,17 @@
                     </span>
                 </div>
             </div>
+            <!-- Sélecteur d'accent néon (script.js, initAccentSwitcher) -->
+            <div class="accent-switcher" role="group" aria-label="Couleur d'accent">
+                <button type="button" class="accent-dot" data-accent="#00f2fe" style="--dot:#00f2fe"
+                    aria-label="Cyan Cyber" title="Cyan Cyber" aria-pressed="true"></button>
+                <button type="button" class="accent-dot" data-accent="#10b981" style="--dot:#10b981"
+                    aria-label="Vert Émeraude" title="Vert Émeraude" aria-pressed="false"></button>
+                <button type="button" class="accent-dot" data-accent="#a855f7" style="--dot:#a855f7"
+                    aria-label="Violet Cyberpunk" title="Violet Cyberpunk" aria-pressed="false"></button>
+                <button type="button" class="accent-dot" data-accent="#ff6b00" style="--dot:#ff6b00"
+                    aria-label="Orange Néon" title="Orange Néon" aria-pressed="false"></button>
+            </div>
             <button type="button" class="theme-toggle" aria-label="Activer le thème clair">
                 <!-- Soleil (affiché en thème sombre) -->
                 <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -82,22 +111,71 @@
 
     <!-- Hero Section -->
     <header class="hero">
-        <div class="hero-content">
-            <h1>Bonjour, je suis <span class="highlight">Léo Baskarane</span></h1>
-            <p class="subtitle">
-                <span class="sr-only">Développeur Full-Stack, passionné de Python & FastAPI, créateur web</span>
-                <span class="typewriter" aria-hidden="true"
-                    data-roles='["Développeur Full-Stack", "Passionné de Python & FastAPI", "Créateur Web"]'>Développeur Full-Stack</span><span
-                    class="typewriter-cursor" aria-hidden="true"></span>
-            </p>
-            <p class="description">
-                Passionné par le développement d'applications web modernes, la conception d'API robustes et la gestion
-                de projets full-stack.
-            </p>
-            <div class="hero-buttons">
-                <a href="#projects" class="btn primary-btn">Voir mes projets</a>
-                <a href="#contact" class="btn secondary-btn">Me contacter</a>
+        <!-- Halos lumineux décoratifs (bleu / violet) -->
+        <span class="hero-halo hero-halo-blue" aria-hidden="true"></span>
+        <span class="hero-halo hero-halo-violet" aria-hidden="true"></span>
+
+        <div class="hero-inner">
+            <div class="hero-content">
+                <h1>Bonjour, je suis <span class="highlight">Léo Baskarane</span></h1>
+                <p class="subtitle">
+                    <span class="sr-only">Développeur Full-Stack, passionné de Python & FastAPI, créateur web</span>
+                    <span class="typewriter" aria-hidden="true"
+                        data-roles='["Développeur Full-Stack", "Passionné de Python & FastAPI", "Créateur Web"]'>Développeur Full-Stack</span><span
+                        class="typewriter-cursor" aria-hidden="true"></span>
+                </p>
+                <p class="description">
+                    Passionné par le développement d'applications web modernes, la conception d'API robustes et la
+                    gestion de projets full-stack.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn primary-btn">Voir mes projets</a>
+                    <a href="#contact" class="btn secondary-btn">Me contacter</a>
+                </div>
+
+                <!-- Chiffres clés -->
+                <ul class="hero-stats">
+                    <li><strong>10+</strong><span>Projets &amp; Démos</span></li>
+                    <li><strong>100%</strong><span>Open Source</span></li>
+                    <li><strong>FastAPI / MySQL</strong><span>Tech Stack</span></li>
+                    <li><strong>99.9%</strong><span>Code Propre &amp; Structuré</span></li>
+                </ul>
             </div>
+
+            <!-- Carte « Capacités » (glassmorphism) -->
+            <aside class="hero-card" aria-labelledby="capabilities-title">
+                <h2 id="capabilities-title" class="hero-card-title">Capacités clés</h2>
+                <ul class="capabilities">
+                    <li>
+                        <span class="capability-icon" aria-hidden="true">🚀</span>
+                        <div>
+                            <h3>Développement Full-Stack</h3>
+                            <p>FastAPI, Python, JavaScript</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="capability-icon" aria-hidden="true">⚡</span>
+                        <div>
+                            <h3>Architecture API REST &amp; BDD</h3>
+                            <p>MySQL, Modélisation, PyMySQL</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="capability-icon" aria-hidden="true">🎨</span>
+                        <div>
+                            <h3>Interface &amp; Ergonomie Web</h3>
+                            <p>UI/UX Moderne, Responsive Design</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="capability-icon" aria-hidden="true">🛠️</span>
+                        <div>
+                            <h3>Workflow &amp; Versioning</h3>
+                            <p>Git, GitHub, CI/CD, Linux/Bash</p>
+                        </div>
+                    </li>
+                </ul>
+            </aside>
         </div>
     </header>
 
@@ -110,22 +188,36 @@
             full-stack, de la gestion de bases de données et des workflows Git/Bitbucket.
         </p>
 
-        <!-- Mini-terminal interactif (piloté par script.js) -->
-        <div class="terminal">
-            <div class="terminal-header" aria-hidden="true">
-                <span class="terminal-dot"></span>
-                <span class="terminal-dot"></span>
-                <span class="terminal-dot"></span>
-                <span class="terminal-title">leo@portfolio: ~</span>
+        <!-- Grille d'activité façon GitHub (données simulées, générées par script.js, initActivityGrid) -->
+        <div class="gh-activity">
+            <div class="gh-header">
+                <h3>
+                    <a href="https://github.com/Amaterasu-leox" class="gh-link" target="_blank"
+                        rel="noopener noreferrer" aria-label="Voir mon profil GitHub (s'ouvre dans un nouvel onglet)">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 .5A11.5 11.5 0 0 0 .5 12c0 5.08 3.29 9.38 7.86 10.9.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a10.9 10.9 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z" />
+                        </svg>
+                        <span>Activité GitHub</span>
+                        <span class="gh-link-arrow" aria-hidden="true">↗</span>
+                    </a>
+                </h3>
+                <span class="gh-note">Données simulées</span>
             </div>
-            <div class="terminal-body">
-                <div class="terminal-output" role="log" aria-live="polite"></div>
-                <form class="terminal-line">
-                    <label for="terminal-input" class="terminal-prompt">leo@portfolio:~$</label>
-                    <input type="text" id="terminal-input" class="terminal-input" autocomplete="off"
-                        autocapitalize="off" spellcheck="false" aria-label="Commande du terminal">
-                </form>
+            <div class="gh-scroll">
+                <div class="gh-months" aria-hidden="true"></div>
+                <div class="gh-grid" role="img" aria-label="Grille de contributions simulée sur les 6 derniers mois"></div>
             </div>
+            <div class="gh-footer">
+                <p class="gh-summary" role="status"></p>
+                <div class="gh-legend" aria-hidden="true">
+                    <span>Moins</span>
+                    <i class="gh-cell" data-level="0"></i><i class="gh-cell" data-level="1"></i>
+                    <i class="gh-cell" data-level="2"></i><i class="gh-cell" data-level="3"></i>
+                    <i class="gh-cell" data-level="4"></i>
+                    <span>Plus</span>
+                </div>
+            </div>
+            <div class="gh-tooltip" role="tooltip" hidden></div>
         </div>
     </section>
 
@@ -186,6 +278,110 @@
             <div class="skill-card">
                 <h3>Outils & Workflow</h3>
                 <p>Git, Bitbucket (Pull Requests), Linux (Ubuntu), VS Code</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Terminal interactif (piloté par script.js, initTerminal) -->
+    <section id="terminal" class="section">
+        <h2>Terminal Interactif</h2>
+        <p>
+            Explorez mon profil comme dans un shell WSL / Ubuntu : tapez une commande, ou cliquez sur une puce.
+        </p>
+
+        <div class="terminal">
+            <div class="terminal-header" aria-hidden="true">
+                <span class="terminal-dot"></span>
+                <span class="terminal-dot"></span>
+                <span class="terminal-dot"></span>
+                <span class="terminal-title">leo@portfolio: ~</span>
+            </div>
+            <div class="terminal-body">
+                <div class="terminal-output" role="log" aria-live="polite"></div>
+                <form class="terminal-line">
+                    <label for="terminal-input" class="terminal-prompt">leo@portfolio:~$</label>
+                    <input type="text" id="terminal-input" class="terminal-input" autocomplete="off"
+                        autocapitalize="off" spellcheck="false" aria-label="Commande du terminal">
+                </form>
+            </div>
+        </div>
+
+        <div class="terminal-chips" role="group" aria-label="Commandes rapides">
+            <button type="button" class="terminal-chip" data-command="help">help</button>
+            <button type="button" class="terminal-chip" data-command="about">about</button>
+            <button type="button" class="terminal-chip" data-command="skills">skills</button>
+            <button type="button" class="terminal-chip" data-command="stack">stack</button>
+            <button type="button" class="terminal-chip" data-command="projects">projects</button>
+            <button type="button" class="terminal-chip" data-command="contact">contact</button>
+            <button type="button" class="terminal-chip" data-command="clear">clear</button>
+        </div>
+    </section>
+
+    <!-- Section Notes rapides (script.js, initScratchpad) : texte sauvegardé dans localStorage -->
+    <section id="notes" class="section">
+        <h2>Notes rapides</h2>
+        <p>Un bloc-notes pour jeter une idée ou un snippet : tout reste dans votre navigateur, rien n'est envoyé.</p>
+
+        <div class="scratchpad">
+            <div class="scratchpad-header">
+                <span class="scratchpad-title">// QUICK_NOTES.txt</span>
+                <span class="scratchpad-status is-saved" role="status" aria-live="polite">SAVED</span>
+                <button type="button" class="scratchpad-clear">Clear</button>
+            </div>
+            <label for="scratchpad-text" class="sr-only">Notes rapides</label>
+            <textarea id="scratchpad-text" class="scratchpad-text" rows="8" spellcheck="false"
+                placeholder="// tape ici : idées, todo, snippets…"></textarea>
+        </div>
+    </section>
+
+    <!-- Section Projet phare / aperçu de la plateforme -->
+    <section id="showcase" class="section">
+        <div class="showcase">
+            <div class="showcase-copy">
+                <p class="project-label">Projet phare</p>
+                <h2>Une plateforme unique pour le code, les API et l'architecture</h2>
+                <p class="showcase-subtitle">De la base MySQL à l'interface web, toute la chaîne full-stack.</p>
+                <p>
+                    Je conçois des applications de bout en bout : un modèle de données relationnel solide, une API
+                    REST claire et performante avec FastAPI, puis une interface fluide qui la consomme. Chaque projet
+                    est versionné avec Git et pensé pour rester lisible, testable et facile à faire évoluer.
+                </p>
+                <ul class="tech-badges" aria-label="Technologies">
+                    <li data-tech="python">Python</li>
+                    <li data-tech="fastapi">FastAPI</li>
+                    <li data-tech="mysql">MySQL</li>
+                    <li data-tech="js">JavaScript</li>
+                </ul>
+                <div class="showcase-buttons">
+                    <a href="https://github.com/Amaterasu-leox" class="btn primary-btn" target="_blank"
+                        rel="noopener noreferrer">Explorer le code sur GitHub</a>
+                    <a href="#projects" class="btn secondary-btn">Voir tous les projets</a>
+                </div>
+            </div>
+
+            <!-- Maquette illustrative (décorative) : fenêtre de navigateur affichant l'app Guru To-Do -->
+            <div class="showcase-window" aria-hidden="true">
+                <div class="window-bar">
+                    <span class="window-dot"></span>
+                    <span class="window-dot"></span>
+                    <span class="window-dot"></span>
+                    <span class="window-url">guru-todo.app</span>
+                </div>
+                <div class="window-body">
+                    <div class="window-header">
+                        <span class="window-title">Mes tâches</span>
+                        <span class="window-status">API connectée</span>
+                    </div>
+                    <ul class="window-tasks">
+                        <li class="is-done"><span class="task-check"></span>Concevoir le schéma MySQL<em>Terminé</em></li>
+                        <li class="is-done"><span class="task-check"></span>Endpoints REST CRUD (FastAPI)<em>Terminé</em></li>
+                        <li><span class="task-check"></span>Connecter l'interface via fetch<em class="is-progress">En cours</em></li>
+                        <li><span class="task-check"></span>Documenter et publier la démo<em>À faire</em></li>
+                    </ul>
+                    <div class="window-code">
+                        <span class="code-method">GET</span> /tasks <span class="code-ok">200 OK</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -269,6 +465,290 @@
                 </svg>
                 Voir mes dépôts GitHub
             </a>
+        </div>
+    </section>
+
+    <!-- Section Blog & Perspectives -->
+    <section id="blog" class="section">
+        <div class="blog-intro">
+            <div class="blog-intro-copy">
+                <p class="project-label">Blog &amp; Perspectives</p>
+                <h2>Perspectives et carnets de code</h2>
+                <p>
+                    Mes retours d'expérience sur le développement full-stack : création d'API REST avec FastAPI,
+                    gestion des bases de données MySQL et intégration d'interfaces web modernes.
+                </p>
+            </div>
+
+            <!-- Widget d'infos : la recherche filtre la grille d'articles (script.js, initBlog) -->
+            <aside class="blog-widget" aria-label="Informations sur le blog">
+                <div class="blog-search" role="search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" aria-hidden="true">
+                        <circle cx="11" cy="11" r="7" />
+                        <path d="M20 20l-3.5-3.5" />
+                    </svg>
+                    <label for="blog-search" class="sr-only">Rechercher un article</label>
+                    <input type="search" id="blog-search" placeholder="Titres, résumés ou catégories..."
+                        autocomplete="off">
+                </div>
+                <ul class="blog-metrics">
+                    <li><strong class="blog-metric-articles">11</strong><span>articles</span></li>
+                    <li><strong>Hebdomadaire</strong><span>Publication</span></li>
+                    <li><strong class="blog-metric-topics">6</strong><span>zones d'intérêt</span></li>
+                    <li><strong>7 min</strong><span>Lecture moyenne</span></li>
+                </ul>
+            </aside>
+        </div>
+
+        <!-- Article mis en avant -->
+        <article class="blog-featured">
+            <div class="blog-thumb blog-thumb-featured" data-cat="fullstack" aria-hidden="true">
+                <div class="thumb-chips"><span>FastAPI</span><span>MySQL</span><span>REST</span></div>
+                <div class="thumb-bars">
+                    <span style="--h: 45%"></span><span style="--h: 62%"></span><span style="--h: 38%"></span>
+                    <span style="--h: 80%"></span><span style="--h: 55%"></span><span style="--h: 90%"></span>
+                    <span style="--h: 68%"></span><span style="--h: 48%"></span>
+                </div>
+            </div>
+            <div class="blog-featured-body">
+                <div class="blog-meta">
+                    <span class="blog-tag">Full-Stack</span>
+                    <span class="blog-read">8 min de lecture</span>
+                </div>
+                <h3>Concevoir une application web robuste avec FastAPI et MySQL</h3>
+                <p>
+                    Une bonne application se joue à l'interface entre le front et le back : relier une interface
+                    moderne à une API REST performante, et structurer une base de données relationnelle qui reste
+                    fiable quand le projet grandit. Retour d'expérience, de la modélisation aux endpoints.
+                </p>
+                <div class="blog-author">
+                    <span class="blog-avatar" aria-hidden="true">LB</span>
+                    <span class="blog-author-info">
+                        <strong>Léo Baskarane</strong>
+                        <time datetime="2026-11-04">4 nov. 2026</time>
+                    </span>
+                    <a href="#blog" class="btn primary-btn blog-cta">Lire l'article</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- Filtres par catégorie -->
+        <div class="blog-filters" role="group" aria-label="Filtrer les articles par catégorie">
+            <button type="button" class="blog-filter-btn is-active" data-filter="all" aria-pressed="true">Tous</button>
+            <button type="button" class="blog-filter-btn" data-filter="fullstack" aria-pressed="false">Full-Stack</button>
+            <button type="button" class="blog-filter-btn" data-filter="api" aria-pressed="false">FastAPI &amp; API</button>
+            <button type="button" class="blog-filter-btn" data-filter="database" aria-pressed="false">Base de données</button>
+            <button type="button" class="blog-filter-btn" data-filter="frontend" aria-pressed="false">Frontend</button>
+            <button type="button" class="blog-filter-btn" data-filter="devops" aria-pressed="false">DevOps &amp; Git</button>
+            <button type="button" class="blog-filter-btn" data-filter="architecture" aria-pressed="false">Architecture</button>
+        </div>
+
+        <!-- Grille d'articles (3 × 2) -->
+        <div class="blog-grid">
+            <article class="blog-card" data-category="api">
+                <div class="blog-thumb" data-cat="api" aria-hidden="true">
+                    <div class="thumb-bars"><span style="--h: 50%"></span><span style="--h: 72%"></span><span style="--h: 88%"></span><span style="--h: 60%"></span><span style="--h: 78%"></span></div>
+                </div>
+                <div class="blog-card-body">
+                    <div class="blog-meta"><span class="blog-tag">FastAPI &amp; API</span><span class="blog-read">7 min</span></div>
+                    <h3>Pourquoi j'ai choisi FastAPI pour mes projets Backend : Performance et Asynchronisme</h3>
+                    <p>Retour d'expérience sur la rapidité d'exécution, la validation automatique via Pydantic et la génération native de la documentation interactive Swagger/ReDoc.</p>
+                    <div class="blog-author">
+                        <span class="blog-avatar" aria-hidden="true">LB</span>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-06">6 nov. 2026</time></span>
+                        <a href="#blog" class="blog-arrow" aria-label="Lire : Pourquoi j'ai choisi FastAPI pour mes projets Backend, performance et asynchronisme">→</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card" data-category="database">
+                <div class="blog-thumb" data-cat="database" aria-hidden="true">
+                    <div class="thumb-bars"><span style="--h: 35%"></span><span style="--h: 52%"></span><span style="--h: 70%"></span><span style="--h: 86%"></span><span style="--h: 62%"></span></div>
+                </div>
+                <div class="blog-card-body">
+                    <div class="blog-meta"><span class="blog-tag">Base de données</span><span class="blog-read">8 min</span></div>
+                    <h3>Structurer une base de données MySQL pour une application web moderne</h3>
+                    <p>Méthodologie de modélisation des tables, gestion propre des relations One-to-Many / Many-to-Many et intégration optimale avec Python.</p>
+                    <div class="blog-author">
+                        <span class="blog-avatar" aria-hidden="true">LB</span>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-06">6 nov. 2026</time></span>
+                        <a href="#blog" class="blog-arrow" aria-label="Lire : Structurer une base de données MySQL pour une application web moderne">→</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card" data-category="architecture">
+                <div class="blog-thumb" data-cat="architecture" aria-hidden="true">
+                    <div class="thumb-bars"><span style="--h: 48%"></span><span style="--h: 66%"></span><span style="--h: 80%"></span><span style="--h: 58%"></span><span style="--h: 90%"></span></div>
+                </div>
+                <div class="blog-card-body">
+                    <div class="blog-meta"><span class="blog-tag">Architecture</span><span class="blog-read">6 min</span></div>
+                    <h3>De l'idée au déploiement : Comment j'ai conçu mon portfolio ForceFabric</h3>
+                    <p>Les coulisses de la création du site : choix d'une architecture HTML/CSS/JS fluide, design en glassmorphism et déploiement continu via GitHub Pages.</p>
+                    <div class="blog-author">
+                        <span class="blog-avatar" aria-hidden="true">LB</span>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-05">5 nov. 2026</time></span>
+                        <a href="#blog" class="blog-arrow" aria-label="Lire : De l'idée au déploiement, comment j'ai conçu mon portfolio ForceFabric">→</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card" data-category="devops">
+                <div class="blog-thumb" data-cat="devops" aria-hidden="true">
+                    <div class="thumb-bars"><span style="--h: 62%"></span><span style="--h: 40%"></span><span style="--h: 76%"></span><span style="--h: 52%"></span><span style="--h: 86%"></span></div>
+                </div>
+                <div class="blog-card-body">
+                    <div class="blog-meta"><span class="blog-tag">DevOps &amp; Git</span><span class="blog-read">6 min</span></div>
+                    <h3>Gérer ses environnements sous Windows 11 avec WSL2 et Ubuntu</h3>
+                    <p>Optimisation de son workflow de dev sous Windows avec WSL, gestion des environnements virtuels Python via uv et gain de productivité au terminal.</p>
+                    <div class="blog-author">
+                        <span class="blog-avatar" aria-hidden="true">LB</span>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-05">5 nov. 2026</time></span>
+                        <a href="#blog" class="blog-arrow" aria-label="Lire : Gérer ses environnements sous Windows 11 avec WSL2 et Ubuntu">→</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card" data-category="devops">
+                <div class="blog-thumb" data-cat="devops" aria-hidden="true">
+                    <div class="thumb-bars"><span style="--h: 44%"></span><span style="--h: 68%"></span><span style="--h: 54%"></span><span style="--h: 82%"></span><span style="--h: 70%"></span></div>
+                </div>
+                <div class="blog-card-body">
+                    <div class="blog-meta"><span class="blog-tag">DevOps &amp; Git</span><span class="blog-read">5 min</span></div>
+                    <h3>Automatiser son workflow de développement avec Git et GitHub</h3>
+                    <p>Les bonnes pratiques de versioning, l'organisation des branches et l'écriture de commits clairs pour maintenir des projets propres.</p>
+                    <div class="blog-author">
+                        <span class="blog-avatar" aria-hidden="true">LB</span>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-04">4 nov. 2026</time></span>
+                        <a href="#blog" class="blog-arrow" aria-label="Lire : Automatiser son workflow de développement avec Git et GitHub">→</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card" data-category="fullstack">
+                <div class="blog-thumb" data-cat="fullstack" aria-hidden="true">
+                    <div class="thumb-bars"><span style="--h: 40%"></span><span style="--h: 65%"></span><span style="--h: 50%"></span><span style="--h: 85%"></span><span style="--h: 60%"></span></div>
+                </div>
+                <div class="blog-card-body">
+                    <div class="blog-meta"><span class="blog-tag">Full-Stack</span><span class="blog-read">7 min</span></div>
+                    <h3>Structurer une application web moderne : bonnes pratiques front et back</h3>
+                    <p>Séparer les responsabilités, organiser le code et faire dialoguer interface et API sans dette technique.</p>
+                    <div class="blog-author">
+                        <span class="blog-avatar" aria-hidden="true">LB</span>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-03">3 nov. 2026</time></span>
+                        <a href="#blog" class="blog-arrow" aria-label="Lire : Structurer une application web moderne, bonnes pratiques front et back">→</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card" data-category="api">
+                <div class="blog-thumb" data-cat="api" aria-hidden="true">
+                    <div class="thumb-bars"><span style="--h: 70%"></span><span style="--h: 45%"></span><span style="--h: 80%"></span><span style="--h: 55%"></span><span style="--h: 35%"></span></div>
+                </div>
+                <div class="blog-card-body">
+                    <div class="blog-meta"><span class="blog-tag">FastAPI &amp; API</span><span class="blog-read">6 min</span></div>
+                    <h3>Créer une API REST robuste et performante avec FastAPI et Python</h3>
+                    <p>Endpoints CRUD, validation des données et gestion des erreurs : les fondations d'une API fiable.</p>
+                    <div class="blog-author">
+                        <span class="blog-avatar" aria-hidden="true">LB</span>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-03">3 nov. 2026</time></span>
+                        <a href="#blog" class="blog-arrow" aria-label="Lire : Créer une API REST robuste et performante avec FastAPI et Python">→</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card" data-category="database">
+                <div class="blog-thumb" data-cat="database" aria-hidden="true">
+                    <div class="thumb-bars"><span style="--h: 30%"></span><span style="--h: 48%"></span><span style="--h: 66%"></span><span style="--h: 82%"></span><span style="--h: 95%"></span></div>
+                </div>
+                <div class="blog-card-body">
+                    <div class="blog-meta"><span class="blog-tag">Base de données</span><span class="blog-read">8 min</span></div>
+                    <h3>Gérer la persistance des données avec MySQL et PyMySQL</h3>
+                    <p>Modélisation relationnelle, requêtes paramétrées et connexions : stocker et relire ses données proprement.</p>
+                    <div class="blog-author">
+                        <span class="blog-avatar" aria-hidden="true">LB</span>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-02">2 nov. 2026</time></span>
+                        <a href="#blog" class="blog-arrow" aria-label="Lire : Gérer la persistance des données avec MySQL et PyMySQL">→</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card" data-category="frontend">
+                <div class="blog-thumb" data-cat="frontend" aria-hidden="true">
+                    <div class="thumb-bars"><span style="--h: 55%"></span><span style="--h: 75%"></span><span style="--h: 40%"></span><span style="--h: 90%"></span><span style="--h: 60%"></span></div>
+                </div>
+                <div class="blog-card-body">
+                    <div class="blog-meta"><span class="blog-tag">Frontend</span><span class="blog-read">9 min</span></div>
+                    <h3>Concevoir des interfaces dynamiques et réactives en JavaScript et CSS</h3>
+                    <p>Manipulation du DOM, appels fetch et responsive design pour une interface fluide, sans framework.</p>
+                    <div class="blog-author">
+                        <span class="blog-avatar" aria-hidden="true">LB</span>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-02">2 nov. 2026</time></span>
+                        <a href="#blog" class="blog-arrow" aria-label="Lire : Concevoir des interfaces dynamiques et réactives en JavaScript et CSS">→</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card" data-category="devops">
+                <div class="blog-thumb" data-cat="devops" aria-hidden="true">
+                    <div class="thumb-bars"><span style="--h: 60%"></span><span style="--h: 35%"></span><span style="--h: 78%"></span><span style="--h: 50%"></span><span style="--h: 88%"></span></div>
+                </div>
+                <div class="blog-card-body">
+                    <div class="blog-meta"><span class="blog-tag">DevOps &amp; Git</span><span class="blog-read">6 min</span></div>
+                    <h3>Maîtriser le versioning et le déploiement continu avec Git, GitHub et Linux</h3>
+                    <p>Branches, Pull Requests et scripts Bash : un workflow reproductible de la machine locale au serveur.</p>
+                    <div class="blog-author">
+                        <span class="blog-avatar" aria-hidden="true">LB</span>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-01">1 nov. 2026</time></span>
+                        <a href="#blog" class="blog-arrow" aria-label="Lire : Maîtriser le versioning et le déploiement continu avec Git, GitHub et Linux">→</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card" data-category="architecture">
+                <div class="blog-thumb" data-cat="architecture" aria-hidden="true">
+                    <div class="thumb-bars"><span style="--h: 45%"></span><span style="--h: 58%"></span><span style="--h: 72%"></span><span style="--h: 64%"></span><span style="--h: 92%"></span></div>
+                </div>
+                <div class="blog-card-body">
+                    <div class="blog-meta"><span class="blog-tag">Architecture</span><span class="blog-read">7 min</span></div>
+                    <h3>De l'idée au déploiement : retour d'expérience sur mon portfolio ForceFabric</h3>
+                    <p>Choix techniques, difficultés rencontrées et leçons tirées de la conception de ce site, étape par étape.</p>
+                    <div class="blog-author">
+                        <span class="blog-avatar" aria-hidden="true">LB</span>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-01">1 nov. 2026</time></span>
+                        <a href="#blog" class="blog-arrow" aria-label="Lire : De l'idée au déploiement, retour d'expérience sur mon portfolio ForceFabric">→</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <p class="blog-empty" hidden>Aucun article ne correspond à votre recherche.</p>
+
+        <!-- Pagination simulée -->
+        <div class="blog-pagination">
+            <p class="blog-count-text">Affichage de <strong class="blog-count">11</strong> sur <span class="blog-total">11</span> articles</p>
+            <button type="button" class="btn secondary-btn blog-more" aria-describedby="blog-more-status">Voir plus d'articles</button>
+            <p class="blog-more-status" id="blog-more-status" role="status" aria-live="polite"></p>
+        </div>
+    </section>
+
+    <!-- Section Newsletter -->
+    <section id="newsletter" class="section">
+        <div class="newsletter-card">
+            <h2>Suivez mes carnets de code et projets full-stack.</h2>
+            <p>
+                Un e-mail par semaine : retours d'expérience sur FastAPI, MySQL, l'architecture d'applications web
+                et mes astuces de développement. Sans spam, désinscription en un clic.
+            </p>
+            <!-- Formulaire simulé : aucune donnée n'est envoyée (voir initNewsletter dans script.js) -->
+            <form class="newsletter-form" novalidate>
+                <label for="newsletter-email" class="sr-only">Adresse e-mail</label>
+                <input type="email" id="newsletter-email" name="email" placeholder="votre@email.com"
+                    autocomplete="email" required>
+                <button type="submit" class="btn primary-btn">S'abonner</button>
+            </form>
+            <p class="newsletter-status" role="status" aria-live="polite"></p>
         </div>
     </section>
 
@@ -403,8 +883,37 @@
     </section>
 
     <footer>
+        <!-- Widget « System Status » : états et latences simulés (script.js, initSystemStatus) -->
+        <div class="system-status" role="group" aria-label="État des services (simulation)">
+            <span class="system-status-title">System Status</span>
+            <ul class="system-status-list">
+                <li class="status-item" data-service="api" data-base="42">
+                    <span class="status-dot" aria-hidden="true"></span>
+                    <span class="status-name">API FastAPI</span>
+                    <span class="status-state">opérationnel · <span class="status-ms">42</span> ms</span>
+                </li>
+                <li class="status-item" data-service="db" data-base="8">
+                    <span class="status-dot" aria-hidden="true"></span>
+                    <span class="status-name">DB MySQL</span>
+                    <span class="status-state">opérationnel · <span class="status-ms">8</span> ms</span>
+                </li>
+                <li class="status-item" data-service="wsl" data-base="3">
+                    <span class="status-dot" aria-hidden="true"></span>
+                    <span class="status-name">WSL Environment</span>
+                    <span class="status-state">opérationnel · <span class="status-ms">3</span> ms</span>
+                </li>
+            </ul>
+            <span class="system-status-note">Données simulées</span>
+        </div>
         <p>© 2026 Léo Baskarane — Tous droits réservés.</p>
     </footer>
+
+    <!-- Notifications Toast (alimentées par showToast() dans script.js) -->
+    <div class="toast-region" role="status" aria-live="polite" aria-atomic="false"></div>
+
+    <!-- Curseur personnalisé (script.js, initCustomCursor) : décoratif, jamais interactif -->
+    <div id="cursor-outline" aria-hidden="true"></div>
+    <div id="cursor-dot" aria-hidden="true"></div>
 
     <script src="script.js"></script>
 </body>

@@ -101,12 +101,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.querySelector('.navbar');
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    initReadingProgress();
+    initSystemStatus(prefersReducedMotion);
+    initDevClock();
+    initAccentSwitcher();
+    initScratchpad();
+    initCustomCursor(prefersReducedMotion);
+    initActivityGrid();
     initSmoothScroll(navbar, prefersReducedMotion);
     initScrollReveal(prefersReducedMotion);
     initTypewriter(prefersReducedMotion);
     initProjectFilter(prefersReducedMotion);
+    initBlog(prefersReducedMotion);
+    initNewsletter();
     initProjectModal();
-    initDevClock();
     initThemeToggle();
     initTerminal();
     initTilt(prefersReducedMotion);
@@ -167,6 +175,38 @@ function initCopyEmail() {
 }
 
 /**
+ * Affiche une notification Toast en bas à droite, qui disparaît seule après `duration` ms.
+ * type : 'success' (défaut) ou 'error'.
+ */
+function showToast(message, type = 'success', duration = 3000) {
+    const region = document.querySelector('.toast-region');
+    if (!region) return;
+
+    const toast = document.createElement('div');
+    toast.className = type === 'error' ? 'toast is-error' : 'toast';
+
+    const icon = document.createElement('span');
+    icon.className = 'toast-icon';
+    icon.setAttribute('aria-hidden', 'true');
+    const path = type === 'error' ? 'M6 6l12 12M18 6L6 18' : 'M5 12.5l4.5 4.5L19 7.5';
+    icon.innerHTML =
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" ' +
+        `stroke-linecap="round" stroke-linejoin="round"><path d="${path}"/></svg>`;
+
+    const text = document.createElement('span');
+    text.textContent = message;
+
+    toast.append(icon, text);
+    region.append(toast);
+
+    // Disparition en fondu, puis retrait du DOM une fois l'animation terminée
+    setTimeout(() => {
+        toast.classList.add('is-leaving');
+        toast.addEventListener('animationend', () => toast.remove(), { once: true });
+    }, duration);
+}
+
+/**
  * Envoi du formulaire de contact via Formspree (fetch, sans rechargement).
  * Tant que l'identifiant Formspree n'est pas renseigné, ouvre la messagerie du visiteur.
  */
@@ -177,6 +217,11 @@ function initContactForm() {
     const status = form.querySelector('.form-status');
     const submitButton = form.querySelector('button[type="submit"]');
     const isConfigured = !form.action.includes('VOTRE_ID');
+
+    // Mode simulation (développement local) : aucune requête réseau, délai fictif d'1 seconde.
+    // Passer à false une fois l'identifiant Formspree renseigné dans index.html.
+    const SIMULATION_MODE = true;
+    const SIMULATED_DELAY = 1000;
 
     function setStatus(message, type) {
         status.textContent = message;
@@ -190,6 +235,17 @@ function initContactForm() {
         const data = new FormData(form);
         if (data.get('_gotcha')) return; // robot détecté par le champ piège
 
+        if (SIMULATION_MODE) {
+            submitButton.disabled = true;
+            setStatus('Envoi en cours…');
+            await new Promise((resolve) => setTimeout(resolve, SIMULATED_DELAY));
+            form.reset();
+            setStatus('Merci ! Votre message a bien été envoyé (simulation, aucune donnée transmise).', 'success');
+            showToast('Message envoyé avec succès !');
+            submitButton.disabled = false;
+            return;
+        }
+
         if (!isConfigured) {
             const subject = data.get('subject') || `Contact portfolio — ${data.get('name')}`;
             const body = `${data.get('message')}\n\n— ${data.get('name')} (${data.get('email')})`;
@@ -197,6 +253,7 @@ function initContactForm() {
                 `mailto:${form.dataset.fallbackEmail}` +
                 `?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
             setStatus('Votre logiciel de messagerie va s’ouvrir avec le message pré-rempli.', 'success');
+            showToast('Messagerie ouverte : envoyez le message depuis votre application.');
             return;
         }
 
@@ -218,8 +275,10 @@ function initContactForm() {
 
             form.reset();
             setStatus('Merci ! Votre message a bien été envoyé, je vous réponds rapidement.', 'success');
+            showToast('Message envoyé avec succès !');
         } catch (error) {
             setStatus(`L’envoi a échoué (${error.message}). Réessayez ou écrivez-moi directement par email.`, 'error');
+            showToast('L’envoi a échoué. Réessayez.', 'error');
         } finally {
             submitButton.disabled = false;
         }
@@ -227,8 +286,9 @@ function initContactForm() {
 }
 
 /**
- * Mini-terminal de la section « À propos » : help, skills, projects, clear.
- * ↑ / ↓ parcourent l'historique des commandes.
+ * Terminal interactif (style CLI Linux / WSL) : help, about, skills, stack, projects [n],
+ * contact, whoami, history, clear. ↑ / ↓ parcourent l'historique, Tab complète la commande,
+ * et les puces sous le terminal lancent une commande d'un clic.
  */
 function initTerminal() {
     const form = document.querySelector('.terminal-line');
@@ -238,71 +298,160 @@ function initTerminal() {
     const output = document.querySelector('.terminal-output');
     const body = document.querySelector('.terminal-body');
     const prompt = form.querySelector('.terminal-prompt').textContent;
+    const chips = document.querySelectorAll('.terminal-chip');
 
+    const EMAIL = 'baskaraneleo@forcefabric.com';
     const history = [];
     let historyIndex = 0;
+
+    // Technologies mises en évidence dans les réponses
+    const TECH = /(FastAPI|Python|MySQL|JavaScript)/g;
 
     const COMMANDS = {
         help: () => [
             'Commandes disponibles :',
-            '  help      Affiche cette aide',
-            '  skills    Liste mes compétences techniques',
-            '  projects  Liste mes projets réalisés',
-            '  clear     Efface le terminal',
+            '  help         Affiche cette aide',
+            '  about        Qui suis-je ?',
+            '  skills       Mes compétences techniques',
+            '  stack        Mes 4 technos phares : FastAPI, Python, MySQL, JavaScript',
+            '  projects     Mes projets (ex : "projects 1" pour le détail)',
+            '  contact      Me contacter',
+            '  whoami       Qui est connecté ?',
+            '  history      Commandes déjà tapées',
+            '  clear        Efface le terminal',
+            '',
+            'Astuces : Tab complète, ↑ / ↓ rappellent l’historique.',
+        ],
+        about: () => [
+            'Léo Baskarane — développeur Full-Stack autonome (Île-de-France).',
+            'Je conçois des applications web fluides : API REST en Python / FastAPI,',
+            'bases MySQL et interfaces en JavaScript natif.',
+            'Tapez "stack" ou "projects" pour aller plus loin.',
         ],
         // Lu depuis les cartes de la section Compétences pour rester synchronisé avec la page
-        skills: () =>
-            [...document.querySelectorAll('.skill-card')].map((card) => {
+        skills: () => [
+            ...[...document.querySelectorAll('.skill-card')].map((card) => {
                 const name = card.querySelector('h3').textContent.trim();
                 const items = card.querySelector('p').textContent.trim();
                 return `  ${name.padEnd(18)} ${items}`;
             }),
-        projects: () => [
-            ...Object.values(PROJECTS).map((p) => `  • ${p.title} — ${p.subtitle}`),
             '',
-            'Astuce : cliquez sur une carte de la section Projets pour voir tous les détails.',
+            'Tapez "stack" pour le détail de mes technos phares.',
         ],
+        stack: () => [
+            '  FastAPI      API REST asynchrones, validation Pydantic, docs Swagger / ReDoc auto',
+            '  Python       Backend, scripts, environnements virtuels gérés avec uv',
+            '  MySQL        Modélisation relationnelle, requêtes SQL, intégration avec Python',
+            '  JavaScript   Interfaces dynamiques en JS natif : DOM, fetch, sans framework',
+            '',
+            'Exemple de combinaison : projet Guru To-Do ("projects 1").',
+        ],
+        projects: (args) => {
+            const entries = Object.values(PROJECTS);
+            if (args[0]) {
+                const project = entries[Number(args[0]) - 1];
+                if (!project) return [`Projet introuvable : ${args[0]}. Choisissez un numéro de 1 à ${entries.length}.`];
+                return [
+                    `${project.title} — ${project.subtitle}`,
+                    '',
+                    project.description,
+                    '',
+                    'Fonctionnalités :',
+                    ...project.features.map((f) => `  • ${f}`),
+                    '',
+                    `Stack : ${project.stack.join(', ')}`,
+                ];
+            }
+            return [
+                ...entries.map((p, i) => `  ${i + 1}. ${p.title} — ${p.subtitle}`),
+                '',
+                'Tapez "projects <numéro>" pour le détail, ou cliquez sur une carte de la section Projets.',
+            ];
+        },
+        contact: () => [
+            `  Email      ${EMAIL}`,
+            '  Formulaire section « Contact » en bas de page',
+            '  Localité   Île-de-France',
+            '',
+            'Un projet FastAPI, Python, MySQL ou JavaScript ? Écrivez-moi !',
+        ],
+        whoami: () => ['leo — développeur Full-Stack (FastAPI · Python · MySQL · JavaScript)'],
+        history: () =>
+            history.length ? history.map((h, i) => `  ${String(i + 1).padStart(2)}  ${h}`) : ['Aucune commande pour l’instant.'],
         clear: () => {
             output.replaceChildren();
             return [];
         },
     };
 
-    function print(lines, className) {
-        lines.forEach((text) => {
-            const line = document.createElement('div');
-            line.className = className ? `terminal-text ${className}` : 'terminal-text';
-            line.textContent = text;
-            output.append(line);
+    // Écrit une ligne en mettant les technos en couleur (nœuds DOM, jamais d'innerHTML)
+    function appendLine(text, className) {
+        const line = document.createElement('div');
+        line.className = className ? `terminal-text ${className}` : 'terminal-text';
+        text.split(TECH).forEach((part, i) => {
+            if (i % 2 === 1) {
+                const span = document.createElement('span');
+                span.className = 'terminal-tech';
+                span.textContent = part;
+                line.append(span);
+            } else if (part) {
+                line.append(part);
+            }
         });
+        output.append(line);
+    }
+
+    function print(lines, className) {
+        lines.forEach((text) => appendLine(text, className));
         body.scrollTop = body.scrollHeight;
     }
 
     function run(raw) {
-        const command = raw.trim().toLowerCase();
+        const [command, ...args] = raw.trim().toLowerCase().split(/\s+/);
         print([`${prompt} ${raw}`], 'terminal-echo');
         if (!command) return;
 
-        const handler = COMMANDS[command];
+        const handler = Object.hasOwn(COMMANDS, command) ? COMMANDS[command] : null;
         if (handler) {
-            print(handler());
+            print(handler(args));
         } else {
             print([`Commande introuvable : ${command}. Tapez "help" pour la liste des commandes.`], 'terminal-error');
         }
     }
 
-    print(['Bienvenue ! Tapez "help" pour découvrir les commandes disponibles.']);
-
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const value = input.value;
-        if (value.trim()) history.push(value);
+    function submit(value) {
+        if (value.trim()) history.push(value.trim());
         historyIndex = history.length;
         input.value = '';
         run(value);
+    }
+
+    print(['Bienvenue sur le terminal de Léo (WSL2 · Ubuntu). Tapez "help" pour commencer.']);
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        submit(input.value);
+    });
+
+    chips.forEach((chip) => {
+        chip.addEventListener('click', () => {
+            submit(chip.dataset.command);
+            input.focus({ preventScroll: true });
+        });
     });
 
     input.addEventListener('keydown', (event) => {
+        if (event.key === 'Tab') {
+            // Complétion : une seule commande possible → on la complète
+            const typed = input.value.trim().toLowerCase();
+            const matches = Object.keys(COMMANDS).filter((name) => typed && name.startsWith(typed));
+            if (matches.length === 1) {
+                event.preventDefault();
+                input.value = matches[0];
+            }
+            return;
+        }
+
         if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
         if (history.length === 0) return;
         event.preventDefault();
@@ -314,7 +463,7 @@ function initTerminal() {
 
     // Un clic n'importe où dans le terminal donne le focus à la saisie (sauf sélection de texte)
     body.addEventListener('click', () => {
-        if (!window.getSelection().toString()) input.focus();
+        if (!window.getSelection().toString()) input.focus({ preventScroll: true });
     });
 }
 
@@ -426,6 +575,151 @@ function initProjectFilter(reducedMotion) {
                 }
             });
         });
+    });
+}
+
+/**
+ * Blog : filtre les articles par catégorie ET par texte saisi dans la recherche,
+ * met à jour le compteur « Affichage de XX sur 50 » et simule « Voir plus d'articles ».
+ */
+function initBlog(reducedMotion) {
+    const cards = document.querySelectorAll('.blog-card');
+    const buttons = document.querySelectorAll('.blog-filter-btn');
+    const search = document.querySelector('#blog-search');
+    const count = document.querySelector('.blog-count');
+    const total = document.querySelector('.blog-total');
+    const empty = document.querySelector('.blog-empty');
+    const more = document.querySelector('.blog-more');
+    const moreStatus = document.querySelector('.blog-more-status');
+    if (cards.length === 0) return;
+
+    // Minuscules et sans accents : « donnees » trouve « données »
+    const normalize = (text) =>
+        text.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+
+    let filter = 'all';
+    let query = '';
+
+    // Index de recherche par carte : titre, résumé et catégorie (étiquette + clé), sans auteur ni date
+    const searchIndex = new Map();
+    cards.forEach((card) => {
+        const parts = [
+            card.querySelector('h3')?.textContent,
+            card.querySelector('.blog-card-body > p')?.textContent,
+            card.querySelector('.blog-tag')?.textContent,
+            card.dataset.category,
+        ];
+        searchIndex.set(card, normalize(parts.filter(Boolean).join(' ')));
+    });
+
+    // Métriques du widget : calculées depuis les cartes pour rester cohérentes
+    const metricArticles = document.querySelector('.blog-metric-articles');
+    const metricTopics = document.querySelector('.blog-metric-topics');
+    if (metricArticles) metricArticles.textContent = String(cards.length);
+    if (metricTopics) {
+        metricTopics.textContent = String(new Set([...cards].map((c) => c.dataset.category)).size);
+    }
+
+    // Nombre d'articles par catégorie affiché dans chaque bouton de filtre
+    buttons.forEach((button) => {
+        const key = button.dataset.filter;
+        const n = key === 'all'
+            ? cards.length
+            : [...cards].filter((c) => c.dataset.category === key).length;
+        if (!button.dataset.label) button.dataset.label = button.textContent.trim();
+        button.textContent = `${button.dataset.label} (${n})`;
+    });
+
+    function apply() {
+        let visible = 0;
+        let available = 0;
+
+        cards.forEach((card) => {
+            const matchCategory = filter === 'all' || card.dataset.category === filter;
+            // Chaque mot saisi doit être présent : « fastapi api » trouve les articles qui contiennent les deux
+            const text = searchIndex.get(card);
+            const matchQuery = !query || query.split(' ').every((word) => text.includes(word));
+            const show = matchCategory && matchQuery;
+            const wasHidden = card.hidden;
+
+            if (show) available++;
+            card.hidden = !show;
+            if (show) visible++;
+
+            if (show && wasHidden && !reducedMotion && card.animate) {
+                card.animate(
+                    [{ opacity: 0, translate: '0 16px' }, { opacity: 1, translate: '0 0' }],
+                    { duration: 400, easing: 'ease-out' }
+                );
+            }
+        });
+
+        if (count) count.textContent = String(visible);
+        if (total) total.textContent = String(available);
+        if (empty) empty.hidden = visible > 0;
+
+        // Pagination : tous les articles de la sélection sont affichés → bouton désactivé
+        if (more) {
+            const allShown = visible >= available;
+            more.hidden = available === 0;
+            more.disabled = allShown;
+            more.setAttribute('aria-disabled', String(allShown));
+            if (moreStatus) {
+                moreStatus.textContent = allShown && available > 0
+                    ? 'Les prochains articles arrivent bientôt.'
+                    : '';
+            }
+        }
+    }
+
+    buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+            filter = button.dataset.filter;
+            buttons.forEach((b) => {
+                const active = b === button;
+                b.classList.toggle('is-active', active);
+                b.setAttribute('aria-pressed', String(active));
+            });
+            apply();
+        });
+    });
+
+    if (search) {
+        search.addEventListener('input', () => {
+            query = normalize(search.value).trim().replace(/\s+/g, ' ');
+            apply();
+        });
+    }
+
+    // État initial de la pagination (compteurs, bouton désactivé, message)
+    apply();
+}
+
+/**
+ * Newsletter : formulaire simulé. Valide l'e-mail puis affiche une confirmation ;
+ * aucune donnée n'est envoyée ni stockée.
+ */
+function initNewsletter() {
+    const form = document.querySelector('.newsletter-form');
+    const status = document.querySelector('.newsletter-status');
+    if (!form || !status) return;
+
+    const input = form.querySelector('input[type="email"]');
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        status.classList.remove('is-success', 'is-error');
+
+        if (!input.value.trim() || !input.checkValidity()) {
+            status.textContent = 'Merci de saisir une adresse e-mail valide.';
+            status.classList.add('is-error');
+            input.focus();
+            return;
+        }
+
+        status.textContent = 'Merci ! Inscription simulée : aucune donnée n’a été enregistrée.';
+        status.classList.add('is-success');
+        form.reset();
     });
 }
 
@@ -559,6 +853,379 @@ function initProjectModal() {
 }
 
 /**
+ * Bascule entre thème sombre et clair. Le thème initial est appliqué
+ * dans le <head> (index.html) ; le choix est mémorisé dans localStorage.
+ */
+function initThemeToggle() {
+    const button = document.querySelector('.theme-toggle');
+    if (!button) return;
+
+    const root = document.documentElement;
+
+    function updateLabel() {
+        const isLight = root.getAttribute('data-theme') === 'light';
+        button.setAttribute('aria-label', isLight ? 'Activer le thème sombre' : 'Activer le thème clair');
+    }
+
+    updateLabel();
+
+    button.addEventListener('click', () => {
+        const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        root.setAttribute('data-theme', next);
+        try {
+            localStorage.setItem('theme', next);
+        } catch (e) {
+            // Stockage indisponible (navigation privée) : le thème s'applique quand même
+        }
+        updateLabel();
+    });
+}
+
+/**
+ * Grille d'activité façon GitHub : ~26 semaines de contributions SIMULÉES (jamais de vraies données),
+ * générées avec un générateur pseudo-aléatoire à graine fixe pour que la grille soit stable
+ * d'un chargement à l'autre. Tooltip au survol (souris) ou au toucher.
+ */
+function initActivityGrid() {
+    const root = document.querySelector('.gh-activity');
+    if (!root) return;
+
+    const grid = root.querySelector('.gh-grid');
+    const monthsRow = root.querySelector('.gh-months');
+    const summary = root.querySelector('.gh-summary');
+    const tooltip = root.querySelector('.gh-tooltip');
+    const scroller = root.querySelector('.gh-scroll');
+
+    const WEEKS = 26;
+    const DAY = 24 * 60 * 60 * 1000;
+
+    // mulberry32 : petit PRNG déterministe
+    function makeRandom(seed) {
+        let a = seed;
+        return () => {
+            a = (a + 0x6d2b79f5) | 0;
+            let t = Math.imul(a ^ (a >>> 15), 1 | a);
+            t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+            return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+    }
+
+    const today = new Date();
+    today.setHours(12, 0, 0, 0);
+    // Début : le dimanche d'il y a (WEEKS - 1) semaines
+    const start = new Date(today.getTime() - ((WEEKS - 1) * 7 + today.getDay()) * DAY);
+
+    const formatDate = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+    const formatMonth = new Intl.DateTimeFormat('fr-FR', { month: 'short' });
+
+    function describe(count, date) {
+        const label = count === 0 ? 'Aucune contribution' : `${count} contribution${count > 1 ? 's' : ''}`;
+        return `${label} le ${formatDate.format(date)}`;
+    }
+
+    const level = (n) => (n === 0 ? 0 : n <= 2 ? 1 : n <= 5 ? 2 : n <= 8 ? 3 : 4);
+
+    const cells = [];
+    const months = [];
+    let total = 0;
+    let best = { count: -1, date: null };
+    let lastMonth = -1;
+
+    for (let i = 0; ; i++) {
+        const date = new Date(start.getTime() + i * DAY);
+        if (date > today) break;
+
+        const random = makeRandom(20260000 + i * 7919);
+        const weekend = date.getDay() === 0 || date.getDay() === 6;
+        // Jours calmes plus fréquents le week-end, pics de 0 à 12 en semaine
+        const count = random() < (weekend ? 0.55 : 0.25) ? 0 : Math.floor(random() ** 1.6 * (weekend ? 6 : 13)) + 1;
+
+        total += count;
+        if (count > best.count) best = { count, date };
+
+        // Type d'actions simulé : surtout des commits, avec parfois une PR et/ou un merge
+        const pulls = count >= 3 && random() < 0.35 ? 1 : 0;
+        const merges = count >= 5 && random() < 0.3 ? 1 : 0;
+        const commits = count - pulls - merges;
+        const plural = (n, word) => `${n} ${word}${n > 1 ? 's' : ''}`;
+        const detail = [
+            commits > 0 && plural(commits, 'commit'),
+            pulls > 0 && plural(pulls, 'pull request'),
+            merges > 0 && plural(merges, 'merge'),
+        ].filter(Boolean).join(' · ');
+
+        const cell = document.createElement('i');
+        cell.className = 'gh-cell';
+        cell.dataset.level = String(level(count));
+        cell.dataset.tip = describe(count, date);
+        cell.dataset.detail = detail;
+        cell.style.setProperty('--col', String(Math.floor(i / 7)));
+        cells.push(cell);
+
+        // Étiquette de mois au-dessus de la première semaine où il apparaît
+        if (date.getDay() === 0 && date.getMonth() !== lastMonth) {
+            const label = document.createElement('span');
+            label.textContent = formatMonth.format(date);
+            label.style.gridColumn = String(Math.floor(i / 7) + 1);
+            months.push(label);
+            lastMonth = date.getMonth();
+        }
+    }
+
+    grid.replaceChildren(...cells);
+    monthsRow.replaceChildren(...months);
+    // Nombre de colonnes (semaines), utilisé par la mise en page fluide sur mobile
+    root.style.setProperty('--gh-weeks', String(Math.ceil(cells.length / 7)));
+
+    const summaryText = document.createElement('span');
+    summaryText.append(
+        document.createElement('strong'),
+        ` contributions ces ${Math.round(WEEKS / 4.35)} derniers mois · meilleur jour : ${best.count}`
+    );
+    summaryText.firstChild.textContent = String(total);
+    summary.replaceChildren(summaryText);
+
+    // Sur mobile, la grille déborde : on montre d'abord les semaines les plus récentes
+    scroller.scrollLeft = scroller.scrollWidth;
+
+    // Tooltip unique, positionné au-dessus de la case survolée
+    function show(cell) {
+        const main = document.createElement('div');
+        main.textContent = cell.dataset.tip;
+        tooltip.replaceChildren(main);
+        if (cell.dataset.detail) {
+            const extra = document.createElement('div');
+            extra.className = 'gh-tooltip-detail';
+            extra.textContent = cell.dataset.detail;
+            tooltip.append(extra);
+        }
+        tooltip.hidden = false;
+        const rect = cell.getBoundingClientRect();
+        const half = tooltip.offsetWidth / 2;
+        const x = Math.min(window.innerWidth - half - 8, Math.max(half + 8, rect.left + rect.width / 2));
+        tooltip.style.left = `${x}px`;
+        tooltip.style.top = `${rect.top - 8}px`;
+    }
+
+    const hide = () => { tooltip.hidden = true; };
+
+    grid.addEventListener('pointerover', (event) => {
+        const cell = event.target.closest('.gh-cell');
+        if (cell) show(cell);
+    });
+    grid.addEventListener('pointerleave', hide);
+    // Au toucher, pas de « leave » fiable : un appui hors de la grille ferme l'infobulle
+    document.addEventListener('pointerdown', (event) => {
+        if (!event.target.closest('.gh-grid')) hide();
+    });
+    scroller.addEventListener('scroll', hide, { passive: true });
+    window.addEventListener('scroll', hide, { passive: true });
+}
+
+/**
+ * Widget « System Status » du footer : états toujours « opérationnels » (simulation),
+ * avec une latence fictive qui varie légèrement toutes les 3 secondes.
+ */
+function initSystemStatus(reducedMotion) {
+    const items = document.querySelectorAll('.status-item');
+    if (items.length === 0) return;
+
+    function refresh() {
+        items.forEach((item) => {
+            const base = Number(item.dataset.base);
+            const jitter = Math.round(base * (Math.random() * 0.5 - 0.25)); // ±25 %
+            item.querySelector('.status-ms').textContent = String(Math.max(1, base + jitter));
+        });
+    }
+
+    if (reducedMotion) return; // valeurs figées : pas de mise à jour en continu
+    setInterval(refresh, 3000);
+}
+
+/**
+ * Notes rapides : sauvegarde automatique du texte dans localStorage ('forcefabric-scratchpad'),
+ * 500 ms après la dernière frappe, et restauration au chargement. « Clear » demande une
+ * confirmation (second clic dans les 3 secondes).
+ */
+function initScratchpad() {
+    const root = document.querySelector('.scratchpad');
+    if (!root) return;
+
+    const textarea = root.querySelector('.scratchpad-text');
+    const status = root.querySelector('.scratchpad-status');
+    const clearButton = root.querySelector('.scratchpad-clear');
+
+    const STORAGE_KEY = 'forcefabric-scratchpad';
+    const DEBOUNCE = 500;
+    const CONFIRM_DELAY = 3000;
+    let saveTimer;
+    let confirmTimer;
+
+    function setStatus(state) {
+        const labels = { saved: 'SAVED', typing: 'TYPING...', error: 'NOT SAVED' };
+        status.textContent = labels[state];
+        status.className = `scratchpad-status is-${state}`;
+    }
+
+    function save() {
+        try {
+            localStorage.setItem(STORAGE_KEY, textarea.value);
+            setStatus('saved');
+        } catch (e) {
+            setStatus('error'); // stockage indisponible ou plein
+        }
+    }
+
+    function resetConfirm() {
+        clearTimeout(confirmTimer);
+        clearButton.classList.remove('is-confirming');
+        clearButton.textContent = 'Clear';
+    }
+
+    try {
+        textarea.value = localStorage.getItem(STORAGE_KEY) || '';
+    } catch (e) {
+        setStatus('error');
+    }
+
+    textarea.addEventListener('input', () => {
+        setStatus('typing');
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(save, DEBOUNCE);
+    });
+
+    // Évite de perdre la dernière frappe si l'onglet se ferme pendant le délai
+    window.addEventListener('pagehide', () => {
+        if (saveTimer) {
+            clearTimeout(saveTimer);
+            saveTimer = 0;
+            save();
+        }
+    });
+
+    clearButton.addEventListener('click', () => {
+        if (!clearButton.classList.contains('is-confirming')) {
+            clearButton.classList.add('is-confirming');
+            clearButton.textContent = 'Sûr ? Confirmer';
+            confirmTimer = setTimeout(resetConfirm, CONFIRM_DELAY);
+            return;
+        }
+        resetConfirm();
+        clearTimeout(saveTimer);
+        textarea.value = '';
+        save();
+        textarea.focus();
+    });
+    clearButton.addEventListener('blur', resetConfirm);
+}
+
+/**
+ * Sélecteur d'accent néon : pose --accent-color et --accent-rgb sur <html> (tout le thème, le curseur
+ * et le widget d'horloge en dépendent) et mémorise le choix dans localStorage ('forcefabric-accent').
+ * La couleur mémorisée est déjà appliquée dans le <head> (index.html) avant le premier affichage.
+ */
+function initAccentSwitcher() {
+    const dots = document.querySelectorAll('.accent-dot');
+    if (dots.length === 0) return;
+
+    const STORAGE_KEY = 'forcefabric-accent';
+    const style = document.documentElement.style;
+    const allowed = [...dots].map((d) => d.dataset.accent);
+
+    function apply(color) {
+        const rgb = [1, 3, 5].map((i) => parseInt(color.slice(i, i + 2), 16)).join(', ');
+        style.setProperty('--accent-color', color);
+        style.setProperty('--accent-rgb', rgb);
+        dots.forEach((dot) => dot.setAttribute('aria-pressed', String(dot.dataset.accent === color)));
+    }
+
+    let saved = null;
+    try {
+        saved = localStorage.getItem(STORAGE_KEY);
+    } catch (e) { }
+    apply(allowed.includes(saved) ? saved : allowed[0]);
+
+    dots.forEach((dot) => {
+        dot.addEventListener('click', () => {
+            const selectedColor = dot.dataset.accent;
+            apply(selectedColor);
+            try {
+                localStorage.setItem(STORAGE_KEY, selectedColor);
+            } catch (e) {
+                // Stockage indisponible (navigation privée) : la couleur s'applique quand même
+            }
+        });
+    });
+}
+
+/**
+ * Curseur personnalisé : un point (#cursor-dot) collé à la souris et un réticule (#cursor-outline)
+ * qui la suit avec de l'inertie (requestAnimationFrame). Le réticule se verrouille sur les éléments
+ * interactifs (classe is-hover) et se contracte au clic (is-down).
+ * Inactif sur écran tactile et avec « réduire les animations » : le curseur système reste alors en place.
+ */
+function initCustomCursor(reducedMotion) {
+    const dot = document.getElementById('cursor-dot');
+    const outline = document.getElementById('cursor-outline');
+    if (!dot || !outline || reducedMotion) return;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    const root = document.documentElement;
+    const INTERACTIVE =
+        'a, button, summary, select, label, [role="button"], [role="tab"], input[type="submit"], ' +
+        '.project-card, .skill-card, .blog-card, .testimonial-card, .dev-clock, .system-status, .gh-cell';
+    const LAG = 0.16; // 0 → figé, 1 → aucun retard
+
+    let mouseX = 0;
+    let mouseY = 0;
+    let outX = 0;
+    let outY = 0;
+    let ready = false;
+    let frame = 0;
+
+    function render() {
+        outX += (mouseX - outX) * LAG;
+        outY += (mouseY - outY) * LAG;
+        outline.style.transform = `translate3d(${outX}px, ${outY}px, 0)`;
+
+        // On s'arrête quand le réticule a rattrapé le point ; le prochain mouvement relance la boucle
+        const settled = Math.abs(mouseX - outX) < 0.1 && Math.abs(mouseY - outY) < 0.1;
+        frame = settled ? 0 : requestAnimationFrame(render);
+    }
+
+    document.addEventListener('mousemove', (event) => {
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+        dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+
+        if (!ready) {
+            // Premier mouvement : le réticule apparaît sous la souris, sans glisser depuis le coin
+            ready = true;
+            outX = mouseX;
+            outY = mouseY;
+            root.classList.add('has-custom-cursor');
+        }
+        dot.classList.remove('is-hidden');
+        outline.classList.remove('is-hidden');
+        if (!frame) frame = requestAnimationFrame(render);
+    }, { passive: true });
+
+    document.addEventListener('mouseover', (event) => {
+        outline.classList.toggle('is-hover', Boolean(event.target.closest && event.target.closest(INTERACTIVE)));
+    });
+
+    document.addEventListener('mousedown', () => outline.classList.add('is-down'));
+    document.addEventListener('mouseup', () => outline.classList.remove('is-down'));
+
+    // Souris sortie de la fenêtre : on masque le curseur personnalisé
+    document.documentElement.addEventListener('mouseleave', () => {
+        dot.classList.add('is-hidden');
+        outline.classList.add('is-hidden');
+        outline.classList.remove('is-down');
+    });
+}
+
+/**
  * Widget « Dev Timezone & Status » de la navbar : heure de Paris (avec décalage UTC+1 / UTC+2
  * selon l'heure d'été), heure UTC, et statut ONLINE entre 08:00 et 22:00 (heure de Paris), AWAY sinon.
  */
@@ -630,32 +1297,34 @@ function initDevClock() {
 }
 
 /**
- * Bascule entre thème sombre et clair. Le thème initial est appliqué
- * dans le <head> (index.html) ; le choix est mémorisé dans localStorage.
+ * Barre de progression de lecture : se remplit en fonction du défilement de la page.
  */
-function initThemeToggle() {
-    const button = document.querySelector('.theme-toggle');
-    if (!button) return;
+function initReadingProgress() {
+    const wrapper = document.querySelector('.reading-progress');
+    const bar = document.querySelector('.reading-progress-bar');
+    if (!wrapper || !bar) return;
 
-    const root = document.documentElement;
+    let ticking = false;
 
-    function updateLabel() {
-        const isLight = root.getAttribute('data-theme') === 'light';
-        button.setAttribute('aria-label', isLight ? 'Activer le thème sombre' : 'Activer le thème clair');
+    function update() {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const ratio = scrollable > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 0;
+        bar.style.setProperty('--progress', ratio.toFixed(4));
+        wrapper.setAttribute('aria-valuenow', String(Math.round(ratio * 100)));
+        ticking = false;
     }
 
-    updateLabel();
-
-    button.addEventListener('click', () => {
-        const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-        root.setAttribute('data-theme', next);
-        try {
-            localStorage.setItem('theme', next);
-        } catch (e) {
-            // Stockage indisponible (navigation privée) : le thème s'applique quand même
+    // Un seul recalcul par image (requestAnimationFrame) pour rester fluide
+    function onScroll() {
+        if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(update);
         }
-        updateLabel();
-    });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
 }
 
 /**
@@ -704,6 +1373,14 @@ function initScrollReveal(reducedMotion) {
         '.timeline-item',
         '.skill-card',
         '.project-card',
+        '.showcase-copy',
+        '.showcase-window',
+        '.blog-intro',
+        '.blog-featured',
+        '.blog-filters',
+        '.blog-card',
+        '.blog-pagination',
+        '.newsletter-card',
         '.filter-bar',
         '.projects-cta',
         '.testimonial-card',
