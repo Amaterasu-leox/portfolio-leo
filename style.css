@@ -8,8 +8,9 @@
     --border-nav: #1e293b;
     --text: #f8fafc;
     --text-soft: #cbd5e1;
-    --text-muted: #94a3b8;
-    --text-faint: #64748b;
+    /* Gris secondaire éclairci pour la lisibilité sur fond sombre (était #94a3b8 / #64748b) */
+    --text-muted: #b4c0d3;
+    --text-faint: #8e9cb2;
     /* Accent néon : --accent-color / --accent-rgb sont posés par script.js (initAccentSwitcher) */
     --accent-color: #00f2fe;
     --accent-rgb: 0, 242, 254;
