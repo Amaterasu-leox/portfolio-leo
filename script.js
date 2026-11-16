@@ -25,6 +25,10 @@ const PROJECTS = {
             { layer: 'Base de données', detail: 'MySQL — stockage relationnel des tâches' },
         ],
         stack: ['Python', 'FastAPI', 'MySQL', 'HTML5', 'CSS3', 'JavaScript', 'Git', 'Bitbucket'],
+        // Liens : { label, href } — ajoute { label: 'Démo en ligne', href: '…' } quand elle existe
+        links: [{ label: 'Code source sur GitHub', href: 'https://github.com/Amaterasu-leox' }],
+        // Captures : { src: 'img/guru-todo-1.png', alt: 'Description', caption: 'Légende' } (vide = espace réservé)
+        screenshots: [],
         choices: [
             { title: 'FastAPI', detail: 'Validation des données via les types Python et documentation interactive de l’API générée automatiquement.' },
             { title: 'MySQL', detail: 'Les tâches forment un modèle simple et relationnel : un SGBD classique permet de pratiquer le SQL et la modélisation.' },
@@ -55,6 +59,8 @@ const PROJECTS = {
             { layer: 'Interactions', detail: 'JavaScript natif — un module init par fonctionnalité' },
         ],
         stack: ['HTML5', 'CSS3', 'JavaScript', 'Git'],
+        links: [{ label: 'Code source sur GitHub', href: 'https://github.com/Amaterasu-leox' }],
+        screenshots: [],
         choices: [
             { title: 'Zéro framework', detail: 'HTML, CSS et JavaScript natifs : site léger, sans dépendance ni étape de build.' },
             { title: 'Variables CSS pour les thèmes', detail: 'Toutes les couleurs passent par des variables : le thème clair ou sombre se change en un seul attribut sur <html>.' },
@@ -84,6 +90,8 @@ const PROJECTS = {
             { layer: 'Visualisation', detail: 'Chart.js — graphiques mis à jour en temps réel' },
         ],
         stack: ['HTML5', 'CSS3', 'JavaScript', 'Chart.js'],
+        links: [{ label: 'Code source sur GitHub', href: 'https://github.com/Amaterasu-leox' }],
+        screenshots: [],
         choices: [
             { title: 'Chart.js', detail: 'Bibliothèque légère et responsive, avec mise à jour fluide des graphiques sans les recréer.' },
             { title: 'JavaScript natif', detail: 'L’agrégation des coûts et le simulateur sont de simples fonctions pures, faciles à tester.' },
@@ -478,19 +486,33 @@ function initTilt(reducedMotion) {
     const MAX_ANGLE = 8; // degrés
 
     document.querySelectorAll('.project-card, .skill-card').forEach((card) => {
-        card.addEventListener('pointermove', (event) => {
+        let frame = 0;
+        let last = null;
+
+        // Un seul calcul par image : les pointermove rapprochés sont regroupés (rAF)
+        function update() {
+            frame = 0;
+            if (!last) return;
             const rect = card.getBoundingClientRect();
-            const x = (event.clientX - rect.left) / rect.width; // 0 → 1
-            const y = (event.clientY - rect.top) / rect.height;
+            const x = (last.clientX - rect.left) / rect.width; // 0 → 1
+            const y = (last.clientY - rect.top) / rect.height;
 
             card.classList.add('is-tilting');
             card.style.setProperty('--ry', `${(x - 0.5) * 2 * MAX_ANGLE}deg`);
             card.style.setProperty('--rx', `${(0.5 - y) * 2 * MAX_ANGLE}deg`);
             card.style.setProperty('--mx', `${x * 100}%`);
             card.style.setProperty('--my', `${y * 100}%`);
+        }
+
+        card.addEventListener('pointermove', (event) => {
+            last = event;
+            if (!frame) frame = requestAnimationFrame(update);
         });
 
         card.addEventListener('pointerleave', () => {
+            last = null;
+            cancelAnimationFrame(frame);
+            frame = 0;
             card.classList.remove('is-tilting');
             card.style.removeProperty('--rx');
             card.style.removeProperty('--ry');
@@ -738,6 +760,8 @@ function initProjectModal() {
     const stack = modal.querySelector('.modal-stack');
     const choices = modal.querySelector('.modal-choices');
     const challenges = modal.querySelector('.modal-challenges');
+    const gallery = modal.querySelector('.modal-gallery');
+    const links = modal.querySelector('.modal-links');
     const tabs = Array.from(modal.querySelectorAll('[role="tab"]'));
 
     // Onglets : un seul panneau visible à la fois, navigation aux flèches / Début / Fin
@@ -813,6 +837,42 @@ function initProjectModal() {
 
         choices.replaceChildren(...project.choices.map(({ title, detail }) => makeItem(title, detail)));
         challenges.replaceChildren(...project.challenges.map(makeChallenge));
+
+        // Captures d'écran (ou espace réservé tant qu'il n'y en a pas)
+        const shots = project.screenshots && project.screenshots.length ? project.screenshots : [null];
+        gallery.replaceChildren(
+            ...shots.map((shot) => {
+                const figure = document.createElement('figure');
+                if (shot) {
+                    const img = document.createElement('img');
+                    img.src = shot.src;
+                    img.alt = shot.alt || '';
+                    img.loading = 'lazy';
+                    figure.append(img);
+                    if (shot.caption) {
+                        const caption = document.createElement('figcaption');
+                        caption.textContent = shot.caption;
+                        figure.append(caption);
+                    }
+                } else {
+                    figure.className = 'is-placeholder';
+                    figure.textContent = 'Captures d’écran bientôt disponibles';
+                }
+                return figure;
+            })
+        );
+
+        links.replaceChildren(
+            ...(project.links || []).map(({ label, href }, i) => {
+                const a = document.createElement('a');
+                a.href = href;
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+                a.className = i === 0 ? 'btn primary-btn' : 'btn secondary-btn';
+                a.textContent = label;
+                return a;
+            })
+        );
 
         selectTab(tabs[0]);
         modal.showModal();

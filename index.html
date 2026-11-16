@@ -759,6 +759,8 @@
         <div class="modal-tabs" role="tablist" aria-label="Sections du projet">
             <button type="button" role="tab" id="tab-overview" aria-controls="panel-overview"
                 aria-selected="true">Présentation</button>
+            <button type="button" role="tab" id="tab-preview" aria-controls="panel-preview"
+                aria-selected="false" tabindex="-1">Aperçu</button>
             <button type="button" role="tab" id="tab-choices" aria-controls="panel-choices" aria-selected="false"
                 tabindex="-1">Choix techniques</button>
             <button type="button" role="tab" id="tab-challenges" aria-controls="panel-challenges"
@@ -775,6 +777,10 @@
             <ul class="modal-stack"></ul>
         </div>
 
+        <div role="tabpanel" id="panel-preview" aria-labelledby="tab-preview" hidden>
+            <div class="modal-gallery"></div>
+        </div>
+
         <div role="tabpanel" id="panel-choices" aria-labelledby="tab-choices" hidden>
             <ul class="modal-choices"></ul>
         </div>
@@ -783,8 +789,7 @@
             <ul class="modal-challenges"></ul>
         </div>
 
-        <a href="https://github.com/Amaterasu-leox" class="btn secondary-btn modal-github" target="_blank"
-            rel="noopener noreferrer">Voir mes projets sur GitHub</a>
+        <div class="modal-links"></div>
     </dialog>
 
     <!-- Section Témoignages -->
