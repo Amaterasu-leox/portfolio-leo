@@ -17,18 +17,16 @@ const PROJECTS = {
             'Endpoints REST CRUD complets (création, lecture, mise à jour, suppression)',
             'Persistance des données dans une base MySQL relationnelle',
             'Interface web dynamique communiquant avec l’API via fetch',
-            'Versionnement et revue de code via Pull Requests Bitbucket',
+            'Versionnement et revue de code via branches et Pull Requests sur GitHub',
         ],
         architecture: [
             { layer: 'Frontend', detail: 'HTML / CSS / JavaScript — interface et appels fetch vers l’API' },
             { layer: 'Backend', detail: 'Python FastAPI — endpoints REST CRUD' },
             { layer: 'Base de données', detail: 'MySQL — stockage relationnel des tâches' },
         ],
-        stack: ['Python', 'FastAPI', 'MySQL', 'HTML5', 'CSS3', 'JavaScript', 'Git', 'Bitbucket'],
+        stack: ['Python', 'FastAPI', 'MySQL', 'HTML5', 'CSS3', 'JavaScript', 'Git', 'GitHub'],
         // Liens : { label, href } — ajoute { label: 'Démo en ligne', href: '…' } quand elle existe
-        links: [{ label: 'Code source sur GitHub', href: 'https://github.com/Amaterasu-leox' }],
-        // Captures : { src: 'img/guru-todo-1.png', alt: 'Description', caption: 'Légende' } (vide = espace réservé)
-        screenshots: [],
+        links: [{ label: 'Code source sur GitHub', href: 'https://github.com/Amaterasu-leox/task-manager-api' }],
         choices: [
             { title: 'FastAPI', detail: 'Validation des données via les types Python et documentation interactive de l’API générée automatiquement.' },
             { title: 'MySQL', detail: 'Les tâches forment un modèle simple et relationnel : un SGBD classique permet de pratiquer le SQL et la modélisation.' },
@@ -37,7 +35,7 @@ const PROJECTS = {
         challenges: [
             { problem: 'Le navigateur bloquait les appels du frontend vers l’API (erreurs CORS).', solution: 'Configuration du middleware CORS de FastAPI pour n’autoriser que l’origine du frontend.' },
             { problem: 'Garder l’interface synchronisée avec la base après chaque création, modification ou suppression.', solution: 'Chaque action passe par l’API, puis la liste est rechargée depuis la réponse du serveur plutôt que modifiée localement.' },
-            { problem: 'Travailler proprement en revue de code.', solution: 'Branches dédiées et Pull Requests Bitbucket pour relire chaque changement avant fusion.' },
+            { problem: 'Travailler proprement en revue de code.', solution: 'Branches dédiées et Pull Requests GitHub pour relire chaque changement avant fusion.' },
         ],
     },
     portfolio: {
@@ -59,8 +57,7 @@ const PROJECTS = {
             { layer: 'Interactions', detail: 'JavaScript natif — un module init par fonctionnalité' },
         ],
         stack: ['HTML5', 'CSS3', 'JavaScript', 'Git'],
-        links: [{ label: 'Code source sur GitHub', href: 'https://github.com/Amaterasu-leox' }],
-        screenshots: [],
+        links: [{ label: 'Code source sur GitHub', href: 'https://github.com/Amaterasu-leox/portfolio-leo' }],
         choices: [
             { title: 'Zéro framework', detail: 'HTML, CSS et JavaScript natifs : site léger, sans dépendance ni étape de build.' },
             { title: 'Variables CSS pour les thèmes', detail: 'Toutes les couleurs passent par des variables : le thème clair ou sombre se change en un seul attribut sur <html>.' },
@@ -77,21 +74,20 @@ const PROJECTS = {
         subtitle: 'Tableau de bord de suivi des coûts multi-cloud',
         description:
             "Tableau de bord interactif pour suivre et optimiser les coûts d'infrastructure répartis " +
-            "sur AWS, GCP et Azure, avec des graphiques en temps réel et un simulateur d'économies.",
+            "sur AWS, GCP et Azure, avec des graphiques interactifs sur données simulées et un simulateur d'économies.",
         features: [
             'Vue consolidée des dépenses AWS, GCP et Azure',
-            'Graphiques interactifs mis à jour en temps réel avec Chart.js',
+            'Graphiques interactifs sur données simulées avec Chart.js',
             "Simulateur d'économies pour évaluer les pistes d'optimisation",
             'Interface responsive en JavaScript natif, sans framework',
         ],
         architecture: [
             { layer: 'Interface', detail: 'HTML5 / CSS3 — tableau de bord responsive' },
             { layer: 'Logique', detail: 'JavaScript — agrégation des coûts par fournisseur et simulateur' },
-            { layer: 'Visualisation', detail: 'Chart.js — graphiques mis à jour en temps réel' },
+            { layer: 'Visualisation', detail: 'Chart.js — graphiques interactifs sur données simulées' },
         ],
         stack: ['HTML5', 'CSS3', 'JavaScript', 'Chart.js'],
         links: [{ label: 'Code source sur GitHub', href: 'https://github.com/Amaterasu-leox' }],
-        screenshots: [],
         choices: [
             { title: 'Chart.js', detail: 'Bibliothèque légère et responsive, avec mise à jour fluide des graphiques sans les recréer.' },
             { title: 'JavaScript natif', detail: 'L’agrégation des coûts et le simulateur sont de simples fonctions pures, faciles à tester.' },
@@ -99,7 +95,7 @@ const PROJECTS = {
         ],
         challenges: [
             { problem: 'Comparer des fournisseurs qui présentent leurs coûts différemment.', solution: 'Normalisation des données dans un format commun avant l’agrégation et l’affichage.' },
-            { problem: 'Garder des graphiques fluides lors des mises à jour en temps réel.', solution: 'Mise à jour des jeux de données existants plutôt que destruction et recréation des graphiques.' },
+            { problem: 'Garder des graphiques fluides lors des mises à jour des données simulées.', solution: 'Mise à jour des jeux de données existants plutôt que destruction et recréation des graphiques.' },
             { problem: 'Rendre le simulateur d’économies compréhensible.', solution: 'Résultats recalculés instantanément à chaque changement de paramètre, avec l’économie estimée mise en évidence.' },
         ],
     },
@@ -760,7 +756,6 @@ function initProjectModal() {
     const stack = modal.querySelector('.modal-stack');
     const choices = modal.querySelector('.modal-choices');
     const challenges = modal.querySelector('.modal-challenges');
-    const gallery = modal.querySelector('.modal-gallery');
     const links = modal.querySelector('.modal-links');
     const tabs = Array.from(modal.querySelectorAll('[role="tab"]'));
 
@@ -837,30 +832,6 @@ function initProjectModal() {
 
         choices.replaceChildren(...project.choices.map(({ title, detail }) => makeItem(title, detail)));
         challenges.replaceChildren(...project.challenges.map(makeChallenge));
-
-        // Captures d'écran (ou espace réservé tant qu'il n'y en a pas)
-        const shots = project.screenshots && project.screenshots.length ? project.screenshots : [null];
-        gallery.replaceChildren(
-            ...shots.map((shot) => {
-                const figure = document.createElement('figure');
-                if (shot) {
-                    const img = document.createElement('img');
-                    img.src = shot.src;
-                    img.alt = shot.alt || '';
-                    img.loading = 'lazy';
-                    figure.append(img);
-                    if (shot.caption) {
-                        const caption = document.createElement('figcaption');
-                        caption.textContent = shot.caption;
-                        figure.append(caption);
-                    }
-                } else {
-                    figure.className = 'is-placeholder';
-                    figure.textContent = 'Captures d’écran bientôt disponibles';
-                }
-                return figure;
-            })
-        );
 
         links.replaceChildren(
             ...(project.links || []).map(({ label, href }, i) => {

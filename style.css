@@ -1227,40 +1227,6 @@ a {
     display: inline-block;
 }
 
-/* Aperçu : captures d'écran */
-.modal-gallery {
-    display: grid;
-    gap: 1rem;
-}
-
-.modal-gallery figure {
-    margin: 0;
-}
-
-.modal-gallery img {
-    display: block;
-    width: 100%;
-    border: 1px solid var(--glass-border);
-    border-radius: 10px;
-}
-
-.modal-gallery figcaption {
-    margin-top: 0.4rem;
-    color: var(--text-muted);
-    font-size: 0.85rem;
-}
-
-.modal-gallery .is-placeholder {
-    display: grid;
-    place-items: center;
-    aspect-ratio: 16 / 9;
-    border: 1px dashed var(--accent);
-    border-radius: 10px;
-    background-color: var(--accent-soft);
-    color: var(--text-muted);
-    font-size: 0.9rem;
-}
-
 /* Filtres de projets */
 .filter-bar {
     display: flex;
