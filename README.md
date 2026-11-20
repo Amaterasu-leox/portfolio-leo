@@ -1,5 +1,7 @@
 # Portfolio — Léo Baskarane
 
+[![Vérification Portfolio](https://github.com/Amaterasu-leox/portfolio-leo/actions/workflows/ci.yml/badge.svg)](https://github.com/Amaterasu-leox/portfolio-leo/actions/workflows/ci.yml)
+
 Portfolio personnel de développeur web full-stack, conçu de A à Z en **HTML, CSS et JavaScript natifs** : aucun framework, aucune dépendance, aucune étape de build.
 
 🔗 **Démo en ligne : <https://amaterasu-leox.github.io/portfolio-leo/>**
