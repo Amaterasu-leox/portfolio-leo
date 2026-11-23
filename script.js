@@ -3,103 +3,39 @@
 // bascule thème sombre / clair, mini-terminal, inclinaison 3D et formulaire de contact.
 
 /**
- * Détails affichés dans la modale, indexés par l'attribut data-project des cartes.
+ * Raccourci vers le traducteur d'i18n.js (chargé avant ce fichier) et abonnement au changement de langue
+ * (événement « langchange » émis à chaque clic sur le sélecteur FR / EN).
+ */
+const tr = (key, vars) => window.i18n.t(key, vars);
+const onLangChange = (callback) => document.addEventListener('langchange', callback);
+
+/**
+ * Données fixes des projets de la modale (technologies, liens), indexées par l'attribut data-project des cartes.
+ * Les textes (titre, description, difficultés…) sont dans le dictionnaire d'i18n.js, clé « project.<id> ».
  */
 const PROJECTS = {
     'guru-todo': {
-        title: 'Guru To-Do App',
-        subtitle: 'Application Full-Stack de gestion de tâches',
-        description:
-            "Application complète permettant de créer, consulter, modifier et supprimer des tâches. " +
-            "Le backend Python FastAPI expose une API REST connectée à une base MySQL, consommée par " +
-            "une interface frontend interactive en HTML/CSS/JavaScript.",
-        features: [
-            'Endpoints REST CRUD complets (création, lecture, mise à jour, suppression)',
-            'Persistance des données dans une base MySQL relationnelle',
-            'Interface web dynamique communiquant avec l’API via fetch',
-            'Versionnement et revue de code via branches et Pull Requests sur GitHub',
-        ],
-        architecture: [
-            { layer: 'Frontend', detail: 'HTML / CSS / JavaScript — interface et appels fetch vers l’API' },
-            { layer: 'Backend', detail: 'Python FastAPI — endpoints REST CRUD' },
-            { layer: 'Base de données', detail: 'MySQL — stockage relationnel des tâches' },
-        ],
         stack: ['Python', 'FastAPI', 'MySQL', 'HTML5', 'CSS3', 'JavaScript', 'Git', 'GitHub'],
-        // Liens : { label, href } — ajoute { label: 'Démo en ligne', href: '…' } quand elle existe
-        links: [{ label: 'Code source sur GitHub', href: 'https://github.com/Amaterasu-leox/task-manager-api' }],
-        choices: [
-            { title: 'FastAPI', detail: 'Validation des données via les types Python et documentation interactive de l’API générée automatiquement.' },
-            { title: 'MySQL', detail: 'Les tâches forment un modèle simple et relationnel : un SGBD classique permet de pratiquer le SQL et la modélisation.' },
-            { title: 'JavaScript natif', detail: 'Pas de framework côté interface : l’objectif était de bien comprendre fetch et la manipulation du DOM.' },
-        ],
-        challenges: [
-            { problem: 'Le navigateur bloquait les appels du frontend vers l’API (erreurs CORS).', solution: 'Configuration du middleware CORS de FastAPI pour n’autoriser que l’origine du frontend.' },
-            { problem: 'Garder l’interface synchronisée avec la base après chaque création, modification ou suppression.', solution: 'Chaque action passe par l’API, puis la liste est rechargée depuis la réponse du serveur plutôt que modifiée localement.' },
-            { problem: 'Travailler proprement en revue de code.', solution: 'Branches dédiées et Pull Requests GitHub pour relire chaque changement avant fusion.' },
-        ],
+        // Liens : une URL par libellé de « project.<id>.links » — ajoute aussi le libellé (ex. « Démo en ligne ») dans i18n.js
+        links: ['https://github.com/Amaterasu-leox/task-manager-api'],
     },
     portfolio: {
-        title: 'Portfolio Web Personnel',
-        subtitle: 'Site vitrine développé sur-mesure',
-        description:
-            "Le site que vous êtes en train de visiter : un portfolio conçu de A à Z en HTML, CSS et " +
-            "JavaScript natif, sans framework ni bibliothèque, avec une attention particulière portée " +
-            "à l'interactivité, à l'accessibilité et au responsive design.",
-        features: [
-            'Timeline interactive du parcours avec apparition au défilement',
-            'Mini-terminal où le visiteur tape des commandes (help, skills, projects…)',
-            'Thème sombre / clair mémorisé, effet machine à écrire et cartes inclinables en 3D',
-            'Formulaire de contact prêt pour Formspree et fenêtres de détail des projets',
-        ],
-        architecture: [
-            { layer: 'Structure', detail: 'HTML5 sémantique — sections, <dialog> natif, formulaires accessibles' },
-            { layer: 'Style', detail: 'CSS3 — variables de thème, Grid / Flexbox, animations' },
-            { layer: 'Interactions', detail: 'JavaScript natif — un module init par fonctionnalité' },
-        ],
         stack: ['HTML5', 'CSS3', 'JavaScript', 'Git'],
-        links: [{ label: 'Code source sur GitHub', href: 'https://github.com/Amaterasu-leox/portfolio-leo' }],
-        choices: [
-            { title: 'Zéro framework', detail: 'HTML, CSS et JavaScript natifs : site léger, sans dépendance ni étape de build.' },
-            { title: 'Variables CSS pour les thèmes', detail: 'Toutes les couleurs passent par des variables : le thème clair ou sombre se change en un seul attribut sur <html>.' },
-            { title: '<dialog> natif', detail: 'Pour les modales : gestion du focus, de la touche Échap et du fond assombri sans bibliothèque.' },
-        ],
-        challenges: [
-            { problem: 'Un flash de la mauvaise couleur au chargement avec le thème sombre / clair.', solution: 'Un petit script dans le <head> applique le thème mémorisé avant le premier affichage.' },
-            { problem: 'L’inclinaison 3D des cartes entrait en conflit avec l’animation d’apparition au défilement.', solution: 'L’apparition anime la propriété translate, ce qui laisse transform à l’inclinaison.' },
-            { problem: 'Rester accessible malgré les animations.', solution: 'Respect de « réduire les animations », rôles ARIA, navigation clavier et libellés explicites.' },
-        ],
+        links: ['https://github.com/Amaterasu-leox/portfolio-leo'],
     },
     finops: {
-        title: 'FinOps Cloud Analytics',
-        subtitle: 'Tableau de bord de suivi des coûts multi-cloud',
-        description:
-            "Tableau de bord interactif pour suivre et optimiser les coûts d'infrastructure répartis " +
-            "sur AWS, GCP et Azure, avec des graphiques interactifs sur données simulées et un simulateur d'économies.",
-        features: [
-            'Vue consolidée des dépenses AWS, GCP et Azure',
-            'Graphiques interactifs sur données simulées avec Chart.js',
-            "Simulateur d'économies pour évaluer les pistes d'optimisation",
-            'Interface responsive en JavaScript natif, sans framework',
-        ],
-        architecture: [
-            { layer: 'Interface', detail: 'HTML5 / CSS3 — tableau de bord responsive' },
-            { layer: 'Logique', detail: 'JavaScript — agrégation des coûts par fournisseur et simulateur' },
-            { layer: 'Visualisation', detail: 'Chart.js — graphiques interactifs sur données simulées' },
-        ],
         stack: ['HTML5', 'CSS3', 'JavaScript', 'Chart.js'],
-        links: [{ label: 'Code source sur GitHub', href: 'https://github.com/Amaterasu-leox' }],
-        choices: [
-            { title: 'Chart.js', detail: 'Bibliothèque légère et responsive, avec mise à jour fluide des graphiques sans les recréer.' },
-            { title: 'JavaScript natif', detail: 'L’agrégation des coûts et le simulateur sont de simples fonctions pures, faciles à tester.' },
-            { title: 'Données simulées', detail: 'Un jeu de données multi-cloud représentatif permet de démontrer l’outil sans compte AWS, GCP ou Azure.' },
-        ],
-        challenges: [
-            { problem: 'Comparer des fournisseurs qui présentent leurs coûts différemment.', solution: 'Normalisation des données dans un format commun avant l’agrégation et l’affichage.' },
-            { problem: 'Garder des graphiques fluides lors des mises à jour des données simulées.', solution: 'Mise à jour des jeux de données existants plutôt que destruction et recréation des graphiques.' },
-            { problem: 'Rendre le simulateur d’économies compréhensible.', solution: 'Résultats recalculés instantanément à chaque changement de paramètre, avec l’économie estimée mise en évidence.' },
-        ],
+        links: ['https://github.com/Amaterasu-leox'],
     },
 };
+
+/** Fiche d'un projet dans la langue courante : textes du dictionnaire + stack et liens fixes. */
+function getProject(id) {
+    const base = PROJECTS[id];
+    if (!base) return null;
+    const text = tr(`project.${id}`);
+    return { ...base, ...text, links: base.links.map((href, i) => ({ href, label: text.links[i] })) };
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.querySelector('.navbar');
@@ -172,9 +108,9 @@ function initCopyEmail() {
             } else {
                 legacyCopy(email);
             }
-            showTooltip('Copié !');
+            showTooltip(tr('js.copied'));
         } catch (error) {
-            showTooltip('Copie impossible', true);
+            showTooltip(tr('js.copy-failed'), true);
         }
     });
 }
@@ -228,10 +164,17 @@ function initContactForm() {
     const SIMULATION_MODE = true;
     const SIMULATED_DELAY = 1000;
 
-    function setStatus(message, type) {
-        status.textContent = message;
-        status.className = type ? `form-status is-${type}` : 'form-status';
+    // Le message est mémorisé par clé pour être retraduit si la langue change
+    let statusState = null; // { key, type, vars }
+    function renderStatus() {
+        status.textContent = statusState ? tr(statusState.key, statusState.vars) : '';
+        status.className = statusState && statusState.type ? `form-status is-${statusState.type}` : 'form-status';
     }
+    function setStatus(key, type, vars) {
+        statusState = key ? { key, type, vars } : null;
+        renderStatus();
+    }
+    onLangChange(renderStatus);
 
     // La validation native (required, type="email") s'exécute avant cet événement
     form.addEventListener('submit', async (event) => {
@@ -242,11 +185,11 @@ function initContactForm() {
 
         if (SIMULATION_MODE) {
             submitButton.disabled = true;
-            setStatus('Envoi en cours…');
+            setStatus('js.sending');
             await new Promise((resolve) => setTimeout(resolve, SIMULATED_DELAY));
             form.reset();
-            setStatus('Merci ! Votre message a bien été envoyé (simulation, aucune donnée transmise).', 'success');
-            showToast('Message envoyé avec succès !');
+            setStatus('js.contact-sim-ok', 'success');
+            showToast(tr('js.toast-sent'));
             submitButton.disabled = false;
             return;
         }
@@ -257,13 +200,13 @@ function initContactForm() {
             window.location.href =
                 `mailto:${form.dataset.fallbackEmail}` +
                 `?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            setStatus('Votre logiciel de messagerie va s’ouvrir avec le message pré-rempli.', 'success');
-            showToast('Messagerie ouverte : envoyez le message depuis votre application.');
+            setStatus('js.contact-mailto', 'success');
+            showToast(tr('js.toast-mailto'));
             return;
         }
 
         submitButton.disabled = true;
-        setStatus('Envoi en cours…');
+        setStatus('js.sending');
 
         try {
             const response = await fetch(form.action, {
@@ -275,15 +218,15 @@ function initContactForm() {
             if (!response.ok) {
                 const json = await response.json().catch(() => ({}));
                 const details = json.errors ? json.errors.map((e) => e.message).join(', ') : '';
-                throw new Error(details || `Erreur ${response.status}`);
+                throw new Error(details || tr('js.http-error', { status: response.status }));
             }
 
             form.reset();
-            setStatus('Merci ! Votre message a bien été envoyé, je vous réponds rapidement.', 'success');
-            showToast('Message envoyé avec succès !');
+            setStatus('js.contact-ok', 'success');
+            showToast(tr('js.toast-sent'));
         } catch (error) {
-            setStatus(`L’envoi a échoué (${error.message}). Réessayez ou écrivez-moi directement par email.`, 'error');
-            showToast('L’envoi a échoué. Réessayez.', 'error');
+            setStatus('js.contact-error', 'error', { reason: error.message });
+            showToast(tr('js.toast-failed'), 'error');
         } finally {
             submitButton.disabled = false;
         }
@@ -312,27 +255,10 @@ function initTerminal() {
     // Technologies mises en évidence dans les réponses
     const TECH = /(FastAPI|Python|MySQL|JavaScript)/g;
 
+    // Les textes viennent du dictionnaire d'i18n.js (clés « term.* ») : les commandes restent les mêmes dans les deux langues
     const COMMANDS = {
-        help: () => [
-            'Commandes disponibles :',
-            '  help         Affiche cette aide',
-            '  about        Qui suis-je ?',
-            '  skills       Mes compétences techniques',
-            '  stack        Mes 4 technos phares : FastAPI, Python, MySQL, JavaScript',
-            '  projects     Mes projets (ex : "projects 1" pour le détail)',
-            '  contact      Me contacter',
-            '  whoami       Qui est connecté ?',
-            '  history      Commandes déjà tapées',
-            '  clear        Efface le terminal',
-            '',
-            'Astuces : Tab complète, ↑ / ↓ rappellent l’historique.',
-        ],
-        about: () => [
-            'Léo Baskarane — développeur Full-Stack autonome (Île-de-France).',
-            'Je conçois des applications web fluides : API REST en Python / FastAPI,',
-            'bases MySQL et interfaces en JavaScript natif.',
-            'Tapez "stack" ou "projects" pour aller plus loin.',
-        ],
+        help: () => tr('term.help'),
+        about: () => tr('term.about'),
         // Lu depuis les cartes de la section Compétences pour rester synchronisé avec la page
         skills: () => [
             ...[...document.querySelectorAll('.skill-card')].map((card) => {
@@ -341,48 +267,35 @@ function initTerminal() {
                 return `  ${name.padEnd(18)} ${items}`;
             }),
             '',
-            'Tapez "stack" pour le détail de mes technos phares.',
+            tr('term.skills-hint'),
         ],
-        stack: () => [
-            '  FastAPI      API REST asynchrones, validation Pydantic, docs Swagger / ReDoc auto',
-            '  Python       Backend, scripts, environnements virtuels gérés avec uv',
-            '  MySQL        Modélisation relationnelle, requêtes SQL, intégration avec Python',
-            '  JavaScript   Interfaces dynamiques en JS natif : DOM, fetch, sans framework',
-            '',
-            'Exemple de combinaison : projet Guru To-Do ("projects 1").',
-        ],
+        stack: () => tr('term.stack'),
         projects: (args) => {
-            const entries = Object.values(PROJECTS);
+            const entries = Object.keys(PROJECTS).map(getProject);
             if (args[0]) {
                 const project = entries[Number(args[0]) - 1];
-                if (!project) return [`Projet introuvable : ${args[0]}. Choisissez un numéro de 1 à ${entries.length}.`];
+                if (!project) return [tr('term.project-missing', { arg: args[0], max: entries.length })];
                 return [
                     `${project.title} — ${project.subtitle}`,
                     '',
                     project.description,
                     '',
-                    'Fonctionnalités :',
+                    tr('term.project-features'),
                     ...project.features.map((f) => `  • ${f}`),
                     '',
-                    `Stack : ${project.stack.join(', ')}`,
+                    tr('term.project-stack', { stack: project.stack.join(', ') }),
                 ];
             }
             return [
                 ...entries.map((p, i) => `  ${i + 1}. ${p.title} — ${p.subtitle}`),
                 '',
-                'Tapez "projects <numéro>" pour le détail, ou cliquez sur une carte de la section Projets.',
+                tr('term.projects-hint'),
             ];
         },
-        contact: () => [
-            `  Email      ${EMAIL}`,
-            '  Formulaire section « Contact » en bas de page',
-            '  Localité   Île-de-France',
-            '',
-            'Un projet FastAPI, Python, MySQL ou JavaScript ? Écrivez-moi !',
-        ],
-        whoami: () => ['leo — développeur Full-Stack (FastAPI · Python · MySQL · JavaScript)'],
+        contact: () => tr('term.contact', { email: EMAIL }),
+        whoami: () => [tr('term.whoami')],
         history: () =>
-            history.length ? history.map((h, i) => `  ${String(i + 1).padStart(2)}  ${h}`) : ['Aucune commande pour l’instant.'],
+            history.length ? history.map((h, i) => `  ${String(i + 1).padStart(2)}  ${h}`) : [tr('term.history-empty')],
         clear: () => {
             output.replaceChildren();
             return [];
@@ -420,7 +333,7 @@ function initTerminal() {
         if (handler) {
             print(handler(args));
         } else {
-            print([`Commande introuvable : ${command}. Tapez "help" pour la liste des commandes.`], 'terminal-error');
+            print([tr('term.not-found', { command })], 'terminal-error');
         }
     }
 
@@ -431,7 +344,7 @@ function initTerminal() {
         run(value);
     }
 
-    print(['Bienvenue sur le terminal de Léo (WSL2 · Ubuntu). Tapez "help" pour commencer.']);
+    print([tr('term.welcome')]);
 
     form.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -523,18 +436,31 @@ function initTilt(reducedMotion) {
  */
 function initTypewriter(reducedMotion) {
     const el = document.querySelector('.typewriter');
-    if (!el || reducedMotion) return;
+    if (!el) return;
 
-    const roles = JSON.parse(el.dataset.roles || '[]');
+    // Les rôles viennent du dictionnaire d'i18n.js et suivent la langue courante
+    let roles = tr('hero.roles');
     if (roles.length === 0) return;
+    el.textContent = roles[0];
+
+    let roleIndex = 0;
+    let charIndex = roles[0].length; // le premier rôle est affiché en entier au départ
+    let deleting = true;
+
+    // Changement de langue : on repart du premier rôle, affiché en entier
+    onLangChange(() => {
+        roles = tr('hero.roles');
+        roleIndex = 0;
+        charIndex = roles[0].length;
+        deleting = true;
+        el.textContent = roles[0];
+    });
+
+    if (reducedMotion) return;
 
     const TYPE_DELAY = 80;
     const DELETE_DELAY = 40;
     const HOLD_DELAY = 1800;
-
-    let roleIndex = 0;
-    let charIndex = roles[0].length; // le premier rôle est déjà présent dans le HTML
-    let deleting = true;
 
     function tick() {
         const role = roles[roleIndex];
@@ -621,15 +547,18 @@ function initBlog(reducedMotion) {
 
     // Index de recherche par carte : titre, résumé et catégorie (étiquette + clé), sans auteur ni date
     const searchIndex = new Map();
-    cards.forEach((card) => {
-        const parts = [
-            card.querySelector('h3')?.textContent,
-            card.querySelector('.blog-card-body > p')?.textContent,
-            card.querySelector('.blog-tag')?.textContent,
-            card.dataset.category,
-        ];
-        searchIndex.set(card, normalize(parts.filter(Boolean).join(' ')));
-    });
+    function buildSearchIndex() {
+        cards.forEach((card) => {
+            const parts = [
+                card.querySelector('h3')?.textContent,
+                card.querySelector('.blog-card-body > p')?.textContent,
+                card.querySelector('.blog-tag')?.textContent,
+                card.dataset.category,
+            ];
+            searchIndex.set(card, normalize(parts.filter(Boolean).join(' ')));
+        });
+    }
+    buildSearchIndex();
 
     // Métriques du widget : calculées depuis les cartes pour rester cohérentes
     const metricArticles = document.querySelector('.blog-metric-articles');
@@ -640,14 +569,19 @@ function initBlog(reducedMotion) {
     }
 
     // Nombre d'articles par catégorie affiché dans chaque bouton de filtre
-    buttons.forEach((button) => {
-        const key = button.dataset.filter;
-        const n = key === 'all'
-            ? cards.length
-            : [...cards].filter((c) => c.dataset.category === key).length;
-        if (!button.dataset.label) button.dataset.label = button.textContent.trim();
-        button.textContent = `${button.dataset.label} (${n})`;
-    });
+    function labelButtons() {
+        buttons.forEach((button) => {
+            const key = button.dataset.filter;
+            const n = key === 'all'
+                ? cards.length
+                : [...cards].filter((c) => c.dataset.category === key).length;
+            // Libellé traduit via data-i18n ; sinon (ex. « Frontend ») celui d'origine, mémorisé dans data-label
+            if (button.dataset.i18n) button.dataset.label = tr(button.dataset.i18n);
+            else if (!button.dataset.label) button.dataset.label = button.textContent.trim();
+            button.textContent = `${button.dataset.label} (${n})`;
+        });
+    }
+    labelButtons();
 
     function apply() {
         let visible = 0;
@@ -684,9 +618,7 @@ function initBlog(reducedMotion) {
             more.disabled = allShown;
             more.setAttribute('aria-disabled', String(allShown));
             if (moreStatus) {
-                moreStatus.textContent = allShown && available > 0
-                    ? 'Les prochains articles arrivent bientôt.'
-                    : '';
+                moreStatus.textContent = allShown && available > 0 ? tr('js.blog-soon') : '';
             }
         }
     }
@@ -712,6 +644,13 @@ function initBlog(reducedMotion) {
 
     // État initial de la pagination (compteurs, bouton désactivé, message)
     apply();
+
+    // Changement de langue : les textes des cartes ont changé, on refait l'index de recherche et les libellés
+    onLangChange(() => {
+        buildSearchIndex();
+        labelButtons();
+        apply();
+    });
 }
 
 /**
@@ -725,19 +664,28 @@ function initNewsletter() {
 
     const input = form.querySelector('input[type="email"]');
 
+    // Le message est mémorisé par clé pour être retraduit si la langue change
+    let message = null; // { key, type }
+    function render() {
+        status.classList.remove('is-success', 'is-error');
+        if (!message) return;
+        status.textContent = tr(message.key);
+        status.classList.add(`is-${message.type}`);
+    }
+    onLangChange(render);
+
     form.addEventListener('submit', (event) => {
         event.preventDefault();
-        status.classList.remove('is-success', 'is-error');
 
         if (!input.value.trim() || !input.checkValidity()) {
-            status.textContent = 'Merci de saisir une adresse e-mail valide.';
-            status.classList.add('is-error');
+            message = { key: 'js.newsletter-invalid', type: 'error' };
+            render();
             input.focus();
             return;
         }
 
-        status.textContent = 'Merci ! Inscription simulée : aucune donnée n’a été enregistrée.';
-        status.classList.add('is-success');
+        message = { key: 'js.newsletter-ok', type: 'success' };
+        render();
         form.reset();
     });
 }
@@ -791,7 +739,7 @@ function initProjectModal() {
 
     function makeChallenge({ problem, solution }) {
         const li = document.createElement('li');
-        [['Difficulté', problem], ['Solution', solution]].forEach(([label, text]) => {
+        [[tr('modal.problem'), problem], [tr('modal.solution'), solution]].forEach(([label, text]) => {
             const row = document.createElement('p');
             const tag = document.createElement('span');
             tag.className = 'modal-tag';
@@ -812,8 +760,10 @@ function initProjectModal() {
         );
     }
 
-    function open(card) {
-        const project = PROJECTS[card.dataset.project];
+    let openId = null; // projet affiché, pour retraduire la modale si la langue change
+
+    function fill(id) {
+        const project = getProject(id);
         if (!project) return;
 
         title.textContent = project.title;
@@ -845,11 +795,22 @@ function initProjectModal() {
                 return a;
             })
         );
+    }
 
+    function open(card) {
+        const id = card.dataset.project;
+        if (!PROJECTS[id]) return;
+
+        openId = id;
+        fill(id);
         selectTab(tabs[0]);
         modal.showModal();
         document.body.style.overflow = 'hidden';
     }
+
+    onLangChange(() => {
+        if (openId) fill(openId);
+    });
 
     document.querySelectorAll('.project-card[data-project]').forEach((card) => {
         card.addEventListener('click', (event) => {
@@ -880,6 +841,7 @@ function initProjectModal() {
 
     // Échap ferme nativement la modale ; le focus revient seul sur la carte
     modal.addEventListener('close', () => {
+        openId = null;
         document.body.style.overflow = '';
     });
 }
@@ -896,10 +858,11 @@ function initThemeToggle() {
 
     function updateLabel() {
         const isLight = root.getAttribute('data-theme') === 'light';
-        button.setAttribute('aria-label', isLight ? 'Activer le thème sombre' : 'Activer le thème clair');
+        button.setAttribute('aria-label', tr(isLight ? 'theme.to-dark' : 'theme.to-light'));
     }
 
     updateLabel();
+    onLangChange(updateLabel);
 
     button.addEventListener('click', () => {
         const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
@@ -947,23 +910,13 @@ function initActivityGrid() {
     // Début : le dimanche d'il y a (WEEKS - 1) semaines
     const start = new Date(today.getTime() - ((WEEKS - 1) * 7 + today.getDay()) * DAY);
 
-    const formatDate = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
-    const formatMonth = new Intl.DateTimeFormat('fr-FR', { month: 'short' });
-
-    function describe(count, date) {
-        const label = count === 0 ? 'Aucune contribution' : `${count} contribution${count > 1 ? 's' : ''}`;
-        return `${label} le ${formatDate.format(date)}`;
-    }
-
     const level = (n) => (n === 0 ? 0 : n <= 2 ? 1 : n <= 5 ? 2 : n <= 8 ? 3 : 4);
+    const plural = (n, word) => `${n} ${word}${n > 1 ? 's' : ''}`;
 
+    const days = []; // { date, count, commits, pulls, merges } : données simulées, identiques quelle que soit la langue
     const cells = [];
-    const months = [];
-    // Une étiquette de mois occupe ~3 colonnes : on masque celle qui serait collée au mois suivant
-    const MIN_LABEL_COLS = 3;
     let total = 0;
     let best = { count: -1, date: null };
-    let lastMonth = -1;
 
     for (let i = 0; ; i++) {
         const date = new Date(start.getTime() + i * DAY);
@@ -980,51 +933,72 @@ function initActivityGrid() {
         // Type d'actions simulé : surtout des commits, avec parfois une PR et/ou un merge
         const pulls = count >= 3 && random() < 0.35 ? 1 : 0;
         const merges = count >= 5 && random() < 0.3 ? 1 : 0;
-        const commits = count - pulls - merges;
-        const plural = (n, word) => `${n} ${word}${n > 1 ? 's' : ''}`;
-        const detail = [
-            commits > 0 && plural(commits, 'commit'),
-            pulls > 0 && plural(pulls, 'pull request'),
-            merges > 0 && plural(merges, 'merge'),
-        ].filter(Boolean).join(' · ');
+        days.push({ date, count, commits: count - pulls - merges, pulls, merges });
 
         const cell = document.createElement('i');
         cell.className = 'gh-cell';
         cell.dataset.level = String(level(count));
-        cell.dataset.tip = describe(count, date);
-        cell.dataset.detail = detail;
         cell.style.setProperty('--col', String(Math.floor(i / 7)));
         cells.push(cell);
-
-        // Étiquette de mois au-dessus de la première semaine où il apparaît
-        if (date.getDay() === 0 && date.getMonth() !== lastMonth) {
-            months.push({ col: Math.floor(i / 7) + 1, text: formatMonth.format(date) });
-            lastMonth = date.getMonth();
-        }
     }
 
     grid.replaceChildren(...cells);
-    monthsRow.replaceChildren(
-        ...months
-            // Si le mois suivant commence trop près, on garde le suivant (mois complet) et on retire celui-ci
-            .filter((m, k) => !months[k + 1] || months[k + 1].col - m.col >= MIN_LABEL_COLS)
-            .map((m) => {
-                const label = document.createElement('span');
-                label.textContent = m.text;
-                label.style.gridColumn = String(m.col);
-                return label;
-            })
-    );
     // Nombre de colonnes (semaines), utilisé par la mise en page fluide sur mobile
     root.style.setProperty('--gh-weeks', String(Math.ceil(cells.length / 7)));
 
-    const summaryText = document.createElement('span');
-    summaryText.append(
-        document.createElement('strong'),
-        ` contributions ces ${Math.round(WEEKS / 4.35)} derniers mois · meilleur jour : ${best.count}`
-    );
-    summaryText.firstChild.textContent = String(total);
-    summary.replaceChildren(summaryText);
+    // Une étiquette de mois occupe ~3 colonnes : on masque celle qui serait collée au mois suivant
+    const MIN_LABEL_COLS = 3;
+
+    // Tous les textes qui dépendent de la langue (infobulles, mois, résumé) : appelé au chargement
+    // puis à chaque changement de langue. La grille elle-même n'est pas recréée.
+    function renderTexts() {
+        const locale = window.i18n.locale();
+        const formatDate = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long', year: 'numeric' });
+        const formatMonth = new Intl.DateTimeFormat(locale, { month: 'short' });
+
+        days.forEach((day, i) => {
+            const date = formatDate.format(day.date);
+            cells[i].dataset.tip = day.count === 0 ? tr('gh.day-none', { date }) : tr('gh.day-some', { n: day.count, date });
+            cells[i].dataset.detail = [
+                day.commits > 0 && plural(day.commits, 'commit'),
+                day.pulls > 0 && plural(day.pulls, 'pull request'),
+                day.merges > 0 && plural(day.merges, 'merge'),
+            ].filter(Boolean).join(' · ');
+        });
+
+        // Étiquette de mois au-dessus de la première semaine où il apparaît
+        const months = [];
+        let lastMonth = -1;
+        days.forEach((day, i) => {
+            if (day.date.getDay() === 0 && day.date.getMonth() !== lastMonth) {
+                months.push({ col: Math.floor(i / 7) + 1, text: formatMonth.format(day.date) });
+                lastMonth = day.date.getMonth();
+            }
+        });
+        monthsRow.replaceChildren(
+            ...months
+                // Si le mois suivant commence trop près, on garde le suivant (mois complet) et on retire celui-ci
+                .filter((m, k) => !months[k + 1] || months[k + 1].col - m.col >= MIN_LABEL_COLS)
+                .map((m) => {
+                    const label = document.createElement('span');
+                    label.textContent = m.text;
+                    label.style.gridColumn = String(m.col);
+                    return label;
+                })
+        );
+
+        const summaryText = document.createElement('span');
+        summaryText.append(
+            document.createElement('strong'),
+            tr('gh.summary', { months: Math.round(WEEKS / 4.35), best: best.count })
+        );
+        summaryText.firstChild.textContent = String(total);
+        summary.replaceChildren(summaryText);
+        tooltip.hidden = true;
+    }
+
+    renderTexts();
+    onLangChange(renderTexts);
 
     // Sur mobile, la grille déborde : on montre d'abord les semaines les plus récentes
     scroller.scrollLeft = scroller.scrollWidth;
@@ -1147,7 +1121,7 @@ function initScratchpad() {
     clearButton.addEventListener('click', () => {
         if (!clearButton.classList.contains('is-confirming')) {
             clearButton.classList.add('is-confirming');
-            clearButton.textContent = 'Sûr ? Confirmer';
+            clearButton.textContent = tr('js.confirm-clear');
             confirmTimer = setTimeout(resetConfirm, CONFIRM_DELAY);
             return;
         }
@@ -1376,11 +1350,19 @@ function initNavMenu(navbar) {
     const toggle = navbar && navbar.querySelector('.nav-toggle');
     if (!toggle) return;
 
+    function updateLabel() {
+        const open = navbar.classList.contains('is-open');
+        toggle.setAttribute('aria-label', tr(open ? 'nav.fermer-le-menu' : 'nav.ouvrir-le-menu'));
+    }
+
     function setOpen(open) {
         navbar.classList.toggle('is-open', open);
         toggle.setAttribute('aria-expanded', String(open));
-        toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+        updateLabel();
     }
+
+    updateLabel();
+    onLangChange(updateLabel);
 
     toggle.addEventListener('click', () => setOpen(!navbar.classList.contains('is-open')));
     navbar.querySelectorAll('.nav-links a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
