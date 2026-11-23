@@ -8,6 +8,7 @@ Portfolio personnel de développeur web full-stack, conçu de A à Z en **HTML, 
 
 ## Fonctionnalités
 
+- **Site bilingue FR / EN** : sélecteur dans la barre de navigation, langue mémorisée dans `localStorage` (sinon langue du navigateur, sinon français), toute la page traduite, y compris les textes générés en JavaScript.
 - **Thème sombre / clair** mémorisé dans `localStorage`, appliqué avant le premier rendu pour éviter tout flash.
 - **Sélecteur de couleur d'accent** et curseur personnalisé.
 - **Modales de détail des projets** (`<dialog>` natif) avec onglets accessibles : présentation, choix techniques, difficultés et solutions.
@@ -34,7 +35,8 @@ Portfolio personnel de développeur web full-stack, conçu de A à Z en **HTML, 
 portfolio-leo/
 ├── index.html    # Structure de la page et balises meta (SEO, Open Graph)
 ├── style.css     # Styles, thèmes sombre / clair, responsive
-├── script.js     # Interactions et données des projets (objet PROJECTS)
+├── script.js     # Interactions (une fonction init… par fonctionnalité)
+├── i18n.js       # Traductions FR / EN : dictionnaire, bascule de langue, mémorisation
 ├── favicon.svg   # Logo
 └── README.md
 ```
@@ -66,9 +68,24 @@ Puis rendez-vous sur <http://localhost:8000>.
 
 ## Personnalisation
 
-- **Projets** : modifiez l'objet `PROJECTS` en tête de `script.js` (titre, description, stack, liens, choix techniques, difficultés), puis la carte correspondante dans `index.html` (attribut `data-project`).
+- **Projets** : la stack et les liens sont dans l'objet `PROJECTS` en tête de `script.js` ; les textes (titre, description, choix techniques, difficultés) sont dans `i18n.js`, clé `project.<id>` (une version `fr` et une `en`). Ajoutez ensuite la carte correspondante dans `index.html` (attribut `data-project`).
 - **Formulaire de contact** : remplacez `VOTRE_ID` dans l'attribut `action` du formulaire (`index.html`) par l'identifiant de votre formulaire [Formspree](https://formspree.io).
+- **Traductions** : voir la section ci-dessous.
 - **Thèmes** : les couleurs sont définies par des variables CSS en début de `style.css`.
+
+## Traductions (FR / EN)
+
+Le HTML reste écrit en français (c'est le contenu par défaut, lisible même sans JavaScript). `i18n.js` contient le dictionnaire : **une entrée par texte, avec le français et l'anglais côte à côte**.
+
+```js
+'nav.a-propos': { fr: 'À propos', en: 'About' },
+```
+
+- **Texte du HTML** : ajoutez `data-i18n="clé"` à l'élément (texte simple), `data-i18n-html="clé"` s'il contient des balises en ligne (`<span>`, `<em>`), ou `data-i18n-attr="aria-label:clé;placeholder:autre.clé"` pour des attributs. Gardez le texte français dans le HTML : il doit être identique à la valeur `fr` du dictionnaire.
+- **Texte généré en JavaScript** : utilisez `tr('clé', { variables })` dans `script.js`. Une valeur peut contenir `{variable}`, être une fonction `(vars) => texte` (pluriels) ou un tableau / objet (lignes du terminal, fiches projets).
+- **Redessiner après un changement de langue** : écoutez l'événement `langchange` (`onLangChange(callback)` dans `script.js`).
+- **Ajouter une langue** : ajoutez son code à `SUPPORTED` dans `i18n.js`, un bouton `.lang-btn[data-lang]` dans la navbar, puis sa valeur dans chaque entrée.
+- **Langue initiale** : la préférence enregistrée (`forcefabric-lang`), sinon la première langue prise en charge parmi celles du navigateur, sinon le français.
 
 ## Déploiement
 
