@@ -56,6 +56,50 @@
         'nav.violet-cyberpunk': { fr: 'Violet Cyberpunk', en: 'Cyberpunk Purple' },
         'nav.orange-neon': { fr: 'Orange Néon', en: 'Neon Orange' },
         'nav.activer-le-theme-clair': { fr: 'Activer le thème clair', en: 'Switch to light theme' },
+        // ── hero ──
+        'hero.bonjour-je-suis-leo-baskarane': { fr: 'Bonjour, je suis <span class="highlight">Léo Baskarane</span>', en: 'Hi, I\'m <span class="highlight">Léo Baskarane</span>' },
+        'hero.developpeur-full-stack-passionne-de': { fr: 'Développeur Full-Stack, passionné de Python & FastAPI, créateur web', en: 'Full-Stack Developer, passionate about Python & FastAPI, web creator' },
+        'hero.passionne-par-le-developpement-d': { fr: 'Passionné par le développement d\'applications web modernes, la conception d\'API robustes et la gestion de projets full-stack.', en: 'Passionate about building modern web applications, designing robust APIs and managing full-stack projects.' },
+        'hero.voir-mes-projets': { fr: 'Voir mes projets', en: 'View my projects' },
+        'hero.me-contacter': { fr: 'Me contacter', en: 'Contact me' },
+        'hero.projets-demos': { fr: 'Projets & Démos', en: 'Projects & Demos' },
+        'hero.code-propre-structure': { fr: 'Code Propre & Structuré', en: 'Clean & Structured Code' },
+        'hero.capacites-cles': { fr: 'Capacités clés', en: 'Key capabilities' },
+        'hero.developpement-full-stack': { fr: 'Développement Full-Stack', en: 'Full-Stack Development' },
+        'hero.fastapi-python-javascript': { fr: 'FastAPI, Python, JavaScript', en: 'FastAPI, Python, JavaScript' },
+        'hero.architecture-api-rest-bdd': { fr: 'Architecture API REST & BDD', en: 'REST API & Database Architecture' },
+        'hero.mysql-modelisation-pymysql': { fr: 'MySQL, Modélisation, PyMySQL', en: 'MySQL, Data Modeling, PyMySQL' },
+        'hero.interface-ergonomie-web': { fr: 'Interface & Ergonomie Web', en: 'Web Interface & Usability' },
+        'hero.ui-ux-moderne-responsive-design': { fr: 'UI/UX Moderne, Responsive Design', en: 'Modern UI/UX, Responsive Design' },
+        'hero.workflow-versioning': { fr: 'Workflow & Versioning', en: 'Workflow & Versioning' },
+        'hero.git-github-ci-cd-linux': { fr: 'Git, GitHub, CI/CD, Linux/Bash', en: 'Git, GitHub, CI/CD, Linux/Bash' },
+
+        // ── about ──
+        'about.developpeur-autonome-base-en-ile': { fr: 'Développeur autonome basé en Île-de-France, j\'aime résoudre des problèmes techniques et concevoir des applications fluides et performantes. Mon parcours m\'a permis d\'acquérir une bonne maîtrise du développement full-stack, de la gestion de bases de données et des workflows Git/Bitbucket.', en: 'Independent developer based in the Île-de-France region, I enjoy solving technical problems and building smooth, high-performance applications. My path has given me a solid command of full-stack development, database management and Git/Bitbucket workflows.' },
+        'about.voir-mon-profil-github-s': { fr: 'Voir mon profil GitHub (s\'ouvre dans un nouvel onglet)', en: 'View my GitHub profile (opens in a new tab)' },
+        'about.activite-github': { fr: 'Activité GitHub', en: 'GitHub Activity' },
+        'about.donnees-simulees': { fr: 'Données simulées', en: 'Simulated data' },
+        'about.grille-de-contributions-simulee-sur': { fr: 'Grille de contributions simulée sur les 6 derniers mois', en: 'Simulated contribution grid over the last 6 months' },
+        'about.moins': { fr: 'Moins', en: 'Less' },
+        'about.plus': { fr: 'Plus', en: 'More' },
+
+        // ── journey ──
+        'journey.developpement-full-stack-projets-personn': { fr: 'Développement Full-Stack & Projets Personnels', en: 'Full-Stack Development & Personal Projects' },
+        'journey.en-autodidacte-combs-la-ville': { fr: 'En autodidacte — Combs-la-Ville', en: 'Self-taught — Combs-la-Ville' },
+        'journey.conception-et-developpement-d-applicatio': { fr: 'Conception et développement d\'applications web interactives, mise en place d\'API REST avec FastAPI, gestion de bases de données MySQL et gestion de versions avec Git.', en: 'Design and development of interactive web applications, REST APIs built with FastAPI, MySQL database management and version control with Git.' },
+        'journey.autodidacte-en-developpement-full-stack': { fr: 'Autodidacte en Développement Full-Stack & Systèmes', en: 'Self-taught in Full-Stack Development & Systems' },
+        'journey.formation-a-la-maison-combs': { fr: 'Formation à la maison — Combs-la-Ville', en: 'Home-based training — Combs-la-Ville' },
+        'journey.apprentissage-approfondi-de-la-programma': { fr: 'Apprentissage approfondi de la programmation, conception d\'applications web avec Python, FastAPI, MySQL et maîtrise des environnements de développement sous Linux/WSL et Git.', en: 'In-depth study of programming, web application design with Python, FastAPI and MySQL, and a solid command of Linux/WSL and Git development environments.' },
+
+        // ── skills ──
+        'skills.competences-techniques': { fr: 'Compétences Techniques', en: 'Technical Skills' },
+        'skills.html5-css3-javascript-es6-responsive': { fr: 'HTML5, CSS3, JavaScript (ES6+), Responsive Design', en: 'HTML5, CSS3, JavaScript (ES6+), Responsive Design' },
+        'skills.backend-api': { fr: 'Backend & API', en: 'Backend & API' },
+        'skills.python-fastapi-endpoints-rest-crud': { fr: 'Python, FastAPI, Endpoints REST CRUD', en: 'Python, FastAPI, REST CRUD Endpoints' },
+        'skills.bases-de-donnees': { fr: 'Bases de données', en: 'Databases' },
+        'skills.mysql-modelisation-relationnelle-sql': { fr: 'MySQL, Modélisation relationnelle, SQL', en: 'MySQL, Relational Modeling, SQL' },
+        'skills.outils-workflow': { fr: 'Outils & Workflow', en: 'Tools & Workflow' },
+        'skills.git-bitbucket-pull-requests-linux': { fr: 'Git, Bitbucket (Pull Requests), Linux (Ubuntu), VS Code', en: 'Git, Bitbucket (Pull Requests), Linux (Ubuntu), VS Code' },
         // @@entries-end
     };
 
