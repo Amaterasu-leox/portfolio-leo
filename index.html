@@ -303,8 +303,8 @@
 
     <!-- Section Terminal interactif (piloté par script.js, initTerminal) -->
     <section id="terminal" class="section">
-        <h2>Terminal Interactif</h2>
-        <p>
+        <h2 data-i18n="terminal.terminal-interactif">Terminal Interactif</h2>
+        <p data-i18n="terminal.explorez-mon-profil-comme-dans">
             Explorez mon profil comme dans un shell WSL / Ubuntu : tapez une commande, ou cliquez sur une puce.
         </p>
 
@@ -319,13 +319,13 @@
                 <div class="terminal-output" role="log" aria-live="polite"></div>
                 <form class="terminal-line">
                     <label for="terminal-input" class="terminal-prompt">leo@portfolio:~$</label>
-                    <input type="text" id="terminal-input" class="terminal-input" autocomplete="off"
+                    <input data-i18n-attr="aria-label:terminal.commande-du-terminal" type="text" id="terminal-input" class="terminal-input" autocomplete="off"
                         autocapitalize="off" spellcheck="false" aria-label="Commande du terminal">
                 </form>
             </div>
         </div>
 
-        <div class="terminal-chips" role="group" aria-label="Commandes rapides">
+        <div data-i18n-attr="aria-label:terminal.commandes-rapides" class="terminal-chips" role="group" aria-label="Commandes rapides">
             <button type="button" class="terminal-chip" data-command="help">help</button>
             <button type="button" class="terminal-chip" data-command="about">about</button>
             <button type="button" class="terminal-chip" data-command="skills">skills</button>
@@ -338,8 +338,8 @@
 
     <!-- Section Notes rapides (script.js, initScratchpad) : texte sauvegardé dans localStorage -->
     <section id="notes" class="section">
-        <h2>Notes rapides</h2>
-        <p>Un bloc-notes pour jeter une idée ou un snippet : tout reste dans votre navigateur, rien n'est envoyé.</p>
+        <h2 data-i18n="notes.notes-rapides">Notes rapides</h2>
+        <p data-i18n="notes.un-bloc-notes-pour-jeter">Un bloc-notes pour jeter une idée ou un snippet : tout reste dans votre navigateur, rien n'est envoyé.</p>
 
         <div class="scratchpad">
             <div class="scratchpad-header">
@@ -347,8 +347,8 @@
                 <span class="scratchpad-status is-saved" role="status" aria-live="polite">SAVED</span>
                 <button type="button" class="scratchpad-clear">Clear</button>
             </div>
-            <label for="scratchpad-text" class="sr-only">Notes rapides</label>
-            <textarea id="scratchpad-text" class="scratchpad-text" rows="8" spellcheck="false"
+            <label data-i18n="notes.notes-rapides" for="scratchpad-text" class="sr-only">Notes rapides</label>
+            <textarea data-i18n-attr="placeholder:notes.tape-ici-idees-todo-snippets" id="scratchpad-text" class="scratchpad-text" rows="8" spellcheck="false"
                 placeholder="// tape ici : idées, todo, snippets…"></textarea>
         </div>
     </section>
@@ -357,10 +357,10 @@
     <section id="showcase" class="section">
         <div class="showcase">
             <div class="showcase-copy">
-                <p class="project-label">Projet phare</p>
-                <h2>Une plateforme unique pour le code, les API et l'architecture</h2>
-                <p class="showcase-subtitle">De la base MySQL à l'interface web, toute la chaîne full-stack.</p>
-                <p>
+                <p data-i18n="showcase.projet-phare" class="project-label">Projet phare</p>
+                <h2 data-i18n="showcase.une-plateforme-unique-pour-le">Une plateforme unique pour le code, les API et l'architecture</h2>
+                <p data-i18n="showcase.de-la-base-mysql-a" class="showcase-subtitle">De la base MySQL à l'interface web, toute la chaîne full-stack.</p>
+                <p data-i18n="showcase.je-concois-des-applications-de">
                     Je conçois des applications de bout en bout : un modèle de données relationnel solide, une API
                     REST claire et performante avec FastAPI, puis une interface fluide qui la consomme. Chaque projet
                     est versionné avec Git et pensé pour rester lisible, testable et facile à faire évoluer.
@@ -372,9 +372,9 @@
                     <li data-tech="js">JavaScript</li>
                 </ul>
                 <div class="showcase-buttons">
-                    <a href="https://github.com/Amaterasu-leox" class="btn primary-btn" target="_blank"
+                    <a data-i18n="showcase.explorer-le-code-sur-github" href="https://github.com/Amaterasu-leox" class="btn primary-btn" target="_blank"
                         rel="noopener noreferrer">Explorer le code sur GitHub</a>
-                    <a href="#projects" class="btn secondary-btn">Voir tous les projets</a>
+                    <a data-i18n="showcase.voir-tous-les-projets" href="#projects" class="btn secondary-btn">Voir tous les projets</a>
                 </div>
             </div>
 
@@ -388,14 +388,14 @@
                 </div>
                 <div class="window-body">
                     <div class="window-header">
-                        <span class="window-title">Mes tâches</span>
-                        <span class="window-status">API connectée</span>
+                        <span data-i18n="showcase.mes-taches" class="window-title">Mes tâches</span>
+                        <span data-i18n="showcase.api-connectee" class="window-status">API connectée</span>
                     </div>
                     <ul class="window-tasks">
-                        <li class="is-done"><span class="task-check"></span>Concevoir le schéma MySQL<em>Terminé</em></li>
-                        <li class="is-done"><span class="task-check"></span>Endpoints REST CRUD (FastAPI)<em>Terminé</em></li>
-                        <li><span class="task-check"></span>Connecter l'interface via fetch<em class="is-progress">En cours</em></li>
-                        <li><span class="task-check"></span>Documenter et publier la démo<em>À faire</em></li>
+                        <li data-i18n-html="showcase.concevoir-le-schema-mysqltermine" class="is-done"><span class="task-check"></span>Concevoir le schéma MySQL<em>Terminé</em></li>
+                        <li data-i18n-html="showcase.endpoints-rest-crud-fastapi-termine" class="is-done"><span class="task-check"></span>Endpoints REST CRUD (FastAPI)<em>Terminé</em></li>
+                        <li data-i18n-html="showcase.connecter-l-interface-via-fetchen"><span class="task-check"></span>Connecter l'interface via fetch<em class="is-progress">En cours</em></li>
+                        <li data-i18n-html="showcase.documenter-et-publier-la-demoa"><span class="task-check"></span>Documenter et publier la démo<em>À faire</em></li>
                     </ul>
                     <div class="window-code">
                         <span class="code-method">GET</span> /tasks <span class="code-ok">200 OK</span>
@@ -407,11 +407,11 @@
 
     <!-- Section Projets -->
     <section id="projects" class="section">
-        <h2>Projets Récents</h2>
+        <h2 data-i18n="projects.projets-recents">Projets Récents</h2>
 
         <!-- Filtres : pilotés par script.js (initProjectFilter) via data-filter / data-category -->
-        <div class="filter-bar" role="group" aria-label="Filtrer les projets par catégorie">
-            <button type="button" class="filter-btn is-active" data-filter="all" aria-pressed="true">Tous</button>
+        <div data-i18n-attr="aria-label:projects.filtrer-les-projets-par-categorie" class="filter-bar" role="group" aria-label="Filtrer les projets par catégorie">
+            <button data-i18n="projects.tous" type="button" class="filter-btn is-active" data-filter="all" aria-pressed="true">Tous</button>
             <button type="button" class="filter-btn" data-filter="full-stack" aria-pressed="false">Full-Stack</button>
             <button type="button" class="filter-btn" data-filter="frontend" aria-pressed="false">Frontend</button>
             <button type="button" class="filter-btn" data-filter="dataviz" aria-pressed="false">Data Viz</button>
@@ -422,8 +422,8 @@
             <!-- Projet 1 -->
             <div class="project-card" data-project="guru-todo" data-category="full-stack" tabindex="0" role="button" aria-haspopup="dialog">
                 <p class="project-label">Full-Stack</p>
-                <h3>Guru To-Do App</h3>
-                <p>
+                <h3 data-i18n="projects.guru-to-do-app">Guru To-Do App</h3>
+                <p data-i18n="projects.application-de-gestion-de-taches">
                     Application de gestion de tâches Full-Stack : API REST CRUD en Python FastAPI, base de données
                     MySQL et interface JavaScript dynamique.
                 </p>
@@ -434,15 +434,15 @@
                     <li data-tech="js">JavaScript</li>
                     <li data-tech="git">Git</li>
                 </ul>
-                <a href="https://github.com/Amaterasu-leox" class="project-more" target="_blank"
+                <a data-i18n="projects.voir-les-details" href="https://github.com/Amaterasu-leox" class="project-more" target="_blank"
                     rel="noopener noreferrer">Voir les détails →</a>
             </div>
 
             <!-- Projet 2 -->
             <div class="project-card" data-project="portfolio" data-category="frontend" tabindex="0" role="button" aria-haspopup="dialog">
                 <p class="project-label">Frontend</p>
-                <h3>Portfolio Web Personnel</h3>
-                <p>
+                <h3 data-i18n="projects.portfolio-web-personnel">Portfolio Web Personnel</h3>
+                <p data-i18n="projects.site-vitrine-developpe-sur-mesure">
                     Site vitrine développé sur-mesure, sans framework : timeline interactive, mini-terminal, thème
                     sombre / clair et responsive design.
                 </p>
@@ -452,15 +452,15 @@
                     <li data-tech="js">JavaScript</li>
                     <li data-tech="git">Git</li>
                 </ul>
-                <a href="https://github.com/Amaterasu-leox" class="project-more" target="_blank"
+                <a data-i18n="projects.voir-les-details" href="https://github.com/Amaterasu-leox" class="project-more" target="_blank"
                     rel="noopener noreferrer">Voir les détails →</a>
             </div>
 
             <!-- Projet 3 -->
             <div class="project-card" data-project="finops" data-category="dataviz" tabindex="0" role="button" aria-haspopup="dialog">
                 <p class="project-label">Data Viz</p>
-                <h3>FinOps Cloud Analytics</h3>
-                <p>
+                <h3 data-i18n="projects.finops-cloud-analytics">FinOps Cloud Analytics</h3>
+                <p data-i18n="projects.tableau-de-bord-interactif-de">
                     Tableau de bord interactif de suivi et d'optimisation des coûts multi-cloud (AWS, GCP, Azure) avec
                     graphiques interactifs sur données simulées et simulateur d'économies.
                 </p>
@@ -470,7 +470,7 @@
                     <li data-tech="js">JavaScript</li>
                     <li data-tech="chartjs">Chart.js</li>
                 </ul>
-                <a href="https://github.com/Amaterasu-leox" class="project-more" target="_blank"
+                <a data-i18n="projects.voir-les-details" href="https://github.com/Amaterasu-leox" class="project-more" target="_blank"
                     rel="noopener noreferrer">Voir les détails →</a>
             </div>
 
@@ -482,7 +482,7 @@
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.4-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z" />
                 </svg>
-                Voir mes dépôts GitHub
+                <span data-i18n="projects.voir-mes-depots-github">Voir mes dépôts GitHub</span>
             </a>
         </div>
     </section>
