@@ -48,7 +48,7 @@
 
     <!-- Navigation -->
     <nav class="navbar">
-        <a href="#" class="logo" aria-label="ForceFabric — Accueil">
+        <a data-i18n-attr="aria-label:nav.forcefabric-accueil" href="#" class="logo" aria-label="ForceFabric — Accueil">
             <!-- Logo ForceFabric : hexagone et « F » -->
             <svg class="logo-forcefabric" viewBox="0 0 120 120" width="36" height="36" fill="none"
                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -59,23 +59,23 @@
             </svg>
             <span class="logo-text">ForceFabric</span>
         </a>
-        <button type="button" class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false"
+        <button data-i18n-attr="aria-label:nav.ouvrir-le-menu" type="button" class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false"
             aria-controls="nav-right">
             <span class="nav-toggle-bar" aria-hidden="true"></span>
         </button>
         <div class="nav-right" id="nav-right">
             <ul class="nav-links">
-                <li><a href="#about">À propos</a></li>
-                <li><a href="#journey">Parcours</a></li>
-                <li><a href="#skills">Compétences</a></li>
-                <li><a href="#terminal">Terminal</a></li>
-                <li><a href="#projects">Projets</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#testimonials">Témoignages</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a data-i18n="nav.a-propos" href="#about">À propos</a></li>
+                <li><a data-i18n="nav.parcours" href="#journey">Parcours</a></li>
+                <li><a data-i18n="nav.competences" href="#skills">Compétences</a></li>
+                <li><a data-i18n="nav.terminal" href="#terminal">Terminal</a></li>
+                <li><a data-i18n="nav.projets" href="#projects">Projets</a></li>
+                <li><a data-i18n="nav.blog" href="#blog">Blog</a></li>
+                <li><a data-i18n="nav.temoignages" href="#testimonials">Témoignages</a></li>
+                <li><a data-i18n="nav.contact" href="#contact">Contact</a></li>
             </ul>
             <!-- Widget « Dev Timezone & Status » (script.js, initDevClock) : Paris + UTC, ONLINE de 08:00 à 22:00 -->
-            <div class="dev-clock is-away" role="group" aria-label="Fuseau horaire et statut du développeur">
+            <div data-i18n-attr="aria-label:nav.fuseau-horaire-et-statut-du" class="dev-clock is-away" role="group" aria-label="Fuseau horaire et statut du développeur">
                 <span class="dev-status">
                     <span class="dev-status-dot" aria-hidden="true"></span>
                     <span class="dev-status-badge">AWAY</span>
@@ -93,17 +93,26 @@
                 </div>
             </div>
             <!-- Sélecteur d'accent néon (script.js, initAccentSwitcher) -->
-            <div class="accent-switcher" role="group" aria-label="Couleur d'accent">
-                <button type="button" class="accent-dot" data-accent="#00f2fe" style="--dot:#00f2fe"
+            <div data-i18n-attr="aria-label:nav.couleur-d-accent" class="accent-switcher" role="group" aria-label="Couleur d'accent">
+                <button data-i18n-attr="aria-label:nav.cyan-cyber;title:nav.cyan-cyber" type="button" class="accent-dot" data-accent="#00f2fe" style="--dot:#00f2fe"
                     aria-label="Cyan Cyber" title="Cyan Cyber" aria-pressed="true"></button>
-                <button type="button" class="accent-dot" data-accent="#10b981" style="--dot:#10b981"
+                <button data-i18n-attr="aria-label:nav.vert-emeraude;title:nav.vert-emeraude" type="button" class="accent-dot" data-accent="#10b981" style="--dot:#10b981"
                     aria-label="Vert Émeraude" title="Vert Émeraude" aria-pressed="false"></button>
-                <button type="button" class="accent-dot" data-accent="#a855f7" style="--dot:#a855f7"
+                <button data-i18n-attr="aria-label:nav.violet-cyberpunk;title:nav.violet-cyberpunk" type="button" class="accent-dot" data-accent="#a855f7" style="--dot:#a855f7"
                     aria-label="Violet Cyberpunk" title="Violet Cyberpunk" aria-pressed="false"></button>
-                <button type="button" class="accent-dot" data-accent="#ff6b00" style="--dot:#ff6b00"
+                <button data-i18n-attr="aria-label:nav.orange-neon;title:nav.orange-neon" type="button" class="accent-dot" data-accent="#ff6b00" style="--dot:#ff6b00"
                     aria-label="Orange Néon" title="Orange Néon" aria-pressed="false"></button>
             </div>
-            <button type="button" class="theme-toggle" aria-label="Activer le thème clair">
+            <!-- Sélecteur de langue FR / EN (i18n.js) : mémorisé dans localStorage -->
+            <div class="lang-switcher" role="group" aria-label="Langue / Language"
+                data-i18n-attr="aria-label:lang.group">
+                <button type="button" class="lang-btn is-active" data-lang="fr" lang="fr" aria-pressed="true"
+                    aria-label="Français" title="Français">FR</button>
+                <button type="button" class="lang-btn" data-lang="en" lang="en" aria-pressed="false"
+                    aria-label="English" title="English">EN</button>
+                <span class="lang-announce sr-only" role="status" aria-live="polite"></span>
+            </div>
+            <button data-i18n-attr="aria-label:nav.activer-le-theme-clair" type="button" class="theme-toggle" aria-label="Activer le thème clair">
                 <!-- Soleil (affiché en thème sombre) -->
                 <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" aria-hidden="true">
@@ -924,6 +933,8 @@
     <div id="cursor-outline" aria-hidden="true"></div>
     <div id="cursor-dot" aria-hidden="true"></div>
 
+    <!-- i18n.js avant script.js : la langue est appliquée avant l'initialisation des composants -->
+    <script src="i18n.js"></script>
     <script src="script.js?v=2"></script>
 </body>
 
