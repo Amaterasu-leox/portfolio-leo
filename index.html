@@ -491,31 +491,31 @@
     <section id="blog" class="section">
         <div class="blog-intro">
             <div class="blog-intro-copy">
-                <p class="project-label">Blog &amp; Perspectives</p>
-                <h2>Perspectives et carnets de code</h2>
-                <p>
+                <p data-i18n="blog.blog-perspectives" class="project-label">Blog &amp; Perspectives</p>
+                <h2 data-i18n="blog.perspectives-et-carnets-de-code">Perspectives et carnets de code</h2>
+                <p data-i18n="blog.mes-retours-d-experience-sur">
                     Mes retours d'expérience sur le développement full-stack : création d'API REST avec FastAPI,
                     gestion des bases de données MySQL et intégration d'interfaces web modernes.
                 </p>
             </div>
 
             <!-- Widget d'infos : la recherche filtre la grille d'articles (script.js, initBlog) -->
-            <aside class="blog-widget" aria-label="Informations sur le blog">
+            <aside data-i18n-attr="aria-label:blog.informations-sur-le-blog" class="blog-widget" aria-label="Informations sur le blog">
                 <div class="blog-search" role="search">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" aria-hidden="true">
                         <circle cx="11" cy="11" r="7" />
                         <path d="M20 20l-3.5-3.5" />
                     </svg>
-                    <label for="blog-search" class="sr-only">Rechercher un article</label>
-                    <input type="search" id="blog-search" placeholder="Titres, résumés ou catégories..."
+                    <label data-i18n="blog.rechercher-un-article" for="blog-search" class="sr-only">Rechercher un article</label>
+                    <input data-i18n-attr="placeholder:blog.titres-resumes-ou-categories" type="search" id="blog-search" placeholder="Titres, résumés ou catégories..."
                         autocomplete="off">
                 </div>
                 <ul class="blog-metrics">
-                    <li><strong class="blog-metric-articles">11</strong><span>articles</span></li>
-                    <li><strong>Hebdomadaire</strong><span>Publication</span></li>
-                    <li><strong class="blog-metric-topics">6</strong><span>zones d'intérêt</span></li>
-                    <li><strong>7 min</strong><span>Lecture moyenne</span></li>
+                    <li><strong class="blog-metric-articles">11</strong><span data-i18n="blog.articles">articles</span></li>
+                    <li><strong data-i18n="blog.hebdomadaire">Hebdomadaire</strong><span data-i18n="blog.publication">Publication</span></li>
+                    <li><strong class="blog-metric-topics">6</strong><span data-i18n="blog.zones-d-interet">zones d'intérêt</span></li>
+                    <li><strong>7 min</strong><span data-i18n="blog.lecture-moyenne">Lecture moyenne</span></li>
                 </ul>
             </aside>
         </div>
@@ -533,10 +533,10 @@
             <div class="blog-featured-body">
                 <div class="blog-meta">
                     <span class="blog-tag">Full-Stack</span>
-                    <span class="blog-read">8 min de lecture</span>
+                    <span data-i18n="blog.8-min-de-lecture" class="blog-read">8 min de lecture</span>
                 </div>
-                <h3>Concevoir une application web robuste avec FastAPI et MySQL</h3>
-                <p>
+                <h3 data-i18n="blog.concevoir-une-application-web-robuste">Concevoir une application web robuste avec FastAPI et MySQL</h3>
+                <p data-i18n="blog.une-bonne-application-se-joue">
                     Une bonne application se joue à l'interface entre le front et le back : relier une interface
                     moderne à une API REST performante, et structurer une base de données relationnelle qui reste
                     fiable quand le projet grandit. Retour d'expérience, de la modélisation aux endpoints.
@@ -545,21 +545,21 @@
                     <span class="blog-avatar" aria-hidden="true">LB</span>
                     <span class="blog-author-info">
                         <strong>Léo Baskarane</strong>
-                        <time datetime="2026-11-04">4 nov. 2026</time>
+                        <time data-i18n="blog.4-nov-2026" datetime="2026-11-04">4 nov. 2026</time>
                     </span>
-                    <a href="#blog" class="btn primary-btn blog-cta">Lire l'article</a>
+                    <a data-i18n="blog.lire-l-article" href="#blog" class="btn primary-btn blog-cta">Lire l'article</a>
                 </div>
             </div>
         </article>
 
         <!-- Filtres par catégorie -->
-        <div class="blog-filters" role="group" aria-label="Filtrer les articles par catégorie">
-            <button type="button" class="blog-filter-btn is-active" data-filter="all" aria-pressed="true">Tous</button>
+        <div data-i18n-attr="aria-label:blog.filtrer-les-articles-par-categorie" class="blog-filters" role="group" aria-label="Filtrer les articles par catégorie">
+            <button data-i18n="projects.tous" type="button" class="blog-filter-btn is-active" data-filter="all" aria-pressed="true">Tous</button>
             <button type="button" class="blog-filter-btn" data-filter="fullstack" aria-pressed="false">Full-Stack</button>
-            <button type="button" class="blog-filter-btn" data-filter="api" aria-pressed="false">FastAPI &amp; API</button>
-            <button type="button" class="blog-filter-btn" data-filter="database" aria-pressed="false">Base de données</button>
+            <button data-i18n="blog.fastapi-api" type="button" class="blog-filter-btn" data-filter="api" aria-pressed="false">FastAPI &amp; API</button>
+            <button data-i18n="blog.base-de-donnees" type="button" class="blog-filter-btn" data-filter="database" aria-pressed="false">Base de données</button>
             <button type="button" class="blog-filter-btn" data-filter="frontend" aria-pressed="false">Frontend</button>
-            <button type="button" class="blog-filter-btn" data-filter="devops" aria-pressed="false">DevOps &amp; Git</button>
+            <button data-i18n="blog.devops-git" type="button" class="blog-filter-btn" data-filter="devops" aria-pressed="false">DevOps &amp; Git</button>
             <button type="button" class="blog-filter-btn" data-filter="architecture" aria-pressed="false">Architecture</button>
         </div>
 
@@ -570,13 +570,13 @@
                     <div class="thumb-bars"><span style="--h: 50%"></span><span style="--h: 72%"></span><span style="--h: 88%"></span><span style="--h: 60%"></span><span style="--h: 78%"></span></div>
                 </div>
                 <div class="blog-card-body">
-                    <div class="blog-meta"><span class="blog-tag">FastAPI &amp; API</span><span class="blog-read">7 min</span></div>
-                    <h3>Pourquoi j'ai choisi FastAPI pour mes projets Backend : Performance et Asynchronisme</h3>
-                    <p>Retour d'expérience sur la rapidité d'exécution, la validation automatique via Pydantic et la génération native de la documentation interactive Swagger/ReDoc.</p>
+                    <div class="blog-meta"><span data-i18n="blog.fastapi-api" class="blog-tag">FastAPI &amp; API</span><span class="blog-read">7 min</span></div>
+                    <h3 data-i18n="blog.pourquoi-j-ai-choisi-fastapi">Pourquoi j'ai choisi FastAPI pour mes projets Backend : Performance et Asynchronisme</h3>
+                    <p data-i18n="blog.retour-d-experience-sur-la">Retour d'expérience sur la rapidité d'exécution, la validation automatique via Pydantic et la génération native de la documentation interactive Swagger/ReDoc.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-06">6 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : Pourquoi j'ai choisi FastAPI pour mes projets Backend, performance et asynchronisme">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.6-nov-2026" datetime="2026-11-06">6 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-pourquoi-j-ai-choisi" href="#blog" class="blog-arrow" aria-label="Lire : Pourquoi j'ai choisi FastAPI pour mes projets Backend, performance et asynchronisme">→</a>
                     </div>
                 </div>
             </article>
@@ -586,13 +586,13 @@
                     <div class="thumb-bars"><span style="--h: 35%"></span><span style="--h: 52%"></span><span style="--h: 70%"></span><span style="--h: 86%"></span><span style="--h: 62%"></span></div>
                 </div>
                 <div class="blog-card-body">
-                    <div class="blog-meta"><span class="blog-tag">Base de données</span><span class="blog-read">8 min</span></div>
-                    <h3>Structurer une base de données MySQL pour une application web moderne</h3>
-                    <p>Méthodologie de modélisation des tables, gestion propre des relations One-to-Many / Many-to-Many et intégration optimale avec Python.</p>
+                    <div class="blog-meta"><span data-i18n="blog.base-de-donnees" class="blog-tag">Base de données</span><span class="blog-read">8 min</span></div>
+                    <h3 data-i18n="blog.structurer-une-base-de-donnees">Structurer une base de données MySQL pour une application web moderne</h3>
+                    <p data-i18n="blog.methodologie-de-modelisation-des-tables">Méthodologie de modélisation des tables, gestion propre des relations One-to-Many / Many-to-Many et intégration optimale avec Python.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-06">6 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : Structurer une base de données MySQL pour une application web moderne">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.6-nov-2026" datetime="2026-11-06">6 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-structurer-une-base-de" href="#blog" class="blog-arrow" aria-label="Lire : Structurer une base de données MySQL pour une application web moderne">→</a>
                     </div>
                 </div>
             </article>
@@ -603,12 +603,12 @@
                 </div>
                 <div class="blog-card-body">
                     <div class="blog-meta"><span class="blog-tag">Architecture</span><span class="blog-read">6 min</span></div>
-                    <h3>De l'idée au déploiement : Comment j'ai conçu mon portfolio ForceFabric</h3>
-                    <p>Les coulisses de la création du site : choix d'une architecture HTML/CSS/JS fluide, design en glassmorphism et déploiement continu via GitHub Pages.</p>
+                    <h3 data-i18n="blog.de-l-idee-au-deploiement">De l'idée au déploiement : Comment j'ai conçu mon portfolio ForceFabric</h3>
+                    <p data-i18n="blog.les-coulisses-de-la-creation">Les coulisses de la création du site : choix d'une architecture HTML/CSS/JS fluide, design en glassmorphism et déploiement continu via GitHub Pages.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-05">5 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : De l'idée au déploiement, comment j'ai conçu mon portfolio ForceFabric">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.5-nov-2026" datetime="2026-11-05">5 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-de-l-idee-au" href="#blog" class="blog-arrow" aria-label="Lire : De l'idée au déploiement, comment j'ai conçu mon portfolio ForceFabric">→</a>
                     </div>
                 </div>
             </article>
@@ -618,13 +618,13 @@
                     <div class="thumb-bars"><span style="--h: 62%"></span><span style="--h: 40%"></span><span style="--h: 76%"></span><span style="--h: 52%"></span><span style="--h: 86%"></span></div>
                 </div>
                 <div class="blog-card-body">
-                    <div class="blog-meta"><span class="blog-tag">DevOps &amp; Git</span><span class="blog-read">6 min</span></div>
-                    <h3>Gérer ses environnements sous Windows 11 avec WSL2 et Ubuntu</h3>
-                    <p>Optimisation de son workflow de dev sous Windows avec WSL, gestion des environnements virtuels Python via uv et gain de productivité au terminal.</p>
+                    <div class="blog-meta"><span data-i18n="blog.devops-git" class="blog-tag">DevOps &amp; Git</span><span class="blog-read">6 min</span></div>
+                    <h3 data-i18n="blog.gerer-ses-environnements-sous-windows">Gérer ses environnements sous Windows 11 avec WSL2 et Ubuntu</h3>
+                    <p data-i18n="blog.optimisation-de-son-workflow-de">Optimisation de son workflow de dev sous Windows avec WSL, gestion des environnements virtuels Python via uv et gain de productivité au terminal.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-05">5 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : Gérer ses environnements sous Windows 11 avec WSL2 et Ubuntu">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.5-nov-2026" datetime="2026-11-05">5 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-gerer-ses-environnements-sous" href="#blog" class="blog-arrow" aria-label="Lire : Gérer ses environnements sous Windows 11 avec WSL2 et Ubuntu">→</a>
                     </div>
                 </div>
             </article>
@@ -634,13 +634,13 @@
                     <div class="thumb-bars"><span style="--h: 44%"></span><span style="--h: 68%"></span><span style="--h: 54%"></span><span style="--h: 82%"></span><span style="--h: 70%"></span></div>
                 </div>
                 <div class="blog-card-body">
-                    <div class="blog-meta"><span class="blog-tag">DevOps &amp; Git</span><span class="blog-read">5 min</span></div>
-                    <h3>Automatiser son workflow de développement avec Git et GitHub</h3>
-                    <p>Les bonnes pratiques de versioning, l'organisation des branches et l'écriture de commits clairs pour maintenir des projets propres.</p>
+                    <div class="blog-meta"><span data-i18n="blog.devops-git" class="blog-tag">DevOps &amp; Git</span><span class="blog-read">5 min</span></div>
+                    <h3 data-i18n="blog.automatiser-son-workflow-de-developpemen">Automatiser son workflow de développement avec Git et GitHub</h3>
+                    <p data-i18n="blog.les-bonnes-pratiques-de-versioning">Les bonnes pratiques de versioning, l'organisation des branches et l'écriture de commits clairs pour maintenir des projets propres.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-04">4 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : Automatiser son workflow de développement avec Git et GitHub">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.4-nov-2026" datetime="2026-11-04">4 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-automatiser-son-workflow-de" href="#blog" class="blog-arrow" aria-label="Lire : Automatiser son workflow de développement avec Git et GitHub">→</a>
                     </div>
                 </div>
             </article>
@@ -651,12 +651,12 @@
                 </div>
                 <div class="blog-card-body">
                     <div class="blog-meta"><span class="blog-tag">Full-Stack</span><span class="blog-read">7 min</span></div>
-                    <h3>Structurer une application web moderne : bonnes pratiques front et back</h3>
-                    <p>Séparer les responsabilités, organiser le code et faire dialoguer interface et API sans dette technique.</p>
+                    <h3 data-i18n="blog.structurer-une-application-web-moderne">Structurer une application web moderne : bonnes pratiques front et back</h3>
+                    <p data-i18n="blog.separer-les-responsabilites-organiser-le">Séparer les responsabilités, organiser le code et faire dialoguer interface et API sans dette technique.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-03">3 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : Structurer une application web moderne, bonnes pratiques front et back">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.3-nov-2026" datetime="2026-11-03">3 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-structurer-une-application-web" href="#blog" class="blog-arrow" aria-label="Lire : Structurer une application web moderne, bonnes pratiques front et back">→</a>
                     </div>
                 </div>
             </article>
@@ -666,13 +666,13 @@
                     <div class="thumb-bars"><span style="--h: 70%"></span><span style="--h: 45%"></span><span style="--h: 80%"></span><span style="--h: 55%"></span><span style="--h: 35%"></span></div>
                 </div>
                 <div class="blog-card-body">
-                    <div class="blog-meta"><span class="blog-tag">FastAPI &amp; API</span><span class="blog-read">6 min</span></div>
-                    <h3>Créer une API REST robuste et performante avec FastAPI et Python</h3>
-                    <p>Endpoints CRUD, validation des données et gestion des erreurs : les fondations d'une API fiable.</p>
+                    <div class="blog-meta"><span data-i18n="blog.fastapi-api" class="blog-tag">FastAPI &amp; API</span><span class="blog-read">6 min</span></div>
+                    <h3 data-i18n="blog.creer-une-api-rest-robuste">Créer une API REST robuste et performante avec FastAPI et Python</h3>
+                    <p data-i18n="blog.endpoints-crud-validation-des-donnees">Endpoints CRUD, validation des données et gestion des erreurs : les fondations d'une API fiable.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-03">3 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : Créer une API REST robuste et performante avec FastAPI et Python">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.3-nov-2026" datetime="2026-11-03">3 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-creer-une-api-rest" href="#blog" class="blog-arrow" aria-label="Lire : Créer une API REST robuste et performante avec FastAPI et Python">→</a>
                     </div>
                 </div>
             </article>
@@ -682,13 +682,13 @@
                     <div class="thumb-bars"><span style="--h: 30%"></span><span style="--h: 48%"></span><span style="--h: 66%"></span><span style="--h: 82%"></span><span style="--h: 95%"></span></div>
                 </div>
                 <div class="blog-card-body">
-                    <div class="blog-meta"><span class="blog-tag">Base de données</span><span class="blog-read">8 min</span></div>
-                    <h3>Gérer la persistance des données avec MySQL et PyMySQL</h3>
-                    <p>Modélisation relationnelle, requêtes paramétrées et connexions : stocker et relire ses données proprement.</p>
+                    <div class="blog-meta"><span data-i18n="blog.base-de-donnees" class="blog-tag">Base de données</span><span class="blog-read">8 min</span></div>
+                    <h3 data-i18n="blog.gerer-la-persistance-des-donnees">Gérer la persistance des données avec MySQL et PyMySQL</h3>
+                    <p data-i18n="blog.modelisation-relationnelle-requetes-para">Modélisation relationnelle, requêtes paramétrées et connexions : stocker et relire ses données proprement.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-02">2 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : Gérer la persistance des données avec MySQL et PyMySQL">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.2-nov-2026" datetime="2026-11-02">2 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-gerer-la-persistance-des" href="#blog" class="blog-arrow" aria-label="Lire : Gérer la persistance des données avec MySQL et PyMySQL">→</a>
                     </div>
                 </div>
             </article>
@@ -699,12 +699,12 @@
                 </div>
                 <div class="blog-card-body">
                     <div class="blog-meta"><span class="blog-tag">Frontend</span><span class="blog-read">9 min</span></div>
-                    <h3>Concevoir des interfaces dynamiques et réactives en JavaScript et CSS</h3>
-                    <p>Manipulation du DOM, appels fetch et responsive design pour une interface fluide, sans framework.</p>
+                    <h3 data-i18n="blog.concevoir-des-interfaces-dynamiques-et">Concevoir des interfaces dynamiques et réactives en JavaScript et CSS</h3>
+                    <p data-i18n="blog.manipulation-du-dom-appels-fetch">Manipulation du DOM, appels fetch et responsive design pour une interface fluide, sans framework.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-02">2 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : Concevoir des interfaces dynamiques et réactives en JavaScript et CSS">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.2-nov-2026" datetime="2026-11-02">2 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-concevoir-des-interfaces-dynamiques" href="#blog" class="blog-arrow" aria-label="Lire : Concevoir des interfaces dynamiques et réactives en JavaScript et CSS">→</a>
                     </div>
                 </div>
             </article>
@@ -714,13 +714,13 @@
                     <div class="thumb-bars"><span style="--h: 60%"></span><span style="--h: 35%"></span><span style="--h: 78%"></span><span style="--h: 50%"></span><span style="--h: 88%"></span></div>
                 </div>
                 <div class="blog-card-body">
-                    <div class="blog-meta"><span class="blog-tag">DevOps &amp; Git</span><span class="blog-read">6 min</span></div>
-                    <h3>Maîtriser le versioning et le déploiement continu avec Git, GitHub et Linux</h3>
-                    <p>Branches, Pull Requests et scripts Bash : un workflow reproductible de la machine locale au serveur.</p>
+                    <div class="blog-meta"><span data-i18n="blog.devops-git" class="blog-tag">DevOps &amp; Git</span><span class="blog-read">6 min</span></div>
+                    <h3 data-i18n="blog.maitriser-le-versioning-et-le">Maîtriser le versioning et le déploiement continu avec Git, GitHub et Linux</h3>
+                    <p data-i18n="blog.branches-pull-requests-et-scripts">Branches, Pull Requests et scripts Bash : un workflow reproductible de la machine locale au serveur.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-01">1 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : Maîtriser le versioning et le déploiement continu avec Git, GitHub et Linux">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.1-nov-2026" datetime="2026-11-01">1 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-maitriser-le-versioning-et" href="#blog" class="blog-arrow" aria-label="Lire : Maîtriser le versioning et le déploiement continu avec Git, GitHub et Linux">→</a>
                     </div>
                 </div>
             </article>
@@ -731,23 +731,23 @@
                 </div>
                 <div class="blog-card-body">
                     <div class="blog-meta"><span class="blog-tag">Architecture</span><span class="blog-read">7 min</span></div>
-                    <h3>De l'idée au déploiement : retour d'expérience sur mon portfolio ForceFabric</h3>
-                    <p>Choix techniques, difficultés rencontrées et leçons tirées de la conception de ce site, étape par étape.</p>
+                    <h3 data-i18n="blog.de-l-idee-au-deploiement-2">De l'idée au déploiement : retour d'expérience sur mon portfolio ForceFabric</h3>
+                    <p data-i18n="blog.choix-techniques-difficultes-rencontrees">Choix techniques, difficultés rencontrées et leçons tirées de la conception de ce site, étape par étape.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-01">1 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : De l'idée au déploiement, retour d'expérience sur mon portfolio ForceFabric">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.1-nov-2026" datetime="2026-11-01">1 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-de-l-idee-au-2" href="#blog" class="blog-arrow" aria-label="Lire : De l'idée au déploiement, retour d'expérience sur mon portfolio ForceFabric">→</a>
                     </div>
                 </div>
             </article>
         </div>
 
-        <p class="blog-empty" hidden>Aucun article ne correspond à votre recherche.</p>
+        <p data-i18n="blog.aucun-article-ne-correspond-a" class="blog-empty" hidden>Aucun article ne correspond à votre recherche.</p>
 
         <!-- Pagination simulée -->
         <div class="blog-pagination">
-            <p class="blog-count-text">Affichage de <strong class="blog-count">11</strong> sur <span class="blog-total">11</span> articles</p>
-            <button type="button" class="btn secondary-btn blog-more" aria-describedby="blog-more-status">Voir plus d'articles</button>
+            <p class="blog-count-text"><span data-i18n="blog.affichage-de">Affichage de</span> <strong class="blog-count">11</strong> <span data-i18n="blog.sur">sur</span> <span class="blog-total">11</span> <span data-i18n="blog.articles">articles</span></p>
+            <button data-i18n="blog.voir-plus-d-articles" type="button" class="btn secondary-btn blog-more" aria-describedby="blog-more-status">Voir plus d'articles</button>
             <p class="blog-more-status" id="blog-more-status" role="status" aria-live="polite"></p>
         </div>
     </section>
@@ -755,17 +755,17 @@
     <!-- Section Newsletter -->
     <section id="newsletter" class="section">
         <div class="newsletter-card">
-            <h2>Suivez mes carnets de code et projets full-stack.</h2>
-            <p>
+            <h2 data-i18n="newsletter.suivez-mes-carnets-de-code">Suivez mes carnets de code et projets full-stack.</h2>
+            <p data-i18n="newsletter.un-e-mail-par-semaine">
                 Un e-mail par semaine : retours d'expérience sur FastAPI, MySQL, l'architecture d'applications web
                 et mes astuces de développement. Sans spam, désinscription en un clic.
             </p>
             <!-- Formulaire simulé : aucune donnée n'est envoyée (voir initNewsletter dans script.js) -->
             <form class="newsletter-form" novalidate>
-                <label for="newsletter-email" class="sr-only">Adresse e-mail</label>
-                <input type="email" id="newsletter-email" name="email" placeholder="votre@email.com"
+                <label data-i18n="newsletter.adresse-e-mail" for="newsletter-email" class="sr-only">Adresse e-mail</label>
+                <input data-i18n-attr="placeholder:newsletter.votre-email-com" type="email" id="newsletter-email" name="email" placeholder="votre@email.com"
                     autocomplete="email" required>
-                <button type="submit" class="btn primary-btn">S'abonner</button>
+                <button data-i18n="newsletter.s-abonner" type="submit" class="btn primary-btn">S'abonner</button>
             </form>
             <p class="newsletter-status" role="status" aria-live="polite"></p>
         </div>
@@ -773,26 +773,26 @@
 
     <!-- Modale de détail projet (remplie par script.js) -->
     <dialog class="project-modal" aria-labelledby="modal-title">
-        <button type="button" class="modal-close" aria-label="Fermer">&times;</button>
+        <button data-i18n-attr="aria-label:modal.fermer" type="button" class="modal-close" aria-label="Fermer">&times;</button>
         <h3 id="modal-title"></h3>
         <p class="modal-subtitle"></p>
 
-        <div class="modal-tabs" role="tablist" aria-label="Sections du projet">
-            <button type="button" role="tab" id="tab-overview" aria-controls="panel-overview"
+        <div data-i18n-attr="aria-label:modal.sections-du-projet" class="modal-tabs" role="tablist" aria-label="Sections du projet">
+            <button data-i18n="modal.presentation" type="button" role="tab" id="tab-overview" aria-controls="panel-overview"
                 aria-selected="true">Présentation</button>
-            <button type="button" role="tab" id="tab-choices" aria-controls="panel-choices" aria-selected="false"
+            <button data-i18n="modal.choix-techniques" type="button" role="tab" id="tab-choices" aria-controls="panel-choices" aria-selected="false"
                 tabindex="-1">Choix techniques</button>
-            <button type="button" role="tab" id="tab-challenges" aria-controls="panel-challenges"
+            <button data-i18n="modal.difficultes-solutions" type="button" role="tab" id="tab-challenges" aria-controls="panel-challenges"
                 aria-selected="false" tabindex="-1">Difficultés &amp; solutions</button>
         </div>
 
         <div role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
             <p class="modal-description"></p>
-            <h4>Fonctionnalités clés</h4>
+            <h4 data-i18n="modal.fonctionnalites-cles">Fonctionnalités clés</h4>
             <ul class="modal-features"></ul>
             <h4>Architecture</h4>
             <ol class="modal-architecture"></ol>
-            <h4>Stack technique</h4>
+            <h4 data-i18n="modal.stack-technique">Stack technique</h4>
             <ul class="modal-stack"></ul>
         </div>
 
@@ -809,8 +809,8 @@
 
     <!-- Section Témoignages -->
     <section id="testimonials" class="section">
-        <h2>Recommandations</h2>
-        <p>Ce que disent celles et ceux avec qui j'ai travaillé ou appris.</p>
+        <h2 data-i18n="testimonials.recommandations">Recommandations</h2>
+        <p data-i18n="testimonials.ce-que-disent-celles-et">Ce que disent celles et ceux avec qui j'ai travaillé ou appris.</p>
 
         <!--
             Pour ajouter une recommandation, duplique un <figure class="testimonial-card">. Les initiales
@@ -819,30 +819,30 @@
         <div class="testimonials-grid">
             <figure class="testimonial-card">
                 <blockquote>
-                    <p>« Léo fait preuve d'une autonomie remarquable et d'une grande rigueur dans le développement
+                    <p data-i18n="testimonials.leo-fait-preuve-d-une">« Léo fait preuve d'une autonomie remarquable et d'une grande rigueur dans le développement
                         d'applications web. Sa capacité à concevoir des architectures backend et à structurer des
                         bases de données témoigne d'un solide niveau technique. »</p>
                 </blockquote>
                 <figcaption>
                     <span class="testimonial-avatar" aria-hidden="true">FB</span>
                     <span class="testimonial-author">
-                        <strong>Formateur Backend</strong>
-                        <span>Enseignant / Référent Pédagogique</span>
+                        <strong data-i18n="testimonials.formateur-backend">Formateur Backend</strong>
+                        <span data-i18n="testimonials.enseignant-referent-pedagogique">Enseignant / Référent Pédagogique</span>
                     </span>
                 </figcaption>
             </figure>
 
             <figure class="testimonial-card">
                 <blockquote>
-                    <p>« Une excellente collaboration avec Léo. Il est réactif, maîtrise parfaitement la gestion de
+                    <p data-i18n="testimonials.une-excellente-collaboration-avec-leo">« Une excellente collaboration avec Léo. Il est réactif, maîtrise parfaitement la gestion de
                         versions avec Git/GitHub et sait proposer des solutions efficaces face aux contraintes
                         techniques. »</p>
                 </blockquote>
                 <figcaption>
                     <span class="testimonial-avatar" aria-hidden="true">CP</span>
                     <span class="testimonial-author">
-                        <strong>Chef de Projet</strong>
-                        <span>Lead Developer / Collaborateur Tech</span>
+                        <strong data-i18n="testimonials.chef-de-projet">Chef de Projet</strong>
+                        <span data-i18n="testimonials.lead-developer-collaborateur-tech">Lead Developer / Collaborateur Tech</span>
                     </span>
                 </figcaption>
             </figure>
@@ -851,8 +851,8 @@
 
     <!-- Section Contact -->
     <section id="contact" class="section">
-        <h2>Contact</h2>
-        <p>Un projet ou une opportunité ? N'hésite pas à me contacter !</p>
+        <h2 data-i18n="nav.contact">Contact</h2>
+        <p data-i18n="contact.un-projet-ou-une-opportunite">Un projet ou une opportunité ? N'hésite pas à me contacter !</p>
 
         <!--
             Formspree : remplacer VOTRE_ID dans l'attribut action par l'identifiant de ton formulaire
@@ -863,7 +863,7 @@
             data-fallback-email="baskaraneleo@forcefabric.com">
             <div class="form-row">
                 <div class="form-field">
-                    <label for="contact-name">Nom</label>
+                    <label data-i18n="contact.nom" for="contact-name">Nom</label>
                     <input type="text" id="contact-name" name="name" autocomplete="name" required>
                 </div>
                 <div class="form-field">
@@ -872,29 +872,29 @@
                 </div>
             </div>
             <div class="form-field">
-                <label for="contact-subject">Sujet</label>
+                <label data-i18n="contact.sujet" for="contact-subject">Sujet</label>
                 <input type="text" id="contact-subject" name="subject">
             </div>
             <div class="form-field">
-                <label for="contact-message">Message</label>
+                <label data-i18n="contact.message" for="contact-message">Message</label>
                 <textarea id="contact-message" name="message" rows="6" required></textarea>
             </div>
             <!-- Champ piège anti-spam : invisible pour les humains -->
             <input type="text" name="_gotcha" class="form-honeypot" tabindex="-1" autocomplete="off"
                 aria-hidden="true">
-            <button type="submit" class="btn primary-btn">Envoyer le message</button>
+            <button data-i18n="contact.envoyer-le-message" type="submit" class="btn primary-btn">Envoyer le message</button>
             <p class="form-status" role="status" aria-live="polite"></p>
         </form>
 
         <p class="contact-alt">
-            Ou écris-moi directement : <a href="mailto:baskaraneleo@forcefabric.com">baskaraneleo@forcefabric.com</a>
+            <span data-i18n="contact.ou-ecris-moi-directement">Ou écris-moi directement :</span> <a href="mailto:baskaraneleo@forcefabric.com">baskaraneleo@forcefabric.com</a>
             <button type="button" class="copy-email-btn" data-copy="baskaraneleo@forcefabric.com">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round" aria-hidden="true">
                     <rect x="9" y="9" width="13" height="13" rx="2" />
                     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
                 </svg>
-                <span class="copy-email-label">Copier l'email</span>
+                <span data-i18n="contact.copier-l-email" class="copy-email-label">Copier l'email</span>
                 <span class="copy-tooltip" role="status" aria-live="polite"></span>
             </button>
         </p>
@@ -902,28 +902,28 @@
 
     <footer>
         <!-- Widget « System Status » : états et latences simulés (script.js, initSystemStatus) -->
-        <div class="system-status" role="group" aria-label="État des services (simulation)">
+        <div data-i18n-attr="aria-label:footer.etat-des-services-simulation" class="system-status" role="group" aria-label="État des services (simulation)">
             <span class="system-status-title">System Status</span>
             <ul class="system-status-list">
                 <li class="status-item" data-service="api" data-base="42">
                     <span class="status-dot" aria-hidden="true"></span>
                     <span class="status-name">API FastAPI</span>
-                    <span class="status-state">opérationnel · <span class="status-ms">42</span> ms</span>
+                    <span class="status-state"><span data-i18n="footer.operationnel">opérationnel ·</span> <span class="status-ms">42</span> ms</span>
                 </li>
                 <li class="status-item" data-service="db" data-base="8">
                     <span class="status-dot" aria-hidden="true"></span>
                     <span class="status-name">DB MySQL</span>
-                    <span class="status-state">opérationnel · <span class="status-ms">8</span> ms</span>
+                    <span class="status-state"><span data-i18n="footer.operationnel">opérationnel ·</span> <span class="status-ms">8</span> ms</span>
                 </li>
                 <li class="status-item" data-service="wsl" data-base="3">
                     <span class="status-dot" aria-hidden="true"></span>
                     <span class="status-name">WSL Environment</span>
-                    <span class="status-state">opérationnel · <span class="status-ms">3</span> ms</span>
+                    <span class="status-state"><span data-i18n="footer.operationnel">opérationnel ·</span> <span class="status-ms">3</span> ms</span>
                 </li>
             </ul>
-            <span class="system-status-note">Données simulées</span>
+            <span data-i18n="about.donnees-simulees" class="system-status-note">Données simulées</span>
         </div>
-        <p>© 2026 Léo Baskarane — Tous droits réservés.</p>
+        <p data-i18n="footer.2026-leo-baskarane-tous-droits">© 2026 Léo Baskarane — Tous droits réservés.</p>
     </footer>
 
     <!-- Notifications Toast (alimentées par showToast() dans script.js) -->
