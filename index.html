@@ -59,7 +59,11 @@
             </svg>
             <span class="logo-text">ForceFabric</span>
         </a>
-        <div class="nav-right">
+        <button type="button" class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false"
+            aria-controls="nav-right">
+            <span class="nav-toggle-bar" aria-hidden="true"></span>
+        </button>
+        <div class="nav-right" id="nav-right">
             <ul class="nav-links">
                 <li><a href="#about">À propos</a></li>
                 <li><a href="#journey">Parcours</a></li>
@@ -143,8 +147,8 @@
                 <ul class="hero-stats">
                     <li><strong>10+</strong><span>Projets &amp; Démos</span></li>
                     <li><strong>100%</strong><span>Open Source</span></li>
-                    <li><strong>FastAPI / MySQL</strong><span>Tech Stack</span></li>
                     <li><strong>99.9%</strong><span>Code Propre &amp; Structuré</span></li>
+                    <li class="hero-stat-stack"><strong>FastAPI / MySQL</strong><span>Tech Stack</span></li>
                 </ul>
             </div>
 

@@ -113,6 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCustomCursor(prefersReducedMotion);
     initActivityGrid();
     initSmoothScroll(navbar, prefersReducedMotion);
+    initNavMenu(navbar);
     initScrollReveal(prefersReducedMotion);
     initTypewriter(prefersReducedMotion);
     initProjectFilter(prefersReducedMotion);
@@ -1356,6 +1357,33 @@ function initReadingProgress() {
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     update();
+}
+
+/**
+ * Menu burger de la navbar (écrans ≤ 1280px) : ouverture/fermeture, Échap, clic sur un lien
+ * ou passage en grand écran referment le panneau.
+ */
+function initNavMenu(navbar) {
+    const toggle = navbar && navbar.querySelector('.nav-toggle');
+    if (!toggle) return;
+
+    function setOpen(open) {
+        navbar.classList.toggle('is-open', open);
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    }
+
+    toggle.addEventListener('click', () => setOpen(!navbar.classList.contains('is-open')));
+    navbar.querySelectorAll('.nav-links a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navbar.classList.contains('is-open')) {
+            setOpen(false);
+            toggle.focus();
+        }
+    });
+    window.matchMedia('(min-width: 1281px)').addEventListener('change', (e) => {
+        if (e.matches) setOpen(false);
+    });
 }
 
 /**
