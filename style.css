@@ -339,12 +339,12 @@ a {
     transform: scale(1.15);
 }
 
-/* Sélecteur de langue FR / EN : même pastille en verre dépoli que le sélecteur d'accent */
+/* Sélecteur de langue : icône de traduction + FR | EN, compact et discret (pastille douce sur la langue active) */
 .lang-switcher {
     display: flex;
     align-items: center;
     gap: 2px;
-    padding: 0.25rem;
+    padding: 0.2rem 0.25rem 0.2rem 0.6rem;
     border: 1px solid var(--glass-border);
     border-radius: 999px;
     background-color: var(--glass-bg);
@@ -352,15 +352,23 @@ a {
     backdrop-filter: blur(12px);
 }
 
+.lang-icon {
+    flex: none;
+    width: 0.95rem;
+    height: 0.95rem;
+    margin-right: 0.3rem;
+    color: var(--text-faint);
+}
+
 .lang-btn {
-    min-width: 2.1rem;
-    padding: 0.35rem 0.6rem;
+    min-width: 1.9rem;
+    padding: 0.3rem 0.5rem;
     border: 0;
     border-radius: 999px;
     background: transparent;
     color: var(--text-muted);
     font-family: inherit;
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 700;
     line-height: 1;
     letter-spacing: 0.06em;
@@ -373,8 +381,8 @@ a {
 }
 
 .lang-btn[aria-pressed="true"] {
-    background-color: var(--accent);
-    color: var(--on-accent);
+    background-color: var(--accent-soft);
+    color: var(--accent);
 }
 
 .lang-btn:focus-visible {
