@@ -959,6 +959,8 @@ function initActivityGrid() {
 
     const cells = [];
     const months = [];
+    // Une étiquette de mois occupe ~3 colonnes : on masque celle qui serait collée au mois suivant
+    const MIN_LABEL_COLS = 3;
     let total = 0;
     let best = { count: -1, date: null };
     let lastMonth = -1;
@@ -996,16 +998,23 @@ function initActivityGrid() {
 
         // Étiquette de mois au-dessus de la première semaine où il apparaît
         if (date.getDay() === 0 && date.getMonth() !== lastMonth) {
-            const label = document.createElement('span');
-            label.textContent = formatMonth.format(date);
-            label.style.gridColumn = String(Math.floor(i / 7) + 1);
-            months.push(label);
+            months.push({ col: Math.floor(i / 7) + 1, text: formatMonth.format(date) });
             lastMonth = date.getMonth();
         }
     }
 
     grid.replaceChildren(...cells);
-    monthsRow.replaceChildren(...months);
+    monthsRow.replaceChildren(
+        ...months
+            // Si le mois suivant commence trop près, on garde le suivant (mois complet) et on retire celui-ci
+            .filter((m, k) => !months[k + 1] || months[k + 1].col - m.col >= MIN_LABEL_COLS)
+            .map((m) => {
+                const label = document.createElement('span');
+                label.textContent = m.text;
+                label.style.gridColumn = String(m.col);
+                return label;
+            })
+    );
     // Nombre de colonnes (semaines), utilisé par la mise en page fluide sur mobile
     root.style.setProperty('--gh-weeks', String(Math.ceil(cells.length / 7)));
 
