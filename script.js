@@ -19,6 +19,10 @@ const PROJECTS = {
         // Liens : une URL par libellé de « project.<id>.links » — ajoute aussi le libellé (ex. « Démo en ligne ») dans i18n.js
         links: ['https://github.com/Amaterasu-leox/task-manager-api'],
     },
+    'task-manager-api': {
+        stack: ['Python', 'FastAPI', 'Uvicorn', 'MySQL', 'Git', 'GitHub'],
+        links: ['https://github.com/Amaterasu-leox/task-manager-api'],
+    },
     portfolio: {
         stack: ['HTML5', 'CSS3', 'JavaScript', 'Git'],
         links: ['https://github.com/Amaterasu-leox/portfolio-leo'],
@@ -235,7 +239,7 @@ function initContactForm() {
 
 /**
  * Terminal interactif (style CLI Linux / WSL) : help, about, skills, stack, projects [n],
- * contact, whoami, history, clear. ↑ / ↓ parcourent l'historique, Tab complète la commande,
+ * github, status, neofetch, contact, whoami, history, clear. ↑ / ↓ parcourent l'historique, Tab complète la commande,
  * et les puces sous le terminal lancent une commande d'un clic.
  */
 function initTerminal() {
@@ -249,6 +253,7 @@ function initTerminal() {
     const chips = document.querySelectorAll('.terminal-chip');
 
     const EMAIL = 'baskaraneleo@forcefabric.com';
+    const GITHUB_URL = 'https://github.com/Amaterasu-leox';
     const history = [];
     let historyIndex = 0;
 
@@ -292,6 +297,19 @@ function initTerminal() {
                 tr('term.projects-hint'),
             ];
         },
+        github: () => tr('term.github', { url: GITHUB_URL, repos: PROJECTS['task-manager-api'].links[0], portfolio: PROJECTS.portfolio.links[0] }),
+        // Lu depuis le widget « Dev Timezone & Status » de la navbar : même statut et même heure que la page
+        status: () => {
+            const clock = document.querySelector('.dev-clock');
+            const read = (selector) => clock?.querySelector(selector)?.textContent.trim() ?? '';
+            return tr('term.status', {
+                state: read('.dev-status-badge') || 'AWAY',
+                time: read('.dev-clock-local'),
+                offset: read('.dev-clock-offset'),
+                projects: Object.keys(PROJECTS).length,
+            });
+        },
+        neofetch: () => tr('term.neofetch'),
         contact: () => tr('term.contact', { email: EMAIL }),
         whoami: () => [tr('term.whoami')],
         history: () =>
