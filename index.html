@@ -48,7 +48,7 @@
 
     <!-- Navigation -->
     <nav class="navbar">
-        <a href="#" class="logo" aria-label="ForceFabric — Accueil">
+        <a data-i18n-attr="aria-label:nav.forcefabric-accueil" href="#" class="logo" aria-label="ForceFabric — Accueil">
             <!-- Logo ForceFabric : hexagone et « F » -->
             <svg class="logo-forcefabric" viewBox="0 0 120 120" width="36" height="36" fill="none"
                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -65,17 +65,17 @@
         </button>
         <div class="nav-right" id="nav-right">
             <ul class="nav-links">
-                <li><a href="#about">À propos</a></li>
-                <li><a href="#journey">Parcours</a></li>
-                <li><a href="#skills">Compétences</a></li>
-                <li><a href="#terminal">Terminal</a></li>
-                <li><a href="#projects">Projets</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#testimonials">Témoignages</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a data-i18n="nav.a-propos" href="#about">À propos</a></li>
+                <li><a data-i18n="nav.parcours" href="#journey">Parcours</a></li>
+                <li><a data-i18n="nav.competences" href="#skills">Compétences</a></li>
+                <li><a data-i18n="nav.terminal" href="#terminal">Terminal</a></li>
+                <li><a data-i18n="nav.projets" href="#projects">Projets</a></li>
+                <li><a data-i18n="nav.blog" href="#blog">Blog</a></li>
+                <li><a data-i18n="nav.temoignages" href="#testimonials">Témoignages</a></li>
+                <li><a data-i18n="nav.contact" href="#contact">Contact</a></li>
             </ul>
             <!-- Widget « Dev Timezone & Status » (script.js, initDevClock) : Paris + UTC, ONLINE de 08:00 à 22:00 -->
-            <div class="dev-clock is-away" role="group" aria-label="Fuseau horaire et statut du développeur">
+            <div data-i18n-attr="aria-label:nav.fuseau-horaire-et-statut-du" class="dev-clock is-away" role="group" aria-label="Fuseau horaire et statut du développeur">
                 <span class="dev-status">
                     <span class="dev-status-dot" aria-hidden="true"></span>
                     <span class="dev-status-badge">AWAY</span>
@@ -93,15 +93,34 @@
                 </div>
             </div>
             <!-- Sélecteur d'accent néon (script.js, initAccentSwitcher) -->
-            <div class="accent-switcher" role="group" aria-label="Couleur d'accent">
-                <button type="button" class="accent-dot" data-accent="#00f2fe" style="--dot:#00f2fe"
+            <div data-i18n-attr="aria-label:nav.couleur-d-accent" class="accent-switcher" role="group" aria-label="Couleur d'accent">
+                <button data-i18n-attr="aria-label:nav.cyan-cyber;title:nav.cyan-cyber" type="button" class="accent-dot" data-accent="#00f2fe" style="--dot:#00f2fe"
                     aria-label="Cyan Cyber" title="Cyan Cyber" aria-pressed="true"></button>
-                <button type="button" class="accent-dot" data-accent="#10b981" style="--dot:#10b981"
+                <button data-i18n-attr="aria-label:nav.vert-emeraude;title:nav.vert-emeraude" type="button" class="accent-dot" data-accent="#10b981" style="--dot:#10b981"
                     aria-label="Vert Émeraude" title="Vert Émeraude" aria-pressed="false"></button>
-                <button type="button" class="accent-dot" data-accent="#a855f7" style="--dot:#a855f7"
+                <button data-i18n-attr="aria-label:nav.violet-cyberpunk;title:nav.violet-cyberpunk" type="button" class="accent-dot" data-accent="#a855f7" style="--dot:#a855f7"
                     aria-label="Violet Cyberpunk" title="Violet Cyberpunk" aria-pressed="false"></button>
-                <button type="button" class="accent-dot" data-accent="#ff6b00" style="--dot:#ff6b00"
+                <button data-i18n-attr="aria-label:nav.orange-neon;title:nav.orange-neon" type="button" class="accent-dot" data-accent="#ff6b00" style="--dot:#ff6b00"
                     aria-label="Orange Néon" title="Orange Néon" aria-pressed="false"></button>
+            </div>
+            <!-- Sélecteur de langue FR / EN (i18n.js) : mémorisé dans localStorage -->
+            <div class="lang-switcher" role="group" aria-label="Langue / Language"
+                data-i18n-attr="aria-label:lang.group">
+                <!-- Icône de traduction (décorative) -->
+                <svg class="lang-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <path d="m5 8 6 6" />
+                    <path d="m4 14 6-6 2-3" />
+                    <path d="M2 5h12" />
+                    <path d="M7 2h1" />
+                    <path d="m22 22-5-10-5 10" />
+                    <path d="M14 18h6" />
+                </svg>
+                <button type="button" class="lang-btn is-active" data-lang="fr" lang="fr" aria-pressed="true"
+                    aria-label="Français" title="Français">FR</button>
+                <button type="button" class="lang-btn" data-lang="en" lang="en" aria-pressed="false"
+                    aria-label="English" title="English">EN</button>
+                <span class="lang-announce sr-only" role="status" aria-live="polite"></span>
             </div>
             <button type="button" class="theme-toggle" aria-label="Activer le thème clair">
                 <!-- Soleil (affiché en thème sombre) -->
@@ -127,61 +146,60 @@
 
         <div class="hero-inner">
             <div class="hero-content">
-                <h1>Bonjour, je suis <span class="highlight">Léo Baskarane</span></h1>
+                <h1 data-i18n-html="hero.bonjour-je-suis-leo-baskarane">Bonjour, je suis <span class="highlight">Léo Baskarane</span></h1>
                 <p class="subtitle">
-                    <span class="sr-only">Développeur Full-Stack, passionné de Python & FastAPI, créateur web</span>
-                    <span class="typewriter" aria-hidden="true"
-                        data-roles="[&quot;Développeur Full-Stack&quot;, &quot;Passionné de Python & FastAPI&quot;, &quot;Créateur Web&quot;]">Développeur Full-Stack</span><span
+                    <span data-i18n="hero.developpeur-full-stack-passionne-de" class="sr-only">Développeur Full-Stack, passionné de Python & FastAPI, créateur web</span>
+                    <span class="typewriter" aria-hidden="true">Développeur Full-Stack</span><span
                         class="typewriter-cursor" aria-hidden="true"></span>
                 </p>
-                <p class="description">
+                <p data-i18n="hero.passionne-par-le-developpement-d" class="description">
                     Passionné par le développement d'applications web modernes, la conception d'API robustes et la
                     gestion de projets full-stack.
                 </p>
                 <div class="hero-buttons">
-                    <a href="#projects" class="btn primary-btn">Voir mes projets</a>
-                    <a href="#contact" class="btn secondary-btn">Me contacter</a>
+                    <a data-i18n="hero.voir-mes-projets" href="#projects" class="btn primary-btn">Voir mes projets</a>
+                    <a data-i18n="hero.me-contacter" href="#contact" class="btn secondary-btn">Me contacter</a>
                 </div>
 
                 <!-- Chiffres clés -->
                 <ul class="hero-stats">
-                    <li><strong>10+</strong><span>Projets &amp; Démos</span></li>
+                    <li><strong>10+</strong><span data-i18n="hero.projets-demos">Projets &amp; Démos</span></li>
                     <li><strong>100%</strong><span>Open Source</span></li>
-                    <li><strong>99.9%</strong><span>Code Propre &amp; Structuré</span></li>
+                    <li><strong>99.9%</strong><span data-i18n="hero.code-propre-structure">Code Propre &amp; Structuré</span></li>
                     <li class="hero-stat-stack"><strong>FastAPI / MySQL</strong><span>Tech Stack</span></li>
                 </ul>
             </div>
 
             <!-- Carte « Capacités » (glassmorphism) -->
             <aside class="hero-card" aria-labelledby="capabilities-title">
-                <h2 id="capabilities-title" class="hero-card-title">Capacités clés</h2>
+                <h2 data-i18n="hero.capacites-cles" id="capabilities-title" class="hero-card-title">Capacités clés</h2>
                 <ul class="capabilities">
                     <li>
                         <span class="capability-icon" aria-hidden="true">🚀</span>
                         <div>
-                            <h3>Développement Full-Stack</h3>
-                            <p>FastAPI, Python, JavaScript</p>
+                            <h3 data-i18n="hero.developpement-full-stack">Développement Full-Stack</h3>
+                            <p data-i18n="hero.fastapi-python-javascript">FastAPI, Python, JavaScript</p>
                         </div>
                     </li>
                     <li>
                         <span class="capability-icon" aria-hidden="true">⚡</span>
                         <div>
-                            <h3>Architecture API REST &amp; BDD</h3>
-                            <p>MySQL, Modélisation, PyMySQL</p>
+                            <h3 data-i18n="hero.architecture-api-rest-bdd">Architecture API REST &amp; BDD</h3>
+                            <p data-i18n="hero.mysql-modelisation-pymysql">MySQL, Modélisation, PyMySQL</p>
                         </div>
                     </li>
                     <li>
                         <span class="capability-icon" aria-hidden="true">🎨</span>
                         <div>
-                            <h3>Interface &amp; Ergonomie Web</h3>
-                            <p>UI/UX Moderne, Responsive Design</p>
+                            <h3 data-i18n="hero.interface-ergonomie-web">Interface &amp; Ergonomie Web</h3>
+                            <p data-i18n="hero.ui-ux-moderne-responsive-design">UI/UX Moderne, Responsive Design</p>
                         </div>
                     </li>
                     <li>
                         <span class="capability-icon" aria-hidden="true">🛠️</span>
                         <div>
-                            <h3>Workflow &amp; Versioning</h3>
-                            <p>Git, GitHub, CI/CD, Linux/Bash</p>
+                            <h3 data-i18n="hero.workflow-versioning">Workflow &amp; Versioning</h3>
+                            <p data-i18n="hero.git-github-ci-cd-linux">Git, GitHub, CI/CD, Linux/Bash</p>
                         </div>
                     </li>
                 </ul>
@@ -191,8 +209,8 @@
 
     <!-- Section À propos -->
     <section id="about" class="section">
-        <h2>À propos</h2>
-        <p>
+        <h2 data-i18n="nav.a-propos">À propos</h2>
+        <p data-i18n="about.developpeur-autonome-base-en-ile">
             Développeur autonome basé en Île-de-France, j'aime résoudre des problèmes techniques et concevoir des
             applications fluides et performantes. Mon parcours m'a permis d'acquérir une bonne maîtrise du développement
             full-stack, de la gestion de bases de données et des workflows Git/Bitbucket.
@@ -202,29 +220,29 @@
         <div class="gh-activity">
             <div class="gh-header">
                 <h3>
-                    <a href="https://github.com/Amaterasu-leox" class="gh-link" target="_blank"
+                    <a data-i18n-attr="aria-label:about.voir-mon-profil-github-s" href="https://github.com/Amaterasu-leox" class="gh-link" target="_blank"
                         rel="noopener noreferrer" aria-label="Voir mon profil GitHub (s'ouvre dans un nouvel onglet)">
                         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <path d="M12 .5A11.5 11.5 0 0 0 .5 12c0 5.08 3.29 9.38 7.86 10.9.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a10.9 10.9 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z" />
                         </svg>
-                        <span>Activité GitHub</span>
+                        <span data-i18n="about.activite-github">Activité GitHub</span>
                         <span class="gh-link-arrow" aria-hidden="true">↗</span>
                     </a>
                 </h3>
-                <span class="gh-note">Données simulées</span>
+                <span data-i18n="about.donnees-simulees" class="gh-note">Données simulées</span>
             </div>
             <div class="gh-scroll">
                 <div class="gh-months" aria-hidden="true"></div>
-                <div class="gh-grid" role="img" aria-label="Grille de contributions simulée sur les 6 derniers mois"></div>
+                <div data-i18n-attr="aria-label:about.grille-de-contributions-simulee-sur" class="gh-grid" role="img" aria-label="Grille de contributions simulée sur les 6 derniers mois"></div>
             </div>
             <div class="gh-footer">
                 <p class="gh-summary" role="status"></p>
                 <div class="gh-legend" aria-hidden="true">
-                    <span>Moins</span>
+                    <span data-i18n="about.moins">Moins</span>
                     <i class="gh-cell" data-level="0"></i><i class="gh-cell" data-level="1"></i>
                     <i class="gh-cell" data-level="2"></i><i class="gh-cell" data-level="3"></i>
                     <i class="gh-cell" data-level="4"></i>
-                    <span>Plus</span>
+                    <span data-i18n="about.plus">Plus</span>
                 </div>
             </div>
             <div class="gh-tooltip" role="tooltip" hidden></div>
@@ -233,15 +251,15 @@
 
     <!-- Section Parcours (timeline verticale) -->
     <section id="journey" class="section">
-        <h2>Parcours</h2>
+        <h2 data-i18n="nav.parcours">Parcours</h2>
         <ol class="timeline">
             <li class="timeline-item">
                 <span class="timeline-dot" aria-hidden="true"></span>
                 <div class="timeline-content">
                     <p class="timeline-date">2025 — 2026</p>
-                    <h3>Développement Full-Stack &amp; Projets Personnels</h3>
-                    <p class="timeline-place">En autodidacte — Combs-la-Ville</p>
-                    <p>
+                    <h3 data-i18n="journey.developpement-full-stack-projets-personn">Développement Full-Stack &amp; Projets Personnels</h3>
+                    <p data-i18n="journey.en-autodidacte-combs-la-ville" class="timeline-place">En autodidacte — Combs-la-Ville</p>
+                    <p data-i18n="journey.conception-et-developpement-d-applicatio">
                         Conception et développement d'applications web interactives, mise en place d'API REST avec
                         FastAPI, gestion de bases de données MySQL et gestion de versions avec Git.
                     </p>
@@ -258,9 +276,9 @@
                 <span class="timeline-dot" aria-hidden="true"></span>
                 <div class="timeline-content">
                     <p class="timeline-date">2025 — 2026</p>
-                    <h3>Autodidacte en Développement Full-Stack &amp; Systèmes</h3>
-                    <p class="timeline-place">Formation à la maison — Combs-la-Ville</p>
-                    <p>
+                    <h3 data-i18n="journey.autodidacte-en-developpement-full-stack">Autodidacte en Développement Full-Stack &amp; Systèmes</h3>
+                    <p data-i18n="journey.formation-a-la-maison-combs" class="timeline-place">Formation à la maison — Combs-la-Ville</p>
+                    <p data-i18n="journey.apprentissage-approfondi-de-la-programma">
                         Apprentissage approfondi de la programmation, conception d'applications web avec Python, FastAPI,
                         MySQL et maîtrise des environnements de développement sous Linux/WSL et Git.
                     </p>
@@ -271,31 +289,31 @@
 
     <!-- Section Compétences -->
     <section id="skills" class="section">
-        <h2>Compétences Techniques</h2>
+        <h2 data-i18n="skills.competences-techniques">Compétences Techniques</h2>
         <div class="skills-grid">
             <div class="skill-card">
                 <h3>Frontend</h3>
-                <p>HTML5, CSS3, JavaScript (ES6+), Responsive Design</p>
+                <p data-i18n="skills.html5-css3-javascript-es6-responsive">HTML5, CSS3, JavaScript (ES6+), Responsive Design</p>
             </div>
             <div class="skill-card">
-                <h3>Backend & API</h3>
-                <p>Python, FastAPI, Endpoints REST CRUD</p>
+                <h3 data-i18n="skills.backend-api">Backend & API</h3>
+                <p data-i18n="skills.python-fastapi-endpoints-rest-crud">Python, FastAPI, Endpoints REST CRUD</p>
             </div>
             <div class="skill-card">
-                <h3>Bases de données</h3>
-                <p>MySQL, Modélisation relationnelle, SQL</p>
+                <h3 data-i18n="skills.bases-de-donnees">Bases de données</h3>
+                <p data-i18n="skills.mysql-modelisation-relationnelle-sql">MySQL, Modélisation relationnelle, SQL</p>
             </div>
             <div class="skill-card">
-                <h3>Outils & Workflow</h3>
-                <p>Git, Bitbucket (Pull Requests), Linux (Ubuntu), VS Code</p>
+                <h3 data-i18n="skills.outils-workflow">Outils & Workflow</h3>
+                <p data-i18n="skills.git-bitbucket-pull-requests-linux">Git, Bitbucket (Pull Requests), Linux (Ubuntu), VS Code</p>
             </div>
         </div>
     </section>
 
     <!-- Section Terminal interactif (piloté par script.js, initTerminal) -->
     <section id="terminal" class="section">
-        <h2>Terminal Interactif</h2>
-        <p>
+        <h2 data-i18n="terminal.terminal-interactif">Terminal Interactif</h2>
+        <p data-i18n="terminal.explorez-mon-profil-comme-dans">
             Explorez mon profil comme dans un shell WSL / Ubuntu : tapez une commande, ou cliquez sur une puce.
         </p>
 
@@ -310,13 +328,13 @@
                 <div class="terminal-output" role="log" aria-live="polite"></div>
                 <form class="terminal-line">
                     <label for="terminal-input" class="terminal-prompt">leo@portfolio:~$</label>
-                    <input type="text" id="terminal-input" class="terminal-input" autocomplete="off"
+                    <input data-i18n-attr="aria-label:terminal.commande-du-terminal" type="text" id="terminal-input" class="terminal-input" autocomplete="off"
                         autocapitalize="off" spellcheck="false" aria-label="Commande du terminal">
                 </form>
             </div>
         </div>
 
-        <div class="terminal-chips" role="group" aria-label="Commandes rapides">
+        <div data-i18n-attr="aria-label:terminal.commandes-rapides" class="terminal-chips" role="group" aria-label="Commandes rapides">
             <button type="button" class="terminal-chip" data-command="help">help</button>
             <button type="button" class="terminal-chip" data-command="about">about</button>
             <button type="button" class="terminal-chip" data-command="skills">skills</button>
@@ -329,8 +347,8 @@
 
     <!-- Section Notes rapides (script.js, initScratchpad) : texte sauvegardé dans localStorage -->
     <section id="notes" class="section">
-        <h2>Notes rapides</h2>
-        <p>Un bloc-notes pour jeter une idée ou un snippet : tout reste dans votre navigateur, rien n'est envoyé.</p>
+        <h2 data-i18n="notes.notes-rapides">Notes rapides</h2>
+        <p data-i18n="notes.un-bloc-notes-pour-jeter">Un bloc-notes pour jeter une idée ou un snippet : tout reste dans votre navigateur, rien n'est envoyé.</p>
 
         <div class="scratchpad">
             <div class="scratchpad-header">
@@ -338,8 +356,8 @@
                 <span class="scratchpad-status is-saved" role="status" aria-live="polite">SAVED</span>
                 <button type="button" class="scratchpad-clear">Clear</button>
             </div>
-            <label for="scratchpad-text" class="sr-only">Notes rapides</label>
-            <textarea id="scratchpad-text" class="scratchpad-text" rows="8" spellcheck="false"
+            <label data-i18n="notes.notes-rapides" for="scratchpad-text" class="sr-only">Notes rapides</label>
+            <textarea data-i18n-attr="placeholder:notes.tape-ici-idees-todo-snippets" id="scratchpad-text" class="scratchpad-text" rows="8" spellcheck="false"
                 placeholder="// tape ici : idées, todo, snippets…"></textarea>
         </div>
     </section>
@@ -348,10 +366,10 @@
     <section id="showcase" class="section">
         <div class="showcase">
             <div class="showcase-copy">
-                <p class="project-label">Projet phare</p>
-                <h2>Une plateforme unique pour le code, les API et l'architecture</h2>
-                <p class="showcase-subtitle">De la base MySQL à l'interface web, toute la chaîne full-stack.</p>
-                <p>
+                <p data-i18n="showcase.projet-phare" class="project-label">Projet phare</p>
+                <h2 data-i18n="showcase.une-plateforme-unique-pour-le">Une plateforme unique pour le code, les API et l'architecture</h2>
+                <p data-i18n="showcase.de-la-base-mysql-a" class="showcase-subtitle">De la base MySQL à l'interface web, toute la chaîne full-stack.</p>
+                <p data-i18n="showcase.je-concois-des-applications-de">
                     Je conçois des applications de bout en bout : un modèle de données relationnel solide, une API
                     REST claire et performante avec FastAPI, puis une interface fluide qui la consomme. Chaque projet
                     est versionné avec Git et pensé pour rester lisible, testable et facile à faire évoluer.
@@ -363,9 +381,9 @@
                     <li data-tech="js">JavaScript</li>
                 </ul>
                 <div class="showcase-buttons">
-                    <a href="https://github.com/Amaterasu-leox" class="btn primary-btn" target="_blank"
+                    <a data-i18n="showcase.explorer-le-code-sur-github" href="https://github.com/Amaterasu-leox" class="btn primary-btn" target="_blank"
                         rel="noopener noreferrer">Explorer le code sur GitHub</a>
-                    <a href="#projects" class="btn secondary-btn">Voir tous les projets</a>
+                    <a data-i18n="showcase.voir-tous-les-projets" href="#projects" class="btn secondary-btn">Voir tous les projets</a>
                 </div>
             </div>
 
@@ -379,14 +397,14 @@
                 </div>
                 <div class="window-body">
                     <div class="window-header">
-                        <span class="window-title">Mes tâches</span>
-                        <span class="window-status">API connectée</span>
+                        <span data-i18n="showcase.mes-taches" class="window-title">Mes tâches</span>
+                        <span data-i18n="showcase.api-connectee" class="window-status">API connectée</span>
                     </div>
                     <ul class="window-tasks">
-                        <li class="is-done"><span class="task-check"></span>Concevoir le schéma MySQL<em>Terminé</em></li>
-                        <li class="is-done"><span class="task-check"></span>Endpoints REST CRUD (FastAPI)<em>Terminé</em></li>
-                        <li><span class="task-check"></span>Connecter l'interface via fetch<em class="is-progress">En cours</em></li>
-                        <li><span class="task-check"></span>Documenter et publier la démo<em>À faire</em></li>
+                        <li data-i18n-html="showcase.concevoir-le-schema-mysqltermine" class="is-done"><span class="task-check"></span>Concevoir le schéma MySQL<em>Terminé</em></li>
+                        <li data-i18n-html="showcase.endpoints-rest-crud-fastapi-termine" class="is-done"><span class="task-check"></span>Endpoints REST CRUD (FastAPI)<em>Terminé</em></li>
+                        <li data-i18n-html="showcase.connecter-l-interface-via-fetchen"><span class="task-check"></span>Connecter l'interface via fetch<em class="is-progress">En cours</em></li>
+                        <li data-i18n-html="showcase.documenter-et-publier-la-demoa"><span class="task-check"></span>Documenter et publier la démo<em>À faire</em></li>
                     </ul>
                     <div class="window-code">
                         <span class="code-method">GET</span> /tasks <span class="code-ok">200 OK</span>
@@ -398,11 +416,11 @@
 
     <!-- Section Projets -->
     <section id="projects" class="section">
-        <h2>Projets Récents</h2>
+        <h2 data-i18n="projects.projets-recents">Projets Récents</h2>
 
         <!-- Filtres : pilotés par script.js (initProjectFilter) via data-filter / data-category -->
-        <div class="filter-bar" role="group" aria-label="Filtrer les projets par catégorie">
-            <button type="button" class="filter-btn is-active" data-filter="all" aria-pressed="true">Tous</button>
+        <div data-i18n-attr="aria-label:projects.filtrer-les-projets-par-categorie" class="filter-bar" role="group" aria-label="Filtrer les projets par catégorie">
+            <button data-i18n="projects.tous" type="button" class="filter-btn is-active" data-filter="all" aria-pressed="true">Tous</button>
             <button type="button" class="filter-btn" data-filter="full-stack" aria-pressed="false">Full-Stack</button>
             <button type="button" class="filter-btn" data-filter="frontend" aria-pressed="false">Frontend</button>
             <button type="button" class="filter-btn" data-filter="dataviz" aria-pressed="false">Data Viz</button>
@@ -413,8 +431,8 @@
             <!-- Projet 1 -->
             <div class="project-card" data-project="guru-todo" data-category="full-stack" tabindex="0" role="button" aria-haspopup="dialog">
                 <p class="project-label">Full-Stack</p>
-                <h3>Guru To-Do App</h3>
-                <p>
+                <h3 data-i18n="projects.guru-to-do-app">Guru To-Do App</h3>
+                <p data-i18n="projects.application-de-gestion-de-taches">
                     Application de gestion de tâches Full-Stack : API REST CRUD en Python FastAPI, base de données
                     MySQL et interface JavaScript dynamique.
                 </p>
@@ -425,15 +443,15 @@
                     <li data-tech="js">JavaScript</li>
                     <li data-tech="git">Git</li>
                 </ul>
-                <a href="https://github.com/Amaterasu-leox" class="project-more" target="_blank"
+                <a data-i18n="projects.voir-les-details" href="https://github.com/Amaterasu-leox" class="project-more" target="_blank"
                     rel="noopener noreferrer">Voir les détails →</a>
             </div>
 
             <!-- Projet 2 -->
             <div class="project-card" data-project="portfolio" data-category="frontend" tabindex="0" role="button" aria-haspopup="dialog">
                 <p class="project-label">Frontend</p>
-                <h3>Portfolio Web Personnel</h3>
-                <p>
+                <h3 data-i18n="projects.portfolio-web-personnel">Portfolio Web Personnel</h3>
+                <p data-i18n="projects.site-vitrine-developpe-sur-mesure">
                     Site vitrine développé sur-mesure, sans framework : timeline interactive, mini-terminal, thème
                     sombre / clair et responsive design.
                 </p>
@@ -443,15 +461,15 @@
                     <li data-tech="js">JavaScript</li>
                     <li data-tech="git">Git</li>
                 </ul>
-                <a href="https://github.com/Amaterasu-leox" class="project-more" target="_blank"
+                <a data-i18n="projects.voir-les-details" href="https://github.com/Amaterasu-leox" class="project-more" target="_blank"
                     rel="noopener noreferrer">Voir les détails →</a>
             </div>
 
             <!-- Projet 3 -->
             <div class="project-card" data-project="finops" data-category="dataviz" tabindex="0" role="button" aria-haspopup="dialog">
                 <p class="project-label">Data Viz</p>
-                <h3>FinOps Cloud Analytics</h3>
-                <p>
+                <h3 data-i18n="projects.finops-cloud-analytics">FinOps Cloud Analytics</h3>
+                <p data-i18n="projects.tableau-de-bord-interactif-de">
                     Tableau de bord interactif de suivi et d'optimisation des coûts multi-cloud (AWS, GCP, Azure) avec
                     graphiques interactifs sur données simulées et simulateur d'économies.
                 </p>
@@ -461,7 +479,7 @@
                     <li data-tech="js">JavaScript</li>
                     <li data-tech="chartjs">Chart.js</li>
                 </ul>
-                <a href="https://github.com/Amaterasu-leox" class="project-more" target="_blank"
+                <a data-i18n="projects.voir-les-details" href="https://github.com/Amaterasu-leox" class="project-more" target="_blank"
                     rel="noopener noreferrer">Voir les détails →</a>
             </div>
 
@@ -473,7 +491,7 @@
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.4-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z" />
                 </svg>
-                Voir mes dépôts GitHub
+                <span data-i18n="projects.voir-mes-depots-github">Voir mes dépôts GitHub</span>
             </a>
         </div>
     </section>
@@ -482,31 +500,31 @@
     <section id="blog" class="section">
         <div class="blog-intro">
             <div class="blog-intro-copy">
-                <p class="project-label">Blog &amp; Perspectives</p>
-                <h2>Perspectives et carnets de code</h2>
-                <p>
+                <p data-i18n="blog.blog-perspectives" class="project-label">Blog &amp; Perspectives</p>
+                <h2 data-i18n="blog.perspectives-et-carnets-de-code">Perspectives et carnets de code</h2>
+                <p data-i18n="blog.mes-retours-d-experience-sur">
                     Mes retours d'expérience sur le développement full-stack : création d'API REST avec FastAPI,
                     gestion des bases de données MySQL et intégration d'interfaces web modernes.
                 </p>
             </div>
 
             <!-- Widget d'infos : la recherche filtre la grille d'articles (script.js, initBlog) -->
-            <aside class="blog-widget" aria-label="Informations sur le blog">
+            <aside data-i18n-attr="aria-label:blog.informations-sur-le-blog" class="blog-widget" aria-label="Informations sur le blog">
                 <div class="blog-search" role="search">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" aria-hidden="true">
                         <circle cx="11" cy="11" r="7" />
                         <path d="M20 20l-3.5-3.5" />
                     </svg>
-                    <label for="blog-search" class="sr-only">Rechercher un article</label>
-                    <input type="search" id="blog-search" placeholder="Titres, résumés ou catégories..."
+                    <label data-i18n="blog.rechercher-un-article" for="blog-search" class="sr-only">Rechercher un article</label>
+                    <input data-i18n-attr="placeholder:blog.titres-resumes-ou-categories" type="search" id="blog-search" placeholder="Titres, résumés ou catégories..."
                         autocomplete="off">
                 </div>
                 <ul class="blog-metrics">
-                    <li><strong class="blog-metric-articles">11</strong><span>articles</span></li>
-                    <li><strong>Hebdomadaire</strong><span>Publication</span></li>
-                    <li><strong class="blog-metric-topics">6</strong><span>zones d'intérêt</span></li>
-                    <li><strong>7 min</strong><span>Lecture moyenne</span></li>
+                    <li><strong class="blog-metric-articles">11</strong><span data-i18n="blog.articles">articles</span></li>
+                    <li><strong data-i18n="blog.hebdomadaire">Hebdomadaire</strong><span data-i18n="blog.publication">Publication</span></li>
+                    <li><strong class="blog-metric-topics">6</strong><span data-i18n="blog.zones-d-interet">zones d'intérêt</span></li>
+                    <li><strong>7 min</strong><span data-i18n="blog.lecture-moyenne">Lecture moyenne</span></li>
                 </ul>
             </aside>
         </div>
@@ -524,10 +542,10 @@
             <div class="blog-featured-body">
                 <div class="blog-meta">
                     <span class="blog-tag">Full-Stack</span>
-                    <span class="blog-read">8 min de lecture</span>
+                    <span data-i18n="blog.8-min-de-lecture" class="blog-read">8 min de lecture</span>
                 </div>
-                <h3>Concevoir une application web robuste avec FastAPI et MySQL</h3>
-                <p>
+                <h3 data-i18n="blog.concevoir-une-application-web-robuste">Concevoir une application web robuste avec FastAPI et MySQL</h3>
+                <p data-i18n="blog.une-bonne-application-se-joue">
                     Une bonne application se joue à l'interface entre le front et le back : relier une interface
                     moderne à une API REST performante, et structurer une base de données relationnelle qui reste
                     fiable quand le projet grandit. Retour d'expérience, de la modélisation aux endpoints.
@@ -536,21 +554,21 @@
                     <span class="blog-avatar" aria-hidden="true">LB</span>
                     <span class="blog-author-info">
                         <strong>Léo Baskarane</strong>
-                        <time datetime="2026-11-04">4 nov. 2026</time>
+                        <time data-i18n="blog.4-nov-2026" datetime="2026-11-04">4 nov. 2026</time>
                     </span>
-                    <a href="#blog" class="btn primary-btn blog-cta">Lire l'article</a>
+                    <a data-i18n="blog.lire-l-article" href="#blog" class="btn primary-btn blog-cta">Lire l'article</a>
                 </div>
             </div>
         </article>
 
         <!-- Filtres par catégorie -->
-        <div class="blog-filters" role="group" aria-label="Filtrer les articles par catégorie">
-            <button type="button" class="blog-filter-btn is-active" data-filter="all" aria-pressed="true">Tous</button>
+        <div data-i18n-attr="aria-label:blog.filtrer-les-articles-par-categorie" class="blog-filters" role="group" aria-label="Filtrer les articles par catégorie">
+            <button data-i18n="projects.tous" type="button" class="blog-filter-btn is-active" data-filter="all" aria-pressed="true">Tous</button>
             <button type="button" class="blog-filter-btn" data-filter="fullstack" aria-pressed="false">Full-Stack</button>
-            <button type="button" class="blog-filter-btn" data-filter="api" aria-pressed="false">FastAPI &amp; API</button>
-            <button type="button" class="blog-filter-btn" data-filter="database" aria-pressed="false">Base de données</button>
+            <button data-i18n="blog.fastapi-api" type="button" class="blog-filter-btn" data-filter="api" aria-pressed="false">FastAPI &amp; API</button>
+            <button data-i18n="blog.base-de-donnees" type="button" class="blog-filter-btn" data-filter="database" aria-pressed="false">Base de données</button>
             <button type="button" class="blog-filter-btn" data-filter="frontend" aria-pressed="false">Frontend</button>
-            <button type="button" class="blog-filter-btn" data-filter="devops" aria-pressed="false">DevOps &amp; Git</button>
+            <button data-i18n="blog.devops-git" type="button" class="blog-filter-btn" data-filter="devops" aria-pressed="false">DevOps &amp; Git</button>
             <button type="button" class="blog-filter-btn" data-filter="architecture" aria-pressed="false">Architecture</button>
         </div>
 
@@ -561,13 +579,13 @@
                     <div class="thumb-bars"><span style="--h: 50%"></span><span style="--h: 72%"></span><span style="--h: 88%"></span><span style="--h: 60%"></span><span style="--h: 78%"></span></div>
                 </div>
                 <div class="blog-card-body">
-                    <div class="blog-meta"><span class="blog-tag">FastAPI &amp; API</span><span class="blog-read">7 min</span></div>
-                    <h3>Pourquoi j'ai choisi FastAPI pour mes projets Backend : Performance et Asynchronisme</h3>
-                    <p>Retour d'expérience sur la rapidité d'exécution, la validation automatique via Pydantic et la génération native de la documentation interactive Swagger/ReDoc.</p>
+                    <div class="blog-meta"><span data-i18n="blog.fastapi-api" class="blog-tag">FastAPI &amp; API</span><span class="blog-read">7 min</span></div>
+                    <h3 data-i18n="blog.pourquoi-j-ai-choisi-fastapi">Pourquoi j'ai choisi FastAPI pour mes projets Backend : Performance et Asynchronisme</h3>
+                    <p data-i18n="blog.retour-d-experience-sur-la">Retour d'expérience sur la rapidité d'exécution, la validation automatique via Pydantic et la génération native de la documentation interactive Swagger/ReDoc.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-06">6 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : Pourquoi j'ai choisi FastAPI pour mes projets Backend, performance et asynchronisme">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.6-nov-2026" datetime="2026-11-06">6 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-pourquoi-j-ai-choisi" href="#blog" class="blog-arrow" aria-label="Lire : Pourquoi j'ai choisi FastAPI pour mes projets Backend, performance et asynchronisme">→</a>
                     </div>
                 </div>
             </article>
@@ -577,13 +595,13 @@
                     <div class="thumb-bars"><span style="--h: 35%"></span><span style="--h: 52%"></span><span style="--h: 70%"></span><span style="--h: 86%"></span><span style="--h: 62%"></span></div>
                 </div>
                 <div class="blog-card-body">
-                    <div class="blog-meta"><span class="blog-tag">Base de données</span><span class="blog-read">8 min</span></div>
-                    <h3>Structurer une base de données MySQL pour une application web moderne</h3>
-                    <p>Méthodologie de modélisation des tables, gestion propre des relations One-to-Many / Many-to-Many et intégration optimale avec Python.</p>
+                    <div class="blog-meta"><span data-i18n="blog.base-de-donnees" class="blog-tag">Base de données</span><span class="blog-read">8 min</span></div>
+                    <h3 data-i18n="blog.structurer-une-base-de-donnees">Structurer une base de données MySQL pour une application web moderne</h3>
+                    <p data-i18n="blog.methodologie-de-modelisation-des-tables">Méthodologie de modélisation des tables, gestion propre des relations One-to-Many / Many-to-Many et intégration optimale avec Python.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-06">6 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : Structurer une base de données MySQL pour une application web moderne">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.6-nov-2026" datetime="2026-11-06">6 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-structurer-une-base-de" href="#blog" class="blog-arrow" aria-label="Lire : Structurer une base de données MySQL pour une application web moderne">→</a>
                     </div>
                 </div>
             </article>
@@ -594,12 +612,12 @@
                 </div>
                 <div class="blog-card-body">
                     <div class="blog-meta"><span class="blog-tag">Architecture</span><span class="blog-read">6 min</span></div>
-                    <h3>De l'idée au déploiement : Comment j'ai conçu mon portfolio ForceFabric</h3>
-                    <p>Les coulisses de la création du site : choix d'une architecture HTML/CSS/JS fluide, design en glassmorphism et déploiement continu via GitHub Pages.</p>
+                    <h3 data-i18n="blog.de-l-idee-au-deploiement">De l'idée au déploiement : Comment j'ai conçu mon portfolio ForceFabric</h3>
+                    <p data-i18n="blog.les-coulisses-de-la-creation">Les coulisses de la création du site : choix d'une architecture HTML/CSS/JS fluide, design en glassmorphism et déploiement continu via GitHub Pages.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-05">5 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : De l'idée au déploiement, comment j'ai conçu mon portfolio ForceFabric">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.5-nov-2026" datetime="2026-11-05">5 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-de-l-idee-au" href="#blog" class="blog-arrow" aria-label="Lire : De l'idée au déploiement, comment j'ai conçu mon portfolio ForceFabric">→</a>
                     </div>
                 </div>
             </article>
@@ -609,13 +627,13 @@
                     <div class="thumb-bars"><span style="--h: 62%"></span><span style="--h: 40%"></span><span style="--h: 76%"></span><span style="--h: 52%"></span><span style="--h: 86%"></span></div>
                 </div>
                 <div class="blog-card-body">
-                    <div class="blog-meta"><span class="blog-tag">DevOps &amp; Git</span><span class="blog-read">6 min</span></div>
-                    <h3>Gérer ses environnements sous Windows 11 avec WSL2 et Ubuntu</h3>
-                    <p>Optimisation de son workflow de dev sous Windows avec WSL, gestion des environnements virtuels Python via uv et gain de productivité au terminal.</p>
+                    <div class="blog-meta"><span data-i18n="blog.devops-git" class="blog-tag">DevOps &amp; Git</span><span class="blog-read">6 min</span></div>
+                    <h3 data-i18n="blog.gerer-ses-environnements-sous-windows">Gérer ses environnements sous Windows 11 avec WSL2 et Ubuntu</h3>
+                    <p data-i18n="blog.optimisation-de-son-workflow-de">Optimisation de son workflow de dev sous Windows avec WSL, gestion des environnements virtuels Python via uv et gain de productivité au terminal.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-05">5 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : Gérer ses environnements sous Windows 11 avec WSL2 et Ubuntu">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.5-nov-2026" datetime="2026-11-05">5 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-gerer-ses-environnements-sous" href="#blog" class="blog-arrow" aria-label="Lire : Gérer ses environnements sous Windows 11 avec WSL2 et Ubuntu">→</a>
                     </div>
                 </div>
             </article>
@@ -625,13 +643,13 @@
                     <div class="thumb-bars"><span style="--h: 44%"></span><span style="--h: 68%"></span><span style="--h: 54%"></span><span style="--h: 82%"></span><span style="--h: 70%"></span></div>
                 </div>
                 <div class="blog-card-body">
-                    <div class="blog-meta"><span class="blog-tag">DevOps &amp; Git</span><span class="blog-read">5 min</span></div>
-                    <h3>Automatiser son workflow de développement avec Git et GitHub</h3>
-                    <p>Les bonnes pratiques de versioning, l'organisation des branches et l'écriture de commits clairs pour maintenir des projets propres.</p>
+                    <div class="blog-meta"><span data-i18n="blog.devops-git" class="blog-tag">DevOps &amp; Git</span><span class="blog-read">5 min</span></div>
+                    <h3 data-i18n="blog.automatiser-son-workflow-de-developpemen">Automatiser son workflow de développement avec Git et GitHub</h3>
+                    <p data-i18n="blog.les-bonnes-pratiques-de-versioning">Les bonnes pratiques de versioning, l'organisation des branches et l'écriture de commits clairs pour maintenir des projets propres.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-04">4 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : Automatiser son workflow de développement avec Git et GitHub">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.4-nov-2026" datetime="2026-11-04">4 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-automatiser-son-workflow-de" href="#blog" class="blog-arrow" aria-label="Lire : Automatiser son workflow de développement avec Git et GitHub">→</a>
                     </div>
                 </div>
             </article>
@@ -642,12 +660,12 @@
                 </div>
                 <div class="blog-card-body">
                     <div class="blog-meta"><span class="blog-tag">Full-Stack</span><span class="blog-read">7 min</span></div>
-                    <h3>Structurer une application web moderne : bonnes pratiques front et back</h3>
-                    <p>Séparer les responsabilités, organiser le code et faire dialoguer interface et API sans dette technique.</p>
+                    <h3 data-i18n="blog.structurer-une-application-web-moderne">Structurer une application web moderne : bonnes pratiques front et back</h3>
+                    <p data-i18n="blog.separer-les-responsabilites-organiser-le">Séparer les responsabilités, organiser le code et faire dialoguer interface et API sans dette technique.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-03">3 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : Structurer une application web moderne, bonnes pratiques front et back">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.3-nov-2026" datetime="2026-11-03">3 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-structurer-une-application-web" href="#blog" class="blog-arrow" aria-label="Lire : Structurer une application web moderne, bonnes pratiques front et back">→</a>
                     </div>
                 </div>
             </article>
@@ -657,13 +675,13 @@
                     <div class="thumb-bars"><span style="--h: 70%"></span><span style="--h: 45%"></span><span style="--h: 80%"></span><span style="--h: 55%"></span><span style="--h: 35%"></span></div>
                 </div>
                 <div class="blog-card-body">
-                    <div class="blog-meta"><span class="blog-tag">FastAPI &amp; API</span><span class="blog-read">6 min</span></div>
-                    <h3>Créer une API REST robuste et performante avec FastAPI et Python</h3>
-                    <p>Endpoints CRUD, validation des données et gestion des erreurs : les fondations d'une API fiable.</p>
+                    <div class="blog-meta"><span data-i18n="blog.fastapi-api" class="blog-tag">FastAPI &amp; API</span><span class="blog-read">6 min</span></div>
+                    <h3 data-i18n="blog.creer-une-api-rest-robuste">Créer une API REST robuste et performante avec FastAPI et Python</h3>
+                    <p data-i18n="blog.endpoints-crud-validation-des-donnees">Endpoints CRUD, validation des données et gestion des erreurs : les fondations d'une API fiable.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-03">3 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : Créer une API REST robuste et performante avec FastAPI et Python">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.3-nov-2026" datetime="2026-11-03">3 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-creer-une-api-rest" href="#blog" class="blog-arrow" aria-label="Lire : Créer une API REST robuste et performante avec FastAPI et Python">→</a>
                     </div>
                 </div>
             </article>
@@ -673,13 +691,13 @@
                     <div class="thumb-bars"><span style="--h: 30%"></span><span style="--h: 48%"></span><span style="--h: 66%"></span><span style="--h: 82%"></span><span style="--h: 95%"></span></div>
                 </div>
                 <div class="blog-card-body">
-                    <div class="blog-meta"><span class="blog-tag">Base de données</span><span class="blog-read">8 min</span></div>
-                    <h3>Gérer la persistance des données avec MySQL et PyMySQL</h3>
-                    <p>Modélisation relationnelle, requêtes paramétrées et connexions : stocker et relire ses données proprement.</p>
+                    <div class="blog-meta"><span data-i18n="blog.base-de-donnees" class="blog-tag">Base de données</span><span class="blog-read">8 min</span></div>
+                    <h3 data-i18n="blog.gerer-la-persistance-des-donnees">Gérer la persistance des données avec MySQL et PyMySQL</h3>
+                    <p data-i18n="blog.modelisation-relationnelle-requetes-para">Modélisation relationnelle, requêtes paramétrées et connexions : stocker et relire ses données proprement.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-02">2 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : Gérer la persistance des données avec MySQL et PyMySQL">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.2-nov-2026" datetime="2026-11-02">2 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-gerer-la-persistance-des" href="#blog" class="blog-arrow" aria-label="Lire : Gérer la persistance des données avec MySQL et PyMySQL">→</a>
                     </div>
                 </div>
             </article>
@@ -690,12 +708,12 @@
                 </div>
                 <div class="blog-card-body">
                     <div class="blog-meta"><span class="blog-tag">Frontend</span><span class="blog-read">9 min</span></div>
-                    <h3>Concevoir des interfaces dynamiques et réactives en JavaScript et CSS</h3>
-                    <p>Manipulation du DOM, appels fetch et responsive design pour une interface fluide, sans framework.</p>
+                    <h3 data-i18n="blog.concevoir-des-interfaces-dynamiques-et">Concevoir des interfaces dynamiques et réactives en JavaScript et CSS</h3>
+                    <p data-i18n="blog.manipulation-du-dom-appels-fetch">Manipulation du DOM, appels fetch et responsive design pour une interface fluide, sans framework.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-02">2 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : Concevoir des interfaces dynamiques et réactives en JavaScript et CSS">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.2-nov-2026" datetime="2026-11-02">2 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-concevoir-des-interfaces-dynamiques" href="#blog" class="blog-arrow" aria-label="Lire : Concevoir des interfaces dynamiques et réactives en JavaScript et CSS">→</a>
                     </div>
                 </div>
             </article>
@@ -705,13 +723,13 @@
                     <div class="thumb-bars"><span style="--h: 60%"></span><span style="--h: 35%"></span><span style="--h: 78%"></span><span style="--h: 50%"></span><span style="--h: 88%"></span></div>
                 </div>
                 <div class="blog-card-body">
-                    <div class="blog-meta"><span class="blog-tag">DevOps &amp; Git</span><span class="blog-read">6 min</span></div>
-                    <h3>Maîtriser le versioning et le déploiement continu avec Git, GitHub et Linux</h3>
-                    <p>Branches, Pull Requests et scripts Bash : un workflow reproductible de la machine locale au serveur.</p>
+                    <div class="blog-meta"><span data-i18n="blog.devops-git" class="blog-tag">DevOps &amp; Git</span><span class="blog-read">6 min</span></div>
+                    <h3 data-i18n="blog.maitriser-le-versioning-et-le">Maîtriser le versioning et le déploiement continu avec Git, GitHub et Linux</h3>
+                    <p data-i18n="blog.branches-pull-requests-et-scripts">Branches, Pull Requests et scripts Bash : un workflow reproductible de la machine locale au serveur.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-01">1 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : Maîtriser le versioning et le déploiement continu avec Git, GitHub et Linux">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.1-nov-2026" datetime="2026-11-01">1 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-maitriser-le-versioning-et" href="#blog" class="blog-arrow" aria-label="Lire : Maîtriser le versioning et le déploiement continu avec Git, GitHub et Linux">→</a>
                     </div>
                 </div>
             </article>
@@ -722,23 +740,23 @@
                 </div>
                 <div class="blog-card-body">
                     <div class="blog-meta"><span class="blog-tag">Architecture</span><span class="blog-read">7 min</span></div>
-                    <h3>De l'idée au déploiement : retour d'expérience sur mon portfolio ForceFabric</h3>
-                    <p>Choix techniques, difficultés rencontrées et leçons tirées de la conception de ce site, étape par étape.</p>
+                    <h3 data-i18n="blog.de-l-idee-au-deploiement-2">De l'idée au déploiement : retour d'expérience sur mon portfolio ForceFabric</h3>
+                    <p data-i18n="blog.choix-techniques-difficultes-rencontrees">Choix techniques, difficultés rencontrées et leçons tirées de la conception de ce site, étape par étape.</p>
                     <div class="blog-author">
                         <span class="blog-avatar" aria-hidden="true">LB</span>
-                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time datetime="2026-11-01">1 nov. 2026</time></span>
-                        <a href="#blog" class="blog-arrow" aria-label="Lire : De l'idée au déploiement, retour d'expérience sur mon portfolio ForceFabric">→</a>
+                        <span class="blog-author-info"><strong>Léo Baskarane</strong><time data-i18n="blog.1-nov-2026" datetime="2026-11-01">1 nov. 2026</time></span>
+                        <a data-i18n-attr="aria-label:blog.lire-de-l-idee-au-2" href="#blog" class="blog-arrow" aria-label="Lire : De l'idée au déploiement, retour d'expérience sur mon portfolio ForceFabric">→</a>
                     </div>
                 </div>
             </article>
         </div>
 
-        <p class="blog-empty" hidden>Aucun article ne correspond à votre recherche.</p>
+        <p data-i18n="blog.aucun-article-ne-correspond-a" class="blog-empty" hidden>Aucun article ne correspond à votre recherche.</p>
 
         <!-- Pagination simulée -->
         <div class="blog-pagination">
-            <p class="blog-count-text">Affichage de <strong class="blog-count">11</strong> sur <span class="blog-total">11</span> articles</p>
-            <button type="button" class="btn secondary-btn blog-more" aria-describedby="blog-more-status">Voir plus d'articles</button>
+            <p class="blog-count-text"><span data-i18n="blog.affichage-de">Affichage de</span> <strong class="blog-count">11</strong> <span data-i18n="blog.sur">sur</span> <span class="blog-total">11</span> <span data-i18n="blog.articles">articles</span></p>
+            <button data-i18n="blog.voir-plus-d-articles" type="button" class="btn secondary-btn blog-more" aria-describedby="blog-more-status">Voir plus d'articles</button>
             <p class="blog-more-status" id="blog-more-status" role="status" aria-live="polite"></p>
         </div>
     </section>
@@ -746,17 +764,17 @@
     <!-- Section Newsletter -->
     <section id="newsletter" class="section">
         <div class="newsletter-card">
-            <h2>Suivez mes carnets de code et projets full-stack.</h2>
-            <p>
+            <h2 data-i18n="newsletter.suivez-mes-carnets-de-code">Suivez mes carnets de code et projets full-stack.</h2>
+            <p data-i18n="newsletter.un-e-mail-par-semaine">
                 Un e-mail par semaine : retours d'expérience sur FastAPI, MySQL, l'architecture d'applications web
                 et mes astuces de développement. Sans spam, désinscription en un clic.
             </p>
             <!-- Formulaire simulé : aucune donnée n'est envoyée (voir initNewsletter dans script.js) -->
             <form class="newsletter-form" novalidate>
-                <label for="newsletter-email" class="sr-only">Adresse e-mail</label>
-                <input type="email" id="newsletter-email" name="email" placeholder="votre@email.com"
+                <label data-i18n="newsletter.adresse-e-mail" for="newsletter-email" class="sr-only">Adresse e-mail</label>
+                <input data-i18n-attr="placeholder:newsletter.votre-email-com" type="email" id="newsletter-email" name="email" placeholder="votre@email.com"
                     autocomplete="email" required>
-                <button type="submit" class="btn primary-btn">S'abonner</button>
+                <button data-i18n="newsletter.s-abonner" type="submit" class="btn primary-btn">S'abonner</button>
             </form>
             <p class="newsletter-status" role="status" aria-live="polite"></p>
         </div>
@@ -764,26 +782,26 @@
 
     <!-- Modale de détail projet (remplie par script.js) -->
     <dialog class="project-modal" aria-labelledby="modal-title">
-        <button type="button" class="modal-close" aria-label="Fermer">&times;</button>
+        <button data-i18n-attr="aria-label:modal.fermer" type="button" class="modal-close" aria-label="Fermer">&times;</button>
         <h3 id="modal-title"></h3>
         <p class="modal-subtitle"></p>
 
-        <div class="modal-tabs" role="tablist" aria-label="Sections du projet">
-            <button type="button" role="tab" id="tab-overview" aria-controls="panel-overview"
+        <div data-i18n-attr="aria-label:modal.sections-du-projet" class="modal-tabs" role="tablist" aria-label="Sections du projet">
+            <button data-i18n="modal.presentation" type="button" role="tab" id="tab-overview" aria-controls="panel-overview"
                 aria-selected="true">Présentation</button>
-            <button type="button" role="tab" id="tab-choices" aria-controls="panel-choices" aria-selected="false"
+            <button data-i18n="modal.choix-techniques" type="button" role="tab" id="tab-choices" aria-controls="panel-choices" aria-selected="false"
                 tabindex="-1">Choix techniques</button>
-            <button type="button" role="tab" id="tab-challenges" aria-controls="panel-challenges"
+            <button data-i18n="modal.difficultes-solutions" type="button" role="tab" id="tab-challenges" aria-controls="panel-challenges"
                 aria-selected="false" tabindex="-1">Difficultés &amp; solutions</button>
         </div>
 
         <div role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
             <p class="modal-description"></p>
-            <h4>Fonctionnalités clés</h4>
+            <h4 data-i18n="modal.fonctionnalites-cles">Fonctionnalités clés</h4>
             <ul class="modal-features"></ul>
             <h4>Architecture</h4>
             <ol class="modal-architecture"></ol>
-            <h4>Stack technique</h4>
+            <h4 data-i18n="modal.stack-technique">Stack technique</h4>
             <ul class="modal-stack"></ul>
         </div>
 
@@ -800,8 +818,8 @@
 
     <!-- Section Témoignages -->
     <section id="testimonials" class="section">
-        <h2>Recommandations</h2>
-        <p>Ce que disent celles et ceux avec qui j'ai travaillé ou appris.</p>
+        <h2 data-i18n="testimonials.recommandations">Recommandations</h2>
+        <p data-i18n="testimonials.ce-que-disent-celles-et">Ce que disent celles et ceux avec qui j'ai travaillé ou appris.</p>
 
         <!--
             Pour ajouter une recommandation, duplique un <figure class="testimonial-card">. Les initiales
@@ -810,30 +828,30 @@
         <div class="testimonials-grid">
             <figure class="testimonial-card">
                 <blockquote>
-                    <p>« Léo fait preuve d'une autonomie remarquable et d'une grande rigueur dans le développement
+                    <p data-i18n="testimonials.leo-fait-preuve-d-une">« Léo fait preuve d'une autonomie remarquable et d'une grande rigueur dans le développement
                         d'applications web. Sa capacité à concevoir des architectures backend et à structurer des
                         bases de données témoigne d'un solide niveau technique. »</p>
                 </blockquote>
                 <figcaption>
                     <span class="testimonial-avatar" aria-hidden="true">FB</span>
                     <span class="testimonial-author">
-                        <strong>Formateur Backend</strong>
-                        <span>Enseignant / Référent Pédagogique</span>
+                        <strong data-i18n="testimonials.formateur-backend">Formateur Backend</strong>
+                        <span data-i18n="testimonials.enseignant-referent-pedagogique">Enseignant / Référent Pédagogique</span>
                     </span>
                 </figcaption>
             </figure>
 
             <figure class="testimonial-card">
                 <blockquote>
-                    <p>« Une excellente collaboration avec Léo. Il est réactif, maîtrise parfaitement la gestion de
+                    <p data-i18n="testimonials.une-excellente-collaboration-avec-leo">« Une excellente collaboration avec Léo. Il est réactif, maîtrise parfaitement la gestion de
                         versions avec Git/GitHub et sait proposer des solutions efficaces face aux contraintes
                         techniques. »</p>
                 </blockquote>
                 <figcaption>
                     <span class="testimonial-avatar" aria-hidden="true">CP</span>
                     <span class="testimonial-author">
-                        <strong>Chef de Projet</strong>
-                        <span>Lead Developer / Collaborateur Tech</span>
+                        <strong data-i18n="testimonials.chef-de-projet">Chef de Projet</strong>
+                        <span data-i18n="testimonials.lead-developer-collaborateur-tech">Lead Developer / Collaborateur Tech</span>
                     </span>
                 </figcaption>
             </figure>
@@ -842,8 +860,8 @@
 
     <!-- Section Contact -->
     <section id="contact" class="section">
-        <h2>Contact</h2>
-        <p>Un projet ou une opportunité ? N'hésite pas à me contacter !</p>
+        <h2 data-i18n="nav.contact">Contact</h2>
+        <p data-i18n="contact.un-projet-ou-une-opportunite">Un projet ou une opportunité ? N'hésite pas à me contacter !</p>
 
         <!--
             Formspree : remplacer VOTRE_ID dans l'attribut action par l'identifiant de ton formulaire
@@ -854,7 +872,7 @@
             data-fallback-email="baskaraneleo@forcefabric.com">
             <div class="form-row">
                 <div class="form-field">
-                    <label for="contact-name">Nom</label>
+                    <label data-i18n="contact.nom" for="contact-name">Nom</label>
                     <input type="text" id="contact-name" name="name" autocomplete="name" required>
                 </div>
                 <div class="form-field">
@@ -863,29 +881,29 @@
                 </div>
             </div>
             <div class="form-field">
-                <label for="contact-subject">Sujet</label>
+                <label data-i18n="contact.sujet" for="contact-subject">Sujet</label>
                 <input type="text" id="contact-subject" name="subject">
             </div>
             <div class="form-field">
-                <label for="contact-message">Message</label>
+                <label data-i18n="contact.message" for="contact-message">Message</label>
                 <textarea id="contact-message" name="message" rows="6" required></textarea>
             </div>
             <!-- Champ piège anti-spam : invisible pour les humains -->
             <input type="text" name="_gotcha" class="form-honeypot" tabindex="-1" autocomplete="off"
                 aria-hidden="true">
-            <button type="submit" class="btn primary-btn">Envoyer le message</button>
+            <button data-i18n="contact.envoyer-le-message" type="submit" class="btn primary-btn">Envoyer le message</button>
             <p class="form-status" role="status" aria-live="polite"></p>
         </form>
 
         <p class="contact-alt">
-            Ou écris-moi directement : <a href="mailto:baskaraneleo@forcefabric.com">baskaraneleo@forcefabric.com</a>
+            <span data-i18n="contact.ou-ecris-moi-directement">Ou écris-moi directement :</span> <a href="mailto:baskaraneleo@forcefabric.com">baskaraneleo@forcefabric.com</a>
             <button type="button" class="copy-email-btn" data-copy="baskaraneleo@forcefabric.com">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round" aria-hidden="true">
                     <rect x="9" y="9" width="13" height="13" rx="2" />
                     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
                 </svg>
-                <span class="copy-email-label">Copier l'email</span>
+                <span data-i18n="contact.copier-l-email" class="copy-email-label">Copier l'email</span>
                 <span class="copy-tooltip" role="status" aria-live="polite"></span>
             </button>
         </p>
@@ -893,28 +911,28 @@
 
     <footer>
         <!-- Widget « System Status » : états et latences simulés (script.js, initSystemStatus) -->
-        <div class="system-status" role="group" aria-label="État des services (simulation)">
+        <div data-i18n-attr="aria-label:footer.etat-des-services-simulation" class="system-status" role="group" aria-label="État des services (simulation)">
             <span class="system-status-title">System Status</span>
             <ul class="system-status-list">
                 <li class="status-item" data-service="api" data-base="42">
                     <span class="status-dot" aria-hidden="true"></span>
                     <span class="status-name">API FastAPI</span>
-                    <span class="status-state">opérationnel · <span class="status-ms">42</span> ms</span>
+                    <span class="status-state"><span data-i18n="footer.operationnel">opérationnel ·</span> <span class="status-ms">42</span> ms</span>
                 </li>
                 <li class="status-item" data-service="db" data-base="8">
                     <span class="status-dot" aria-hidden="true"></span>
                     <span class="status-name">DB MySQL</span>
-                    <span class="status-state">opérationnel · <span class="status-ms">8</span> ms</span>
+                    <span class="status-state"><span data-i18n="footer.operationnel">opérationnel ·</span> <span class="status-ms">8</span> ms</span>
                 </li>
                 <li class="status-item" data-service="wsl" data-base="3">
                     <span class="status-dot" aria-hidden="true"></span>
                     <span class="status-name">WSL Environment</span>
-                    <span class="status-state">opérationnel · <span class="status-ms">3</span> ms</span>
+                    <span class="status-state"><span data-i18n="footer.operationnel">opérationnel ·</span> <span class="status-ms">3</span> ms</span>
                 </li>
             </ul>
-            <span class="system-status-note">Données simulées</span>
+            <span data-i18n="about.donnees-simulees" class="system-status-note">Données simulées</span>
         </div>
-        <p>© 2026 Léo Baskarane — Tous droits réservés.</p>
+        <p data-i18n="footer.2026-leo-baskarane-tous-droits">© 2026 Léo Baskarane — Tous droits réservés.</p>
     </footer>
 
     <!-- Notifications Toast (alimentées par showToast() dans script.js) -->
@@ -924,6 +942,8 @@
     <div id="cursor-outline" aria-hidden="true"></div>
     <div id="cursor-dot" aria-hidden="true"></div>
 
+    <!-- i18n.js avant script.js : la langue est appliquée avant l'initialisation des composants -->
+    <script src="i18n.js"></script>
     <script src="script.js?v=2"></script>
 </body>
 

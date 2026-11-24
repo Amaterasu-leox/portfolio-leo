@@ -282,7 +282,8 @@ a {
         align-self: flex-start;
     }
 
-    .accent-switcher {
+    .accent-switcher,
+    .lang-switcher {
         align-self: flex-start;
     }
 
@@ -336,6 +337,57 @@ a {
     border-color: var(--text);
     box-shadow: 0 0 0 2px color-mix(in srgb, var(--dot) 35%, transparent), 0 0 12px 2px var(--dot);
     transform: scale(1.15);
+}
+
+/* Sélecteur de langue : icône de traduction + FR | EN, compact et discret (pastille douce sur la langue active) */
+.lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 0.2rem 0.25rem 0.2rem 0.6rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    background-color: var(--glass-bg);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+}
+
+.lang-icon {
+    flex: none;
+    width: 0.95rem;
+    height: 0.95rem;
+    margin-right: 0.3rem;
+    color: var(--text-faint);
+}
+
+.lang-btn {
+    min-width: 1.9rem;
+    padding: 0.3rem 0.5rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 0.68rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+.lang-btn:hover {
+    color: var(--text);
+}
+
+.lang-btn[aria-pressed="true"] {
+    background-color: var(--accent-soft);
+    color: var(--accent);
+}
+
+.lang-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
 }
 
 /* Widget « Dev Timezone & Status » : carte compacte en verre dépoli, horloges monospace */
@@ -440,7 +492,7 @@ a {
 }
 
 /* Navbar trop chargée sous cette largeur : on masque le widget (visible dans le menu burger) */
-@media (max-width: 1500px) {
+@media (max-width: 1640px) {
     .dev-clock {
         display: none;
     }
