@@ -1130,6 +1130,7 @@ a {
 
 .tech-badges [data-tech="python"] { --tech: #4b8bbe; }
 .tech-badges [data-tech="fastapi"] { --tech: #009688; }
+.tech-badges [data-tech="uvicorn"] { --tech: #2bb673; }
 .tech-badges [data-tech="mysql"] { --tech: #f29111; }
 .tech-badges [data-tech="js"] { --tech: #f7df1e; }
 .tech-badges [data-tech="git"] { --tech: #f05032; }

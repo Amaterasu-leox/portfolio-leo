@@ -118,6 +118,9 @@
                 '  skills       Mes compétences techniques',
                 '  stack        Mes 4 technos phares : FastAPI, Python, MySQL, JavaScript',
                 '  projects     Mes projets (ex : "projects 1" pour le détail)',
+                '  github       Mon profil et mes dépôts GitHub',
+                '  status       Statut du développeur et heure de Paris',
+                '  neofetch     Mon environnement de travail',
                 '  contact      Me contacter',
                 '  whoami       Qui est connecté ?',
                 '  history      Commandes déjà tapées',
@@ -132,6 +135,9 @@
                 '  skills       My technical skills',
                 '  stack        My 4 flagship technologies: FastAPI, Python, MySQL, JavaScript',
                 '  projects     My projects (e.g. "projects 1" for details)',
+                '  github       My GitHub profile and repositories',
+                '  status       Developer status and Paris time',
+                '  neofetch     My working environment',
                 '  contact      Get in touch',
                 '  whoami       Who is logged in?',
                 '  history      Commands already typed',
@@ -186,6 +192,60 @@
             fr: 'Tapez "projects <numéro>" pour le détail, ou cliquez sur une carte de la section Projets.',
             en: 'Type "projects <number>" for details, or click a card in the Projects section.',
         },
+        'term.github': {
+            fr: ({ url, repos, portfolio }) => [
+                `  Profil       ${url}`,
+                `  Dépôt        ${repos}  (API FastAPI + MySQL)`,
+                `  Dépôt        ${portfolio}  (ce portfolio)`,
+                '',
+                'Branches dédiées et Pull Requests : tout mon code est versionné avec Git.',
+            ],
+            en: ({ url, repos, portfolio }) => [
+                `  Profile      ${url}`,
+                `  Repository   ${repos}  (FastAPI + MySQL API)`,
+                `  Repository   ${portfolio}  (this portfolio)`,
+                '',
+                'Dedicated branches and Pull Requests: all my code is versioned with Git.',
+            ],
+        },
+        'term.status': {
+            fr: ({ state, time, offset, projects }) => [
+                `  Statut       ${state}  (ONLINE de 08:00 à 22:00, heure de Paris)`,
+                `  Paris        ${time} ${offset}`,
+                '  Localité     Île-de-France',
+                `  Projets      ${projects} fiches détaillées ("projects")`,
+                '',
+                'Un message ? Tapez "contact".',
+            ],
+            en: ({ state, time, offset, projects }) => [
+                `  Status       ${state}  (ONLINE 08:00 to 22:00, Paris time)`,
+                `  Paris        ${time} ${offset}`,
+                '  Location     Île-de-France',
+                `  Projects     ${projects} detailed pages ("projects")`,
+                '',
+                'A message? Type "contact".',
+            ],
+        },
+        'term.neofetch': {
+            fr: [
+                '  leo@portfolio',
+                '  -------------',
+                '  OS           Ubuntu sur WSL2',
+                '  Shell        bash',
+                '  Backend      Python · FastAPI · Uvicorn · MySQL',
+                '  Frontend     HTML5 · CSS3 · JavaScript natif',
+                '  Outils       Git · GitHub · uv',
+            ],
+            en: [
+                '  leo@portfolio',
+                '  -------------',
+                '  OS           Ubuntu on WSL2',
+                '  Shell        bash',
+                '  Backend      Python · FastAPI · Uvicorn · MySQL',
+                '  Frontend     HTML5 · CSS3 · vanilla JavaScript',
+                '  Tools        Git · GitHub · uv',
+            ],
+        },
         'term.contact': {
             fr: ({ email }) => [
                 `  Email      ${email}`,
@@ -225,11 +285,12 @@
                     'Endpoints REST CRUD complets (création, lecture, mise à jour, suppression)',
                     'Persistance des données dans une base MySQL relationnelle',
                     'Interface web dynamique communiquant avec l’API via fetch',
+                    'Backend FastAPI servi par Uvicorn, reliant le frontend HTML/CSS/JS à la base MySQL',
                     'Versionnement et revue de code via branches et Pull Requests sur GitHub',
                 ],
                 architecture: [
                     { layer: 'Frontend', detail: 'HTML / CSS / JavaScript — interface et appels fetch vers l’API' },
-                    { layer: 'Backend', detail: 'Python FastAPI — endpoints REST CRUD' },
+                    { layer: 'Backend', detail: 'Python FastAPI servi par Uvicorn — endpoints REST CRUD' },
                     { layer: 'Base de données', detail: 'MySQL — stockage relationnel des tâches' },
                 ],
                 links: ['Code source sur GitHub'],
@@ -255,11 +316,12 @@
                     'Full REST CRUD endpoints (create, read, update, delete)',
                     'Data persisted in a relational MySQL database',
                     'Dynamic web interface talking to the API through fetch',
+                    'FastAPI backend served by Uvicorn, linking the HTML/CSS/JS frontend to the MySQL database',
                     'Versioning and code review with branches and Pull Requests on GitHub',
                 ],
                 architecture: [
                     { layer: 'Frontend', detail: 'HTML / CSS / JavaScript — interface and fetch calls to the API' },
-                    { layer: 'Backend', detail: 'Python FastAPI — REST CRUD endpoints' },
+                    { layer: 'Backend', detail: 'Python FastAPI served by Uvicorn — REST CRUD endpoints' },
                     { layer: 'Database', detail: 'MySQL — relational storage of tasks' },
                 ],
                 links: ['Source code on GitHub'],
@@ -272,6 +334,67 @@
                     { problem: 'The browser blocked the frontend’s calls to the API (CORS errors).', solution: 'Configured FastAPI’s CORS middleware to allow only the frontend’s origin.' },
                     { problem: 'Keeping the interface in sync with the database after every creation, edit or deletion.', solution: 'Every action goes through the API, then the list is reloaded from the server’s response instead of being modified locally.' },
                     { problem: 'Working cleanly with code review.', solution: 'Dedicated branches and GitHub Pull Requests to review every change before merging.' },
+                ],
+            },
+        },
+        'project.task-manager-api': {
+            fr: {
+                title: 'Task Manager API',
+                subtitle: 'API REST de gestion de tâches',
+                description:
+                    'Le backend de mes applications de gestion de tâches : une API REST développée en Python avec ' +
+                    'FastAPI, servie par Uvicorn et connectée à une base MySQL. Elle expose les opérations ' +
+                    'nécessaires pour créer, lire, modifier et supprimer des tâches, et peut être consommée par ' +
+                    'n’importe quel frontend.',
+                features: [
+                    'Endpoints REST CRUD pour gérer les tâches',
+                    'Persistance des données dans une base MySQL relationnelle',
+                    'Serveur ASGI Uvicorn pour une exécution rapide et asynchrone',
+                    'Documentation interactive de l’API (Swagger / ReDoc) générée automatiquement par FastAPI',
+                ],
+                architecture: [
+                    { layer: 'API', detail: 'Python FastAPI — routes REST et validation des données' },
+                    { layer: 'Serveur', detail: 'Uvicorn — serveur ASGI qui exécute l’application' },
+                    { layer: 'Base de données', detail: 'MySQL — stockage relationnel des tâches' },
+                ],
+                links: ['Code source sur GitHub'],
+                choices: [
+                    { title: 'FastAPI', detail: 'Validation via les types Python et documentation de l’API générée automatiquement, sans configuration supplémentaire.' },
+                    { title: 'Uvicorn', detail: 'Serveur ASGI léger, adapté à l’asynchronisme de FastAPI et pratique en développement comme en production.' },
+                    { title: 'MySQL', detail: 'Un SGBD relationnel classique pour pratiquer le SQL et la modélisation des données.' },
+                ],
+                challenges: [
+                    { problem: 'Faire communiquer l’API avec un frontend servi depuis une autre origine.', solution: 'Configuration du middleware CORS de FastAPI pour autoriser uniquement l’origine du frontend.' },
+                    { problem: 'Garder une API claire et facile à tester.', solution: 'Des endpoints courts et cohérents, testables directement depuis la documentation interactive.' },
+                ],
+            },
+            en: {
+                title: 'Task Manager API',
+                subtitle: 'Task management REST API',
+                description:
+                    'The backend of my task management applications: a REST API built in Python with FastAPI, ' +
+                    'served by Uvicorn and connected to a MySQL database. It exposes the operations needed to ' +
+                    'create, read, update and delete tasks, and can be consumed by any frontend.',
+                features: [
+                    'REST CRUD endpoints to manage tasks',
+                    'Data persisted in a relational MySQL database',
+                    'Uvicorn ASGI server for fast, asynchronous execution',
+                    'Interactive API documentation (Swagger / ReDoc) generated automatically by FastAPI',
+                ],
+                architecture: [
+                    { layer: 'API', detail: 'Python FastAPI — REST routes and data validation' },
+                    { layer: 'Server', detail: 'Uvicorn — ASGI server running the application' },
+                    { layer: 'Database', detail: 'MySQL — relational storage of tasks' },
+                ],
+                links: ['Source code on GitHub'],
+                choices: [
+                    { title: 'FastAPI', detail: 'Validation through Python types and automatically generated API documentation, with no extra setup.' },
+                    { title: 'Uvicorn', detail: 'A lightweight ASGI server that fits FastAPI’s async model and works well in development and production.' },
+                    { title: 'MySQL', detail: 'A classic relational DBMS, a good way to practice SQL and data modeling.' },
+                ],
+                challenges: [
+                    { problem: 'Letting the API talk to a frontend served from another origin.', solution: 'Configured FastAPI’s CORS middleware to allow only the frontend’s origin.' },
+                    { problem: 'Keeping the API clear and easy to test.', solution: 'Short, consistent endpoints that can be tried directly from the interactive documentation.' },
                 ],
             },
         },
@@ -491,6 +614,8 @@
         'projects.tous': { fr: 'Tous', en: 'All' },
         'projects.guru-to-do-app': { fr: 'Guru To-Do App', en: 'Guru To-Do App' },
         'projects.application-de-gestion-de-taches': { fr: 'Application de gestion de tâches Full-Stack : API REST CRUD en Python FastAPI, base de données MySQL et interface JavaScript dynamique.', en: 'Full-Stack task management application: CRUD REST API in Python FastAPI, MySQL database and a dynamic JavaScript interface.' },
+        'projects.task-manager-api': { fr: 'Task Manager API', en: 'Task Manager API' },
+        'projects.api-rest-de-gestion-de-taches': { fr: 'API REST de gestion de tâches en Python FastAPI, servie par Uvicorn, avec une base de données MySQL et une documentation interactive générée automatiquement.', en: 'Task management REST API in Python FastAPI, served by Uvicorn, with a MySQL database and automatically generated interactive documentation.' },
         'projects.voir-les-details': { fr: 'Voir les détails →', en: 'View details →' },
         'projects.portfolio-web-personnel': { fr: 'Portfolio Web Personnel', en: 'Personal Web Portfolio' },
         'projects.site-vitrine-developpe-sur-mesure': { fr: 'Site vitrine développé sur-mesure, sans framework : timeline interactive, mini-terminal, thème sombre / clair et responsive design.', en: 'Custom-built showcase site, no framework: interactive timeline, mini-terminal, dark / light theme and responsive design.' },
