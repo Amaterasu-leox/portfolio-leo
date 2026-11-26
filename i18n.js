@@ -569,10 +569,10 @@
         // ── journey ──
         'journey.developpement-full-stack-projets-personn': { fr: 'Développement Full-Stack & Projets Personnels', en: 'Full-Stack Development & Personal Projects' },
         'journey.en-autodidacte-combs-la-ville': { fr: 'En autodidacte — Combs-la-Ville', en: 'Self-taught — Combs-la-Ville' },
-        'journey.conception-et-developpement-d-applicatio': { fr: 'Conception et développement d\'applications web interactives, mise en place d\'API REST avec FastAPI, gestion de bases de données MySQL et gestion de versions avec Git.', en: 'Design and development of interactive web applications, REST APIs built with FastAPI, MySQL database management and version control with Git.' },
+        'journey.conception-et-developpement-d-applicatio': { fr: 'Conception d\'applications full-stack et d\'APIs REST (Task Manager API, Guru To-Do), modélisation de bases de données MySQL et intégration frontend/backend.', en: 'Design of full-stack applications and REST APIs (Task Manager API, Guru To-Do), MySQL database modelling and frontend/backend integration.' },
         'journey.autodidacte-en-developpement-full-stack': { fr: 'Autodidacte en Développement Full-Stack & Systèmes', en: 'Self-taught in Full-Stack Development & Systems' },
         'journey.formation-a-la-maison-combs': { fr: 'Formation à la maison — Combs-la-Ville', en: 'Home-based training — Combs-la-Ville' },
-        'journey.apprentissage-approfondi-de-la-programma': { fr: 'Apprentissage approfondi de la programmation, conception d\'applications web avec Python, FastAPI, MySQL et maîtrise des environnements de développement sous Linux/WSL et Git.', en: 'In-depth study of programming, web application design with Python, FastAPI and MySQL, and a solid command of Linux/WSL and Git development environments.' },
+        'journey.apprentissage-approfondi-de-la-programma': { fr: 'Fondamentaux du développement web, maîtrise de l\'environnement Linux/WSL sous Windows, outillage quotidien avec VS Code et workflow collaboratif Git / Pull Requests sur GitHub.', en: 'Web development fundamentals, command of the Linux/WSL environment on Windows, daily tooling with VS Code and a collaborative Git / Pull Request workflow on GitHub.' },
 
         // ── skills ──
         'skills.competences-techniques': { fr: 'Compétences Techniques', en: 'Technical Skills' },
