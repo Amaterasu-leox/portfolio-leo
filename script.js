@@ -1290,7 +1290,7 @@ function initCustomCursor(reducedMotion) {
 
 /**
  * Widget « Dev Timezone & Status » de la navbar : heure de Paris (avec décalage UTC+1 / UTC+2
- * selon l'heure d'été), heure UTC, et statut ONLINE entre 08:00 et 22:00 (heure de Paris), AWAY sinon.
+ * selon l'heure d'été), heure UTC, et statut ONLINE de 08:00 à 01:00 (heure de Paris), AWAY la nuit.
  */
 function initDevClock() {
     const root = document.querySelector('.dev-clock');
@@ -1301,8 +1301,9 @@ function initDevClock() {
     const offsetEl = root.querySelector('.dev-clock-offset');
     const badge = root.querySelector('.dev-status-badge');
 
+    // Plage qui passe minuit : ONLINE de 08:00 à 00:59:59 (heure de Paris), AWAY de 01:00 à 07:59:59
     const ONLINE_FROM = 8;
-    const ONLINE_TO = 22; // exclu : 21:59:59 est encore ONLINE
+    const ONLINE_TO = 1; // exclu : 00:59:59 est encore ONLINE
 
     const parisTime = new Intl.DateTimeFormat('fr-FR', {
         timeZone: 'Europe/Paris', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23',
@@ -1337,7 +1338,7 @@ function initDevClock() {
     function tick() {
         const now = new Date();
         const hour = Number(parisHour.format(now));
-        const online = hour >= ONLINE_FROM && hour < ONLINE_TO;
+        const online = hour >= ONLINE_FROM || hour < ONLINE_TO;
 
         localEl.textContent = parisTime.format(now);
         utcEl.textContent = utcTime.format(now);
