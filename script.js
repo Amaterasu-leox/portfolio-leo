@@ -239,7 +239,7 @@ function initContactForm() {
 
 /**
  * Terminal interactif (style CLI Linux / WSL) : help, about, skills, stack, projects [n],
- * github, status, neofetch, contact, whoami, history, clear. ↑ / ↓ parcourent l'historique, Tab complète la commande,
+ * github, status, neofetch, journey (alias parcours), contact, whoami, history, clear. ↑ / ↓ parcourent l'historique, Tab complète la commande,
  * et les puces sous le terminal lancent une commande d'un clic.
  */
 function initTerminal() {
@@ -268,7 +268,7 @@ function initTerminal() {
         skills: () => [
             ...[...document.querySelectorAll('.skill-card')].map((card) => {
                 const name = card.querySelector('h3').textContent.trim();
-                const items = card.querySelector('p').textContent.trim();
+                const items = [...card.querySelectorAll('.skill-tags li')].map((li) => li.textContent.trim()).join(', ');
                 return `  ${name.padEnd(18)} ${items}`;
             }),
             '',
@@ -309,7 +309,16 @@ function initTerminal() {
                 projects: Object.keys(PROJECTS).length,
             });
         },
-        neofetch: () => tr('term.neofetch'),
+        neofetch: () => tr('term.neofetch', { projects: Object.keys(PROJECTS).length }),
+        // Lu depuis la timeline de la section Parcours : suit la langue active et le contenu de la page
+        journey: () => [
+            ...[...document.querySelectorAll('.timeline-item')].flatMap((item) => {
+                const read = (selector) => item.querySelector(selector)?.textContent.replace(/\s+/g, ' ').trim() ?? '';
+                const tags = [...item.querySelectorAll('.timeline-tags li')].map((li) => li.textContent.trim()).join(' · ');
+                return [`  ${read('.timeline-date')}  ${read('h3')}`, `  ${' '.repeat(11)}${read('.timeline-place')}`, `  ${' '.repeat(11)}${tags}`, ''];
+            }),
+            tr('term.journey-hint'),
+        ],
         contact: () => tr('term.contact', { email: EMAIL }),
         whoami: () => [tr('term.whoami')],
         history: () =>
@@ -319,6 +328,8 @@ function initTerminal() {
             return [];
         },
     };
+
+    COMMANDS.parcours = COMMANDS.journey; // alias FR
 
     // Écrit une ligne en mettant les technos en couleur (nœuds DOM, jamais d'innerHTML)
     function appendLine(text, className) {
@@ -358,6 +369,7 @@ function initTerminal() {
     function submit(value) {
         if (value.trim()) history.push(value.trim());
         historyIndex = history.length;
+        draft = '';
         input.value = '';
         run(value);
     }
@@ -376,15 +388,31 @@ function initTerminal() {
         });
     });
 
+    // Ligne en cours de saisie, restaurée quand on redescend après la dernière entrée de l'historique
+    let draft = '';
+
     input.addEventListener('keydown', (event) => {
         if (event.key === 'Tab') {
-            // Complétion : une seule commande possible → on la complète
-            const typed = input.value.trim().toLowerCase();
-            const matches = Object.keys(COMMANDS).filter((name) => typed && name.startsWith(typed));
+            // Complétion du nom de commande (premier mot seulement).
+            // Sans correspondance (ou champ vide), Tab garde son rôle normal : la navigation au clavier reste possible.
+            const typed = input.value.trimStart().toLowerCase();
+            if (!typed || /\s/.test(typed)) return;
+            const matches = Object.keys(COMMANDS).filter((name) => name.startsWith(typed));
+            if (matches.length === 0) return;
+
+            event.preventDefault();
             if (matches.length === 1) {
-                event.preventDefault();
-                input.value = matches[0];
+                input.value = `${matches[0]} `;
+                return;
             }
+            // Plusieurs possibilités : on complète le préfixe commun et on affiche les suggestions
+            let common = matches[0];
+            matches.forEach((name) => {
+                while (!name.startsWith(common)) common = common.slice(0, -1);
+            });
+            input.value = common;
+            print([`${prompt} ${input.value}`], 'terminal-echo');
+            print([matches.join('   ')]);
             return;
         }
 
@@ -392,9 +420,11 @@ function initTerminal() {
         if (history.length === 0) return;
         event.preventDefault();
 
+        if (historyIndex === history.length) draft = input.value;
         historyIndex += event.key === 'ArrowUp' ? -1 : 1;
         historyIndex = Math.max(0, Math.min(history.length, historyIndex));
-        input.value = history[historyIndex] ?? '';
+        input.value = historyIndex === history.length ? draft : history[historyIndex];
+        input.setSelectionRange(input.value.length, input.value.length);
     });
 
     // Un clic n'importe où dans le terminal donne le focus à la saisie (sauf sélection de texte)
