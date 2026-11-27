@@ -1002,6 +1002,25 @@ a {
 .terminal-prompt {
     color: #4ade80;
     white-space: nowrap;
+    transition: text-shadow 0.2s;
+}
+
+/* Focus net : halo cyan autour du terminal, prompt allumé et curseur bloc */
+.terminal {
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.terminal:focus-within {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px var(--accent-soft), 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.terminal-line:focus-within .terminal-prompt {
+    text-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
+}
+
+.terminal-input:focus-visible {
+    caret-shape: block;
 }
 
 .terminal-input {
