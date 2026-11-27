@@ -576,13 +576,11 @@
 
         // ── skills ──
         'skills.competences-techniques': { fr: 'Compétences Techniques', en: 'Technical Skills' },
-        'skills.html5-css3-javascript-es6-responsive': { fr: 'HTML5, CSS3, JavaScript (ES6+), Responsive Design', en: 'HTML5, CSS3, JavaScript (ES6+), Responsive Design' },
         'skills.backend-api': { fr: 'Backend & API', en: 'Backend & API' },
-        'skills.python-fastapi-endpoints-rest-crud': { fr: 'Python, FastAPI, Endpoints REST CRUD', en: 'Python, FastAPI, REST CRUD Endpoints' },
+        'skills.tag-rest-crud-endpoints': { fr: 'Endpoints REST CRUD', en: 'REST CRUD Endpoints' },
         'skills.bases-de-donnees': { fr: 'Bases de données', en: 'Databases' },
-        'skills.mysql-modelisation-relationnelle-sql': { fr: 'MySQL, Modélisation relationnelle, SQL', en: 'MySQL, Relational Modeling, SQL' },
+        'skills.tag-relational-modeling': { fr: 'Modélisation relationnelle', en: 'Relational Modeling' },
         'skills.outils-workflow': { fr: 'Outils & Workflow', en: 'Tools & Workflow' },
-        'skills.git-bitbucket-pull-requests-linux': { fr: 'Git, Bitbucket (Pull Requests), Linux (Ubuntu), VS Code', en: 'Git, Bitbucket (Pull Requests), Linux (Ubuntu), VS Code' },
         // ── terminal ──
         'terminal.terminal-interactif': { fr: 'Terminal Interactif', en: 'Interactive Terminal' },
         'terminal.explorez-mon-profil-comme-dans': { fr: 'Explorez mon profil comme dans un shell WSL / Ubuntu : tapez une commande, ou cliquez sur une puce.', en: 'Explore my profile as in a WSL / Ubuntu shell: type a command, or click a chip.' },

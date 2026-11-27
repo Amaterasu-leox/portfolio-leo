@@ -1018,9 +1018,15 @@ a {
 /* Compétences Grille */
 .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
     margin-top: 2rem;
+}
+
+@media (max-width: 640px) {
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Cartes : inclinaison 3D (--rx / --ry posées par script.js) + soulèvement au survol (--lift) */
@@ -1052,6 +1058,22 @@ a {
 .skill-card h3 {
     color: var(--accent);
     margin-bottom: 0.5rem;
+}
+
+/* Badges de compétences (même rendu que les tags du parcours) */
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+}
+
+.skill-tags li {
+    padding: 0.2rem 0.7rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.8rem;
 }
 
 /* Projets Grille */
