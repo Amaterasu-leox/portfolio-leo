@@ -212,7 +212,7 @@
         },
         'term.status': {
             fr: ({ state, time, offset, projects }) => [
-                `  Statut       ${state}  (ONLINE de 08:00 à 22:00, heure de Paris)`,
+                `  Statut       ${state}  (ONLINE de 08:00 à 01:00, heure de Paris)`,
                 `  Paris        ${time} ${offset}`,
                 '  Localité     Île-de-France',
                 `  Projets      ${projects} fiches détaillées ("projects")`,
@@ -220,7 +220,7 @@
                 'Un message ? Tapez "contact".',
             ],
             en: ({ state, time, offset, projects }) => [
-                `  Status       ${state}  (ONLINE 08:00 to 22:00, Paris time)`,
+                `  Status       ${state}  (ONLINE 08:00 to 01:00, Paris time)`,
                 `  Paris        ${time} ${offset}`,
                 '  Location     Île-de-France',
                 `  Projects     ${projects} detailed pages ("projects")`,
